@@ -409,9 +409,13 @@ PlayerSettings:
   - Android::ScriptingBackend
   - Standalone::ScriptingBackend
   - WebPlayer::ScriptingBackend
+  - iOS::Architecture
+  - iOS::ScriptingBackend
   Android::ScriptingBackend: 0
   Standalone::ScriptingBackend: 0
   WebPlayer::ScriptingBackend: 0
+  iOS::Architecture: 2
+  iOS::ScriptingBackend: 1
   boolPropertyNames:
   - Android::VR::enable
   - Metro::VR::enable
@@ -506,7 +510,7 @@ PlayerSettings:
   XboxOne::VR::enabledDevices: []
   iOS::VR::enabledDevices: []
   tvOS::VR::enabledDevices: []
-  cloudProjectId: c505db92-7d1a-48ec-a555-6347394377ee
+  cloudProjectId: 3af5f8bc-455f-43ec-a795-8feb88cc0143
   projectName: Augmented Reality Game
-  organizationId: kalidren
+  organizationId: foxproject
   cloudEnabled: 0
