@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 
 public class HostGame : MonoBehaviour {
 
-	[SerializeField] private uint roomSize = 6;
+	[SerializeField] private uint roomSize = 4;
 
 	private string roomName;
 	private NetworkManager networkManager;
@@ -16,13 +16,10 @@ public class HostGame : MonoBehaviour {
 	}
 
 	public void SetRoomName(string _name) {
-		Debug.Log("Kaldt");
 		roomName = _name;
 	}
 
 	public void CreateRoom() {
-
-		Debug.Log("Navn: "+roomName);
 		if (roomName != null && roomName != "") {
 			Debug.Log("Creating a room: "+roomName + " with room for " + roomSize + " players.");
 
