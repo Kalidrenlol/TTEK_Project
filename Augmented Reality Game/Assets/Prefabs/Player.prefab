@@ -37,9 +37,9 @@ GameObject:
   - 135: {fileID: 135000011549412258}
   - 54: {fileID: 54000011679358324}
   - 114: {fileID: 114000010706120136}
-  - 114: {fileID: 114000012223668820}
-  - 114: {fileID: 114000010459295988}
   - 114: {fileID: 114000012329265616}
+  - 114: {fileID: 114000010459295988}
+  - 114: {fileID: 114000012223668820}
   - 114: {fileID: 114000011496008384}
   - 114: {fileID: 114000011225430558}
   m_Layer: 8
@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 401911744e798426fa058e948d351e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
 --- !u!114 &114000010706120136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -275,7 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2288c705e2e8f47678fc2bbfabd6e5ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
 --- !u!114 &114000012329265616
 MonoBehaviour:
   m_ObjectHideFlags: 1
