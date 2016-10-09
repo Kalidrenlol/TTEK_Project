@@ -21,8 +21,6 @@ public class HostGame : MonoBehaviour {
 
 	public void CreateRoom() {
 		if (roomName != null && roomName != "") {
-			Debug.Log("Creating a room: "+roomName + " with room for " + roomSize + " players.");
-
 			networkManager.matchMaker.CreateMatch(roomName, roomSize, true, "", "", "", 0, 0, networkManager.OnMatchCreate);
 		}
 	}

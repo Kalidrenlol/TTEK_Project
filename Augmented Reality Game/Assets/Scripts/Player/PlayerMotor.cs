@@ -6,7 +6,7 @@ public class PlayerMotor : MonoBehaviour {
 	[SerializeField] private float speed;
 
 	private Vector3 velocity = Vector3.zero;
-	private Vector3 rotation = Vector3.zero;
+//	private Vector3 rotation = Vector3.zero;
 	private VirtualJoystick joystick;
 	private Rigidbody rb;
 

@@ -7,7 +7,7 @@ public class PlayerSetup : NetworkBehaviour {
 
 	[SerializeField] Behaviour[] componentsToDisable;
 	[SerializeField] string remoteLayerName = "RemotePlayer";
-	[SerializeField] string dontDrawLayerName = "DontDraw";
+//	[SerializeField] string dontDrawLayerName = "DontDraw";
 	[SerializeField] GameObject playerGraphics;
 	[SerializeField] GameObject playerUIPrefab;
 
