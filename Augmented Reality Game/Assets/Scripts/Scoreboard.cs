@@ -14,10 +14,11 @@ public class Scoreboard : MonoBehaviour {
 
 	void AddPlayers() {
 		Player[] players = GameManager.GetPlayers();
+        GameObject scoreList = GameObject.FindWithTag("ScoreboardContent");
 
 		foreach (Player player in players) {
-			GameObject itemGO = (GameObject) Instantiate(scoreboardItem);
-			itemGO.transform.SetParent(playerList);
+            GameObject itemGO = Instantiate(scoreboardItem) as GameObject;
+			itemGO.transform.SetParent(scoreList.transform);
 			ScoreboardItem item = itemGO.GetComponent<ScoreboardItem>();
 
 
