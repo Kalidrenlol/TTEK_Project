@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameManager : MonoBehaviour {
 
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour {
 			instance = this;
 		}
 	}
-
+		
 	#region Player tracking
 
 	private const string PLAYER_ID_PREFIX = "Player ";
@@ -36,17 +37,9 @@ public class GameManager : MonoBehaviour {
 		return players[_playerID];
 	}
 
-	/*void OnGUI() {
-		GUILayout.BeginArea(new Rect(200,200,200,500));
-		GUILayout.BeginVertical();
-
-		foreach(string _playerID in players.Keys) {
-			GUILayout.Label(_playerID + " - " + players[_playerID].transform.name);
-		}
-
-		GUILayout.EndVertical();
-		GUILayout.EndArea();
-	}*/
+	public static Player[] GetPlayers() {
+		return players.Values.ToArray();
+	}
 
 	#endregion
 

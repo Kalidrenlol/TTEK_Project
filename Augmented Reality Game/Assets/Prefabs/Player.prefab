@@ -211,8 +211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681c8830014d04db4bb4b94c9a86f752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  username: Loading...
   maxHealth: 100
   disableOnDeath: []
+  score: 0
 --- !u!114 &114000011225430558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,6 +295,8 @@ MonoBehaviour:
   remoteLayerName: RemotePlayer
   playerGraphics: {fileID: 1000012279501020}
   playerUIPrefab: {fileID: 1000013529638916, guid: 2d1e6236b08f144edb696a313d3a65f0,
+    type: 2}
+  scoreboard: {fileID: 114000012999019136, guid: 2d1e6236b08f144edb696a313d3a65f0,
     type: 2}
 --- !u!135 &135000011549412258
 SphereCollider:

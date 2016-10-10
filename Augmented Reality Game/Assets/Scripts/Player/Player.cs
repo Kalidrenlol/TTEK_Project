@@ -10,10 +10,14 @@ public class Player : NetworkBehaviour {
 		protected set {_isDead = value;}
 	}
 
-	[SerializeField] private int maxHealth = 100;
-
 	[SyncVar] private int currentHealth;
+	[SyncVar] public string username = "Loading...";
+
+	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
+
+	public int score = 0;
+
 	private bool[] wasEnabled;
 
 	public void Setup() {
@@ -75,7 +79,5 @@ public class Player : NetworkBehaviour {
 		Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
 		transform.position = _spawnPoint.position;
 		transform.rotation = _spawnPoint.rotation;
-
-		Debug.Log(transform.name + " respawns.");
 	}
 }

@@ -53,3 +53,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matchSettings:
     respawnTime: 3
+  scoreboard: {fileID: 114000013376835506, guid: 2d1e6236b08f144edb696a313d3a65f0,
+    type: 2}

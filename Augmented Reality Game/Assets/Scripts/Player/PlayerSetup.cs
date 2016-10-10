@@ -11,10 +11,22 @@ public class PlayerSetup : NetworkBehaviour {
 	[SerializeField] GameObject playerGraphics;
 	[SerializeField] GameObject playerUIPrefab;
 
+	public Scoreboard scoreboard;
 	private GameObject playerUIInstance;
 	//Camera sceneCamera;
 
 	void Start() {
+		string _username = "Loading...";
+
+		/*if () {
+			Hvis username er indtastet..	
+		} else {
+			
+		}*/
+
+		_username = transform.name;
+		CmdSetUsername(transform.name, _username);
+
 		if (!isLocalPlayer) {
 			DisableComponents();
 			AssignRemoteLayer();
@@ -36,6 +48,13 @@ public class PlayerSetup : NetworkBehaviour {
 		}
 
 		GetComponent<Player>().Setup();
+
+	}
+
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.E)) {
+			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
+		}
 	}
 
 	public override void OnStartClient() {
@@ -62,6 +81,15 @@ public class PlayerSetup : NetworkBehaviour {
 		gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
 	}
 
+	[Command]
+	void CmdSetUsername (string _playerID, string _username) {
+		Player player = GameManager.GetPlayer(_playerID);
+		if (player != null) {
+			player.username = _username;
+		}
+	}
+
+
 	void OnDisable() {
 		/*if (sceneCamera != null) {
 			sceneCamera.gameObject.SetActive(true);
@@ -69,6 +97,5 @@ public class PlayerSetup : NetworkBehaviour {
 
 		GameManager.UnregisterPlayer(transform.name);
 		Destroy(playerUIInstance);
-
 	}
 }

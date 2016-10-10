@@ -8,14 +8,9 @@ public class JoinGame : MonoBehaviour {
 
 	List<GameObject> roomList = new List<GameObject>();
 
-	[SerializeField]
-	private Text status;
-
-	[SerializeField]
-	private GameObject roomListItemPrefab;
-
-	[SerializeField]
-	private Transform roomListParent;
+	[SerializeField] private Text status;
+	[SerializeField] private GameObject roomListItemPrefab;
+	[SerializeField] private Transform roomListParent;
 
 	private NetworkManager networkManager;
 
