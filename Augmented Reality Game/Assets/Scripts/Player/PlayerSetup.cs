@@ -11,7 +11,7 @@ public class PlayerSetup : NetworkBehaviour {
 	[SerializeField] GameObject playerGraphics;
 	[SerializeField] GameObject playerUIPrefab;
 
-	public Scoreboard scoreboard;
+	public GameObject scoreboard;
 	private GameObject playerUIInstance;
 	//Camera sceneCamera;
 
@@ -52,12 +52,17 @@ public class PlayerSetup : NetworkBehaviour {
 
 	}
 
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.E)) {
+			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
+		}
+	}
+
 	public override void OnStartClient() {
 		base.OnStartClient();
 		string _netID = GetComponent<NetworkIdentity>().netId.ToString();
 		Player _player = GetComponent<Player>();
 		GameManager.RegisterPlayer(_netID, _player);
-		
 	}
 
 	void RegisterPlayer() {
@@ -69,7 +74,6 @@ public class PlayerSetup : NetworkBehaviour {
 		for (int i = 0; i < componentsToDisable.Length; i++) {
 			componentsToDisable[i].enabled = false;
 		}
-
 	}
 
 	void AssignRemoteLayer() {
@@ -83,7 +87,6 @@ public class PlayerSetup : NetworkBehaviour {
 			player.username = _username;
 		}
 	}
-
 
 	void OnDisable() {
 		/*if (sceneCamera != null) {

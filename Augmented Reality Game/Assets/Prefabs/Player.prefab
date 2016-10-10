@@ -212,9 +212,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   username: Loading...
+  score: 0
   maxHealth: 100
   disableOnDeath: []
-  score: 0
+  WeaponBoxPrefab: {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8,
+    type: 2}
 --- !u!114 &114000011225430558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -296,8 +298,7 @@ MonoBehaviour:
   playerGraphics: {fileID: 1000012279501020}
   playerUIPrefab: {fileID: 1000013529638916, guid: 2d1e6236b08f144edb696a313d3a65f0,
     type: 2}
-  scoreboard: {fileID: 114000012999019136, guid: 2d1e6236b08f144edb696a313d3a65f0,
-    type: 2}
+  scoreboard: {fileID: 1000012944594310, guid: 2d1e6236b08f144edb696a313d3a65f0, type: 2}
 --- !u!135 &135000011549412258
 SphereCollider:
   m_ObjectHideFlags: 1

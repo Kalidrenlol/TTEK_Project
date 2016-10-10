@@ -6,6 +6,7 @@ public class HostGame : MonoBehaviour {
 	[SerializeField] private uint roomSize = 4;
 
 	private string roomName;
+	private string username;
 	private NetworkManager networkManager;
 
 	void Start() {
@@ -17,6 +18,10 @@ public class HostGame : MonoBehaviour {
 
 	public void SetRoomName(string _name) {
 		roomName = _name;
+	}
+
+	public void SetUsername(string _name) {
+		username = _name;
 	}
 
 	public void CreateRoom() {

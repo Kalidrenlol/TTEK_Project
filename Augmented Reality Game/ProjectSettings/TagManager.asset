@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - VirtualJoystick
-  - ScoreboardContent
+  - WeaponDrop
   layers:
   - Default
   - TransparentFX

@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : NetworkBehaviour {
 
 	public static GameManager instance;
 
 	public MatchSettings matchSettings;
+	public GameObject WeaponBoxPrefab;
+
+	private List<GameObject> WeaponsSpawn = new List<GameObject>();
 
 	void Awake() {
 		if (instance != null) {
@@ -15,6 +19,37 @@ public class GameManager : MonoBehaviour {
 			instance = this;
 		}
 	}
+
+	void Start() {
+		SpawnBoxAuto();
+	}
+
+	#region Weapon Drop
+
+	void SpawnBoxAuto() {
+		CmdSpawnBox();
+		Invoke("SpawnBoxAuto", instance.matchSettings.spawnNextWeapon);
+	}
+
+	[Command]
+	public void CmdSpawnBox() {
+		GameObject box = (GameObject) Instantiate(WeaponBoxPrefab);
+		box.transform.position = GetWeaponSpawn().transform.position;
+		NetworkServer.Spawn(box);
+	}
+
+	GameObject GetWeaponSpawn() {
+		WeaponsSpawn.Clear();
+		GameObject[] SpawnArray = GameObject.FindGameObjectsWithTag("WeaponDrop");
+		foreach (GameObject Spawn in SpawnArray) {
+			WeaponsSpawn.Add(Spawn);
+		}
+		Debug.Log(WeaponsSpawn.Count());
+
+		return WeaponsSpawn[Random.Range(0,WeaponsSpawn.Count())];
+	}
+		
+	#endregion
 		
 	#region Player tracking
 

@@ -10,13 +10,12 @@ public class Player : NetworkBehaviour {
 		protected set {_isDead = value;}
 	}
 
-	[SyncVar] private int currentHealth;
 	[SyncVar] public string username = "Loading...";
+	[SyncVar] public int score = 0;
+	[SyncVar] private int currentHealth;
 
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
-
-	public int score = 0;
 
 	private bool[] wasEnabled;
 
@@ -70,6 +69,10 @@ public class Player : NetworkBehaviour {
 		if (_col != null) {
 			_col.enabled = true;
 		}
+	}
+
+	public void SetScore(int _score) {
+		score += _score;
 	}
 
 	private IEnumerator Respawn() {

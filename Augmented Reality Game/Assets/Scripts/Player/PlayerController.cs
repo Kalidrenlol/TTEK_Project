@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update() {
+
 		if (PauseMenu.IsOn) {
 			return;
 		}

@@ -128,7 +128,7 @@ GameObject:
   - 114: {fileID: 114000013751730690}
   m_Layer: 5
   m_Name: ScoreboardPlayerList
-  m_TagString: ScoreboardContent
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -288,6 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreboardItem: {fileID: 1000013338077550, guid: 555df171a09e24c218cfc36193a86ba2,
     type: 2}
+  secondsBetweenUpdate: 3
 --- !u!114 &114000013190331378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -603,7 +604,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -30}
-  m_SizeDelta: {x: 310, y: 214}
+  m_SizeDelta: {x: 280, y: 214}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000010164224202
 RectTransform:
@@ -622,8 +623,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -338, y: 0}
-  m_SizeDelta: {x: 338, y: 320}
+  m_AnchoredPosition: {x: -280, y: 0}
+  m_SizeDelta: {x: 280, y: 320}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224000011226199598
 RectTransform:
@@ -735,8 +736,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 5, y: -43}
-  m_SizeDelta: {x: 299, y: 45}
+  m_AnchoredPosition: {x: 0, y: -43}
+  m_SizeDelta: {x: 280, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000014106614702
 RectTransform:

@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012927473560}
   - 114: {fileID: 114000010184726438}
+  - 114: {fileID: 114000014292715744}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -53,5 +54,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matchSettings:
     respawnTime: 3
-  scoreboard: {fileID: 114000013376835506, guid: 2d1e6236b08f144edb696a313d3a65f0,
+  WeaponBoxPrefab: {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8,
     type: 2}
+--- !u!114 &114000014292715744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011250917102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 123
+    i1: 251
+    i2: 104
+    i3: 61
+    i4: 96
+    i5: 90
+    i6: 164
+    i7: 109
+    i8: 185
+    i9: 15
+    i10: 180
+    i11: 72
+    i12: 168
+    i13: 223
+    i14: 44
+    i15: 170
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

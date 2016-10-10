@@ -40,6 +40,8 @@ GameObject:
   - 65: {fileID: 65000013606777412}
   - 33: {fileID: 33000013075571158}
   - 23: {fileID: 23000012064685756}
+  - 114: {fileID: 114000012672589166}
+  - 114: {fileID: 114000012465995814}
   m_Layer: 0
   m_Name: Weapon Box
   m_TagString: Untagged
@@ -161,3 +163,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons: []
+--- !u!114 &114000012465995814
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013416835768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114000012672589166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013416835768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 207
+    i1: 189
+    i2: 67
+    i3: 25
+    i4: 165
+    i5: 85
+    i6: 4
+    i7: 182
+    i8: 89
+    i9: 108
+    i10: 138
+    i11: 37
+    i12: 110
+    i13: 174
+    i14: 25
+    i15: 184
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
