@@ -4,7 +4,7 @@ using System.Collections;
 public class Scoreboard : MonoBehaviour {
 
 	[SerializeField] GameObject scoreboardItem;
-	[SerializeField] Transform playerList;
+	Transform playerList;
 
 	public void RefreshScoreboard () {
 		//RemovePlayers();
@@ -14,13 +14,11 @@ public class Scoreboard : MonoBehaviour {
 
 	void AddPlayers() {
 		Player[] players = GameManager.GetPlayers();
-        GameObject scoreList = GameObject.FindWithTag("ScoreboardContent");
+		playerList = GameObject.Find("ScoreboardPlayerList").transform;
 
 		foreach (Player player in players) {
-            GameObject itemGO = Instantiate(scoreboardItem) as GameObject;
-			itemGO.transform.SetParent(scoreList.transform);
+			GameObject itemGO = Instantiate(scoreboardItem, playerList) as GameObject;
 			ScoreboardItem item = itemGO.GetComponent<ScoreboardItem>();
-
 
 			if (item != null) {
 				item.Setup(player.username, player.score);

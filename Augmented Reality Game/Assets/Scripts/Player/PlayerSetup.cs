@@ -44,17 +44,12 @@ public class PlayerSetup : NetworkBehaviour {
 				Debug.LogError("No playerUI on PlayerUI Prefab");
 			}
 			ui.SetController(GetComponent<PlayerController>());
+			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
 
 		}
 
 		GetComponent<Player>().Setup();
 
-	}
-
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.E)) {
-			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
-		}
 	}
 
 	public override void OnStartClient() {
