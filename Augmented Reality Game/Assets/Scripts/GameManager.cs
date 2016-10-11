@@ -44,7 +44,6 @@ public class GameManager : NetworkBehaviour {
 		foreach (GameObject Spawn in SpawnArray) {
 			WeaponsSpawn.Add(Spawn);
 		}
-		Debug.Log(WeaponsSpawn.Count());
 
 		return WeaponsSpawn[Random.Range(0,WeaponsSpawn.Count())];
 	}
