@@ -16,8 +16,14 @@ public class Player : NetworkBehaviour {
 
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
+	[SerializeField] private GameObject spawnParticle;
 
+	private string playerNo;
 	private bool[] wasEnabled;
+
+	void Start() {
+		
+	}
 
 	public void Setup() {
 		wasEnabled = new bool[disableOnDeath.Length];
@@ -26,7 +32,12 @@ public class Player : NetworkBehaviour {
 		}
 		SetDefaults();
 	}
-		
+
+	public void SetPlayerNo(string _no) {
+		playerNo = _no;
+		Debug.Log(username + " er nummer "+playerNo);
+	}
+
 	[ClientRpc]
 	public void RpcTakeDamage(int _amount) {
 		if (isDead) {
@@ -82,5 +93,21 @@ public class Player : NetworkBehaviour {
 		Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
 		transform.position = _spawnPoint.position;
 		transform.rotation = _spawnPoint.rotation;
+	}
+		
+	[Client]
+	public void HitWater() {
+		if (!isLocalPlayer) {
+			return;
+		}
+
+		CmdHitWater(username);
+
+	}
+
+	[Command]
+	void CmdHitWater(string _playerID) {
+		Player _player = GameManager.GetPlayer(_playerID);
+		_player.RpcTakeDamage(100);
 	}
 }

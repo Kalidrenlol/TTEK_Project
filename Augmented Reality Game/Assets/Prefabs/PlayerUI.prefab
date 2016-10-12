@@ -288,7 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreboardItem: {fileID: 1000013338077550, guid: 555df171a09e24c218cfc36193a86ba2,
     type: 2}
-  secondsBetweenUpdate: 3
+  secondsBetweenUpdate: 0.1
 --- !u!114 &114000013190331378
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010936444112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: -13.3, y: 1.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -214,9 +214,9 @@ MonoBehaviour:
   username: Loading...
   score: 0
   maxHealth: 100
-  disableOnDeath: []
-  WeaponBoxPrefab: {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8,
-    type: 2}
+  disableOnDeath:
+  - {fileID: 114000010459295988}
+  - {fileID: 114000012223668820}
 --- !u!114 &114000011225430558
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -6,7 +6,7 @@ using System;
 public class Scoreboard : MonoBehaviour {
 
 	[SerializeField] GameObject scoreboardItem;
-	[SerializeField] int secondsBetweenUpdate;
+	[SerializeField] float secondsBetweenUpdate;
 	Transform playerList;
 
 	public void RefreshScoreboard () {
