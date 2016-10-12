@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Linq;
 
 public class Player : NetworkBehaviour {
 
@@ -18,11 +19,16 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private Behaviour[] disableOnDeath;
 	[SerializeField] private GameObject spawnParticle;
 
-	private string playerNo;
+
+	private Vector3 spawnpointPos;
+	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
 
 	void Start() {
-		
+		spawnpointPos = transform.position;
+		spawnpointRot = transform.rotation;
+
+		StartParticle();
 	}
 
 	public void Setup() {
@@ -31,11 +37,6 @@ public class Player : NetworkBehaviour {
 			wasEnabled[i] = disableOnDeath[i].enabled;
 		}
 		SetDefaults();
-	}
-
-	public void SetPlayerNo(string _no) {
-		playerNo = _no;
-		Debug.Log(username + " er nummer "+playerNo);
 	}
 
 	[ClientRpc]
@@ -86,13 +87,26 @@ public class Player : NetworkBehaviour {
 		score += _score;
 	}
 
+	void GoToSpawnpoint() {
+		transform.position = spawnpointPos;
+		transform.rotation = spawnpointRot;
+	}
+
+	void StartParticle() {
+		ParticleSystem[] _particles;
+		_particles = spawnParticle.GetComponentsInChildren<ParticleSystem>();
+
+		foreach (ParticleSystem _particle in _particles) {
+			_particle.Play();
+		}
+	}
+	
 	private IEnumerator Respawn() {
 		yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime);
 
 		SetDefaults();
-		Transform _spawnPoint = NetworkManager.singleton.GetStartPosition();
-		transform.position = _spawnPoint.position;
-		transform.rotation = _spawnPoint.rotation;
+		GoToSpawnpoint();
+		StartParticle();
 	}
 		
 	[Client]
@@ -100,9 +114,7 @@ public class Player : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		}
-
 		CmdHitWater(username);
-
 	}
 
 	[Command]

@@ -34,3 +34,5 @@
 /Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/UnityEditor.iOS.Extensions.Common.dll.mdb
 /Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.dll
 /Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.dll.mdb
+/Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
