@@ -18,8 +18,10 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
 	[SerializeField] private GameObject spawnParticle;
+	[SerializeField] private GameObject gameManager;
 
-
+	public Color color;
+	private int playerIndex;
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
@@ -28,7 +30,20 @@ public class Player : NetworkBehaviour {
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
 
-		StartParticle();
+		SetColor();
+
+		if (isLocalPlayer) {
+			StartParticle();
+			SetPlayerIndex();
+		}
+	}
+
+	void SetColor() {
+		color = gameManager.GetComponent<GameManager>().GetPlayerColor(playerIndex);
+	}
+
+	public void SetPlayerIndex() {
+		playerIndex = GameManager.GetPlayers().Count() - 1;
 	}
 
 	public void Setup() {

@@ -5,6 +5,8 @@ using System.Linq;
 
 public class GameManager : NetworkBehaviour {
 
+	[SerializeField] Color[] playerColors;
+
 	public static GameManager instance;
 
 	public MatchSettings matchSettings;
@@ -22,6 +24,10 @@ public class GameManager : NetworkBehaviour {
 
 	void Start() {
 		SpawnBoxAuto();
+	}
+
+	public Color GetPlayerColor(int _index) {
+		return playerColors[_index];
 	}
 
 	#region Weapon Drop

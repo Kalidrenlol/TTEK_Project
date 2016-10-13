@@ -52,8 +52,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f65900bbac4741df9159b8703794a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerColors:
+  - {r: 1, g: 0.06714966, b: 0.06714966, a: 0}
+  - {r: 1, g: 0.9724138, b: 0, a: 0}
+  - {r: 0, g: 1, b: 0.048275948, a: 0}
+  - {r: 0, g: 0.11912498, b: 1, a: 0}
   matchSettings:
     respawnTime: 3
+    spawnNextWeapon: 5
   WeaponBoxPrefab: {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8,
     type: 2}
 --- !u!114 &114000014292715744

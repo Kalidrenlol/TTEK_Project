@@ -47,6 +47,7 @@ public class PlayerSetup : NetworkBehaviour {
 			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
 
 		}
+		playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
 
 		GetComponent<Player>().Setup();
 
@@ -63,6 +64,7 @@ public class PlayerSetup : NetworkBehaviour {
 		string _netID = GetComponent<NetworkIdentity>().netId.ToString();
 		Player _player = GetComponent<Player>();
 		GameManager.RegisterPlayer(_netID, _player);
+		GetComponent<Player>().SetPlayerIndex();
 	}
 
 	void RegisterPlayer() {

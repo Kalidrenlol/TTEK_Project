@@ -371,6 +371,9 @@ MonoBehaviour:
   - {fileID: 114000010459295988}
   - {fileID: 114000012223668820}
   spawnParticle: {fileID: 1000011208478404}
+  gameManager: {fileID: 1000011250917102, guid: 7bfb683d605aa46db90fb448a8df2caa,
+    type: 2}
+  color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114000011225430558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -449,7 +452,7 @@ MonoBehaviour:
   - {fileID: 114000012223668820}
   - {fileID: 114000010459295988}
   remoteLayerName: RemotePlayer
-  playerGraphics: {fileID: 1000012279501020}
+  playerGraphics: {fileID: 1000012947437564}
   playerUIPrefab: {fileID: 1000013529638916, guid: 2d1e6236b08f144edb696a313d3a65f0,
     type: 2}
   scoreboard: {fileID: 1000012944594310, guid: 2d1e6236b08f144edb696a313d3a65f0, type: 2}
