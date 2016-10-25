@@ -5,14 +5,22 @@ using System.Linq;
 
 public class GameManager : NetworkBehaviour {
 
-	[SerializeField] Color[] playerColors;
+	private bool gameStarted = false;
 
+	[SerializeField] Color[] playerColors;
+	[SerializeField] GameObject presceneUIPrefab;
+	[SerializeField] GameObject networkManager;
+	[SerializeField] GameObject playerPrefab;
+
+	[SyncVar] public string roomName;
 	public static GameManager instance;
 
 	public MatchSettings matchSettings;
 	public GameObject WeaponBoxPrefab;
 
+	private GameObject presceneUI;
 	private List<GameObject> WeaponsSpawn = new List<GameObject>();
+
 
 	void Awake() {
 		if (instance != null) {
@@ -23,11 +31,48 @@ public class GameManager : NetworkBehaviour {
 	}
 
 	void Start() {
-		SpawnBoxAuto();
+		presceneUI = Instantiate(presceneUIPrefab);
+		if (GetComponent<NetworkIdentity>().isServer) {
+			Debug.Log("Roomname set");
+			roomName = networkManager.GetComponent<HostGame>().GetRoomName();
+		} else {
+			Debug.Log("Roomname not set due to client");
+
+		}
+	}
+
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			StartGame();
+		}
+	}
+
+	public void StartGame() {
+		Debug.Log("Starting game");
+		gameStarted = true;
+
+		//Deactivate Prescene UI
+		presceneUI.SetActive(false);
+
+		// Spawn Players
+		foreach (Player _player in GetPlayers()) {
+			Debug.Log("Spawning "+_player.name);
+
+			_player.GetComponent<PlayerSetup>().StartGame();
+
+		}
+
+		// Spawn boxe
+		//SpawnBoxAuto();
+
 	}
 
 	public Color GetPlayerColor(int _index) {
 		return playerColors[_index];
+	}
+
+	public bool IsGameStarted() {
+		return gameStarted;
 	}
 
 	#region Weapon Drop
@@ -61,12 +106,14 @@ public class GameManager : NetworkBehaviour {
 	private const string PLAYER_ID_PREFIX = "Player ";
 
 	private static Dictionary<string, Player> players = new Dictionary<string, Player>();
+	private static Dictionary<string, PrescenePlayer> prescenePlayers = new Dictionary<string, PrescenePlayer>();
 
 
 	public static void RegisterPlayer(string _netID, Player _player) {
 		string _playerID = PLAYER_ID_PREFIX + _netID;
 		players.Add(_playerID, _player);
 		_player.transform.name = _playerID;
+		Debug.Log(_player + " registreret.");
 	}
 
 	public static void UnregisterPlayer(string _playerID) {
@@ -79,6 +126,26 @@ public class GameManager : NetworkBehaviour {
 
 	public static Player[] GetPlayers() {
 		return players.Values.ToArray();
+	}
+
+	// PRESCENE PLAYERS //
+
+	public static void RegisterPrescenePlayer(string _netID, PrescenePlayer _player) {
+		string _playerID = PLAYER_ID_PREFIX + _netID;
+		prescenePlayers.Add(_playerID, _player);
+		_player.transform.name = _playerID;
+	}
+
+	public static void UnregisterPrescenePlayer(string _playerID) {
+		prescenePlayers.Remove(_playerID);
+	}
+
+	public static PrescenePlayer GetPrescenePlayer(string _playerID) {
+		return prescenePlayers[_playerID];
+	}
+
+	public static PrescenePlayer[] GetPrescenePlayers() {
+		return prescenePlayers.Values.ToArray();
 	}
 
 	#endregion

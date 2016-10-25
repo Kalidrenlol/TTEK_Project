@@ -19,12 +19,14 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private Behaviour[] disableOnDeath;
 	[SerializeField] private GameObject spawnParticle;
 	[SerializeField] private GameObject gameManager;
+	[SerializeField] private GameObject prescenePlayerPrefab;
 
 	public Color color;
 	private int playerIndex;
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
+	private GameObject prescenePlayer;
 
 	void Start() {
 		spawnpointPos = transform.position;
@@ -33,8 +35,9 @@ public class Player : NetworkBehaviour {
 		SetColor();
 
 		if (isLocalPlayer) {
-			StartParticle();
 			SetPlayerIndex();
+			prescenePlayer = (GameObject) Instantiate(prescenePlayerPrefab);
+
 		}
 	}
 
@@ -107,7 +110,7 @@ public class Player : NetworkBehaviour {
 		transform.rotation = spawnpointRot;
 	}
 
-	void StartParticle() {
+	public void StartParticle() {
 		ParticleSystem[] _particles;
 		_particles = spawnParticle.GetComponentsInChildren<ParticleSystem>();
 

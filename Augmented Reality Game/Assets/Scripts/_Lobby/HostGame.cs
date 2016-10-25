@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class HostGame : MonoBehaviour {
+public class HostGame : NetworkBehaviour {
 
 	[SerializeField] private uint roomSize = 4;
 
-	private string roomName;
-	private string username;
+	private static string roomName;
 	private NetworkManager networkManager;
 
 	void Start() {
@@ -20,8 +19,8 @@ public class HostGame : MonoBehaviour {
 		roomName = _name;
 	}
 
-	public void SetUsername(string _name) {
-		username = _name;
+	public string GetRoomName() {
+		return roomName;
 	}
 
 	public void CreateRoom() {

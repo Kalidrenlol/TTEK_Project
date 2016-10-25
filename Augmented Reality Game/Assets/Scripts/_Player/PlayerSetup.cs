@@ -16,21 +16,20 @@ public class PlayerSetup : NetworkBehaviour {
 	//Camera sceneCamera;
 
 	void Start() {
-		string _username = "Loading...";
+		SetComponents(false);
+		AssignRemoteLayer();
+		playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
 
-		/*if () {
-			Hvis username er indtastet..	
-		} else {
-			
-		}*/
+	}
 
-		_username = transform.name;
-		CmdSetUsername(transform.name, _username);
-
+	public void StartGame() {
 		if (!isLocalPlayer) {
-			DisableComponents();
-			AssignRemoteLayer();
+			
 		} else {
+			SetComponents(true);
+			GetComponent<Player>().StartParticle();
+
+
 			/*sceneCamera = Camera.main;
 			if (sceneCamera != null) {
 				sceneCamera.gameObject.SetActive(false);
@@ -43,38 +42,17 @@ public class PlayerSetup : NetworkBehaviour {
 			if (ui == null) {
 				Debug.LogError("No playerUI on PlayerUI Prefab");
 			}
-			ui.SetController(GetComponent<PlayerController>());
 			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
 
 		}
-		playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
 
 		GetComponent<Player>().Setup();
-
+				
 	}
 
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.E)) {
-			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
-		}
-	}
-
-	public override void OnStartClient() {
-		base.OnStartClient();
-		string _netID = GetComponent<NetworkIdentity>().netId.ToString();
-		Player _player = GetComponent<Player>();
-		GameManager.RegisterPlayer(_netID, _player);
-		GetComponent<Player>().SetPlayerIndex();
-	}
-
-	void RegisterPlayer() {
-		string _ID = "Player " + GetComponent<NetworkIdentity>().netId;
-		transform.name = _ID;
-	}
-
-	void DisableComponents() {
+	void SetComponents(bool _bool) {
 		for (int i = 0; i < componentsToDisable.Length; i++) {
-			componentsToDisable[i].enabled = false;
+			componentsToDisable[i].enabled = _bool;
 		}
 	}
 
@@ -82,14 +60,15 @@ public class PlayerSetup : NetworkBehaviour {
 		gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
 	}
 
-	[Command]
-	void CmdSetUsername (string _playerID, string _username) {
-		Player player = GameManager.GetPlayer(_playerID);
-		if (player != null) {
-			player.username = _username;
-		}
-	}
+	public override void OnStartClient() {
+		base.OnStartClient();
+		string _netID = GetComponent<NetworkIdentity>().netId.ToString();
+		Player _player = GetComponent<Player>();
+		GameManager.RegisterPlayer(_netID, _player);
 
+		//GetComponent<Player>().SetPlayerIndex();
+	}
+		
 	void OnDisable() {
 		/*if (sceneCamera != null) {
 			sceneCamera.gameObject.SetActive(true);
