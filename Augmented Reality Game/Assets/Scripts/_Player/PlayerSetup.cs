@@ -22,7 +22,8 @@ public class PlayerSetup : NetworkBehaviour {
 
 	}
 
-	public void StartGame() {
+	[ClientRpc]
+	public void RpcStartGame() {
 		if (!isLocalPlayer) {
 			
 		} else {

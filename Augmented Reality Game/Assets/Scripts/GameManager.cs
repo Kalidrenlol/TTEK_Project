@@ -5,13 +5,12 @@ using System.Linq;
 
 public class GameManager : NetworkBehaviour {
 
-	private bool gameStarted = false;
-
 	[SerializeField] Color[] playerColors;
 	[SerializeField] GameObject presceneUIPrefab;
 	[SerializeField] GameObject networkManager;
 	[SerializeField] GameObject playerPrefab;
 
+	public bool gameStarted = false;
 	[SyncVar] public string roomName;
 	public static GameManager instance;
 
@@ -37,34 +36,33 @@ public class GameManager : NetworkBehaviour {
 			roomName = networkManager.GetComponent<HostGame>().GetRoomName();
 		} else {
 			Debug.Log("Roomname not set due to client");
+			roomName = networkManager.GetComponent<HostGame>().GetRoomName();
 
 		}
 	}
 
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			StartGame();
+
+	[Command]
+	public void CmdStartGame() {
+		if (gameStarted) {
+			Debug.Log("Starting game");
+			gameStarted = true;
+
+			//Deactivate Prescene UI
+			presceneUI.SetActive(false);
+
+			// Spawn Players
+			foreach (Player _player in GetPlayers()) {
+				Debug.Log("Spawning "+_player.name);
+
+				_player.GetComponent<PlayerSetup>().RpcStartGame();
+
+			}
+
+			// Spawn boxe
+			//SpawnBoxAuto();
+
 		}
-	}
-
-	public void StartGame() {
-		Debug.Log("Starting game");
-		gameStarted = true;
-
-		//Deactivate Prescene UI
-		presceneUI.SetActive(false);
-
-		// Spawn Players
-		foreach (Player _player in GetPlayers()) {
-			Debug.Log("Spawning "+_player.name);
-
-			_player.GetComponent<PlayerSetup>().StartGame();
-
-		}
-
-		// Spawn boxe
-		//SpawnBoxAuto();
-
 	}
 
 	public Color GetPlayerColor(int _index) {

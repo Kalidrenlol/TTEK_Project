@@ -41,6 +41,12 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			gameManager.GetComponent<GameManager>().CmdStartGame();
+		}
+	}
+
 	void SetColor() {
 		color = gameManager.GetComponent<GameManager>().GetPlayerColor(playerIndex);
 	}
