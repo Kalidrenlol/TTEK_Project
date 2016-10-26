@@ -36,15 +36,14 @@ public class GameManager : NetworkBehaviour {
 			roomName = networkManager.GetComponent<HostGame>().GetRoomName();
 		} else {
 			Debug.Log("Roomname not set due to client");
-			roomName = networkManager.GetComponent<HostGame>().GetRoomName();
-
 		}
 	}
 
 
-	[Command]
-	public void CmdStartGame() {
-		if (gameStarted) {
+	#region Game Control
+	//[Command]
+	public void StartGame(int _index) {
+		if (!gameStarted) {
 			Debug.Log("Starting game");
 			gameStarted = true;
 
@@ -72,6 +71,8 @@ public class GameManager : NetworkBehaviour {
 	public bool IsGameStarted() {
 		return gameStarted;
 	}
+
+	#endregion
 
 	#region Weapon Drop
 
@@ -132,6 +133,7 @@ public class GameManager : NetworkBehaviour {
 		string _playerID = PLAYER_ID_PREFIX + _netID;
 		prescenePlayers.Add(_playerID, _player);
 		_player.transform.name = _playerID;
+		Debug.Log("Prescene Player registreret.");
 	}
 
 	public static void UnregisterPrescenePlayer(string _playerID) {

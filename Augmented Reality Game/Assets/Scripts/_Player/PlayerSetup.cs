@@ -13,7 +13,7 @@ public class PlayerSetup : NetworkBehaviour {
 
 	public GameObject scoreboard;
 	private GameObject playerUIInstance;
-	//Camera sceneCamera;
+
 
 	void Start() {
 		SetComponents(false);
@@ -24,9 +24,7 @@ public class PlayerSetup : NetworkBehaviour {
 
 	[ClientRpc]
 	public void RpcStartGame() {
-		if (!isLocalPlayer) {
-			
-		} else {
+		if (isLocalPlayer) {
 			SetComponents(true);
 			GetComponent<Player>().StartParticle();
 

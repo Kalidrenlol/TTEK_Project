@@ -10,12 +10,13 @@ public class PrescenePlayer : NetworkBehaviour {
 
 	public string username;
 	public bool isReady = false;
+	public string index;
 
 	void Start() {
-		base.OnStartClient();
+		RegisterPlayer();
 		presceneUI.GetComponent<PresceneManager>().RefreshPlayerList();
 
-		string _username = "Loading...";
+		string _username = "Loading..."; // Imens username bliver hentet til klienter
 
 		/*if () {
 			Hvis username er indtastet..	
@@ -26,34 +27,20 @@ public class PrescenePlayer : NetworkBehaviour {
 		_username = transform.name;
 		username = _username;
 		CmdSetUsername(transform.name, _username);
-
 	}
 
 	public void SetReady(bool _isReady) {
 		isReady = _isReady;
 	}
 
-	public void SpawnPlayer(Transform _transform) {
-		GameObject _newPlayer = (GameObject) Instantiate(playerPrefab);
-		_newPlayer.transform.position = _transform.position;
-
-		_newPlayer.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
-
-		Debug.Log(_newPlayer.GetComponent<NetworkIdentity>().clientAuthorityOwner);
-	
-	}
-
-	public override void OnStartClient() {
-		base.OnStartClient();
-		string _netID = GetComponent<NetworkIdentity>().netId.ToString();
-		PrescenePlayer _player = GetComponent<PrescenePlayer>();
-		GameManager.RegisterPrescenePlayer(_netID, _player);
-		//GetComponent<Player>().SetPlayerIndex();
+	public void SetIndex(string _index) {
+		index = _index;
 	}
 
 	void RegisterPlayer() {
-		string _ID = "PrePlayer " + GetComponent<NetworkIdentity>().netId;
-		transform.name = _ID;
+		PrescenePlayer _player = GetComponent<PrescenePlayer>();
+		GameManager.RegisterPrescenePlayer(index, _player);
+
 	}
 
 	[Command]

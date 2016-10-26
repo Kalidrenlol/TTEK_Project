@@ -34,8 +34,6 @@ public class PresceneManager : NetworkBehaviour {
 
 	public void RefreshPlayerList() {
 		playerList.GetComponent<PrescenePlayerList>().RefreshPlayerlist();
-		int _playerNo = GameManager.GetPrescenePlayers().Count();
-		playerTitle.text = "Players ("+_playerNo+"/4)";
 
 	}
 

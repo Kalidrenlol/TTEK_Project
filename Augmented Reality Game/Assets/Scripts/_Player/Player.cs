@@ -27,6 +27,7 @@ public class Player : NetworkBehaviour {
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
 	private GameObject prescenePlayer;
+	private bool isReady;
 
 	void Start() {
 		spawnpointPos = transform.position;
@@ -36,16 +37,37 @@ public class Player : NetworkBehaviour {
 
 		if (isLocalPlayer) {
 			SetPlayerIndex();
-			prescenePlayer = (GameObject) Instantiate(prescenePlayerPrefab);
-
+			SpawnPrescenePlayer();
+			isReady = false;
 		}
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			gameManager.GetComponent<GameManager>().CmdStartGame();
+		if (Input.GetKeyDown(KeyCode.Space) && !isReady) {
+			IsReady();
 		}
 	}
+		
+	//[Client]
+	public void IsReady() {
+		if (!isLocalPlayer) {
+			return;
+		}
+		isReady = true;
+		gameManager.GetComponent<GameManager>().StartGame(playerIndex);
+	}
+
+	void SpawnPrescenePlayer() {
+		prescenePlayer = (GameObject) Instantiate(prescenePlayerPrefab);
+		string _index = GetComponent<NetworkIdentity>().netId.ToString();
+		prescenePlayer.GetComponent<PrescenePlayer>().SetIndex(_index);
+		//prescenePlayer.transform.name = "PrePlayer " + _index;
+
+		prescenePlayer.transform.SetParent(gameObject.transform);
+	}
+
+
+
 
 	void SetColor() {
 		color = gameManager.GetComponent<GameManager>().GetPlayerColor(playerIndex);
