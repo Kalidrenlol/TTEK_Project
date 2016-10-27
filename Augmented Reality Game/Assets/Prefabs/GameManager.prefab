@@ -57,9 +57,22 @@ MonoBehaviour:
   - {r: 1, g: 0.9724138, b: 0, a: 0}
   - {r: 0, g: 1, b: 0.048275948, a: 0}
   - {r: 0, g: 0.11912498, b: 1, a: 0}
+  presceneUIPrefab: {fileID: 1000010228276408, guid: 51081c9b5576d45a1a34a8d0551cd2ff,
+    type: 2}
+  networkManager: {fileID: 1000012648087524, guid: d46ad53fdda4f4132ac79db4324afc1b,
+    type: 2}
+  playerPrefab: {fileID: 1000010936444112, guid: 33e41cb384b694ed0bab3fdb67c3fb2d,
+    type: 2}
+  roomName: 
   matchSettings:
     respawnTime: 3
+<<<<<<< HEAD
     spawnNextWeapon: 5
+=======
+    spawnNextWeapon: 20
+  WeaponBoxPrefab: {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8,
+    type: 2}
+>>>>>>> master
 --- !u!114 &114000014292715744
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -374,6 +374,8 @@ MonoBehaviour:
   spawnParticle: {fileID: 1000011208478404}
   gameManager: {fileID: 1000011250917102, guid: 7bfb683d605aa46db90fb448a8df2caa,
     type: 2}
+  prescenePlayerPrefab: {fileID: 1000012066811878, guid: 3b73d4ffe62ea4d138df258d8a1f9abf,
+    type: 2}
   color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114000011225430558
 MonoBehaviour:
