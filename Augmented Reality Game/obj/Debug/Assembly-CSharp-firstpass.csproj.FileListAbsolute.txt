@@ -1,5 +1,6 @@
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\Assembly-CSharp-firstpass.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
+T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\ICSharpCode.SharpZipLib.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\UnityEditor.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\UnityEngine.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\UnityEngine.Networking.dll
@@ -21,4 +22,3 @@ T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\Vufo
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\obj\Debug\Assembly-CSharp-firstpass.csprojResolveAssemblyReference.cache
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\obj\Debug\Assembly-CSharp-firstpass.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\obj\Debug\Assembly-CSharp-firstpass.pdb
-T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\ICSharpCode.SharpZipLib.dll

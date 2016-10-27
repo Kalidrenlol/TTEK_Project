@@ -50,7 +50,6 @@ public class PlayerSetup : NetworkBehaviour {
 			}
 
 			if (!gameManager.GetComponent<GameManager>().gameStarted) {
-				Debug.Log("Spil ikke startet:");
 				playerUIInstance.SetActive(false);
 				SetComponents(false);
 			} else {
@@ -66,7 +65,6 @@ public class PlayerSetup : NetworkBehaviour {
 		playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
 
 		GetComponent<Player>().Setup();
-
 	}
 
 
@@ -74,7 +72,7 @@ public class PlayerSetup : NetworkBehaviour {
 
 	public void SetReady() {
 		isReady = true;
-		Debug.Log(gameObject.name + " is " + isReady);
+		Debug.Log(gameObject.name + " is set to " + isReady);
 	}
 
 
@@ -83,6 +81,9 @@ public class PlayerSetup : NetworkBehaviour {
 
 
 	public void StartGame() {
+		if (!isLocalPlayer) {
+			return;
+		}
 		playerUIInstance.SetActive(true);
 		SetComponents(true);
 		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();

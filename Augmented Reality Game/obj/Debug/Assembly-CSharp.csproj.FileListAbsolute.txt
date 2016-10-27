@@ -1,5 +1,7 @@
+T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\Assembly-CSharp.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\Assembly-CSharp.pdb
+T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\ICSharpCode.SharpZipLib.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\UnityEditor.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\UnityEngine.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\UnityEngine.Networking.dll
@@ -19,7 +21,5 @@ T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\Unit
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\UnityEngine.UI.xml
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\UnityEngine.Networking.xml
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\Vuforia.UnityExtensions.xml
-T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\obj\Debug\Assembly-CSharp.dll
 T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\obj\Debug\Assembly-CSharp.pdb
-T:\Dokumenter\SourceTree\Social Lab 1\Augmented Reality Game\Temp\bin\Debug\ICSharpCode.SharpZipLib.dll

@@ -458,7 +458,7 @@ MonoBehaviour:
   waitingUIPrefab: {fileID: 1000012096020640, guid: 7f665a677a6377347ae404b4625d5322,
     type: 2}
   scoreboard: {fileID: 1000012944594310, guid: 2d1e6236b08f144edb696a313d3a65f0, type: 2}
-  isReady: 1
+  isReady: 0
 --- !u!135 &135000011549412258
 SphereCollider:
   m_ObjectHideFlags: 1
