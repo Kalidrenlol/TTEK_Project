@@ -18,7 +18,7 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
 	[SerializeField] private GameObject spawnParticle;
-	[SerializeField] private GameObject gameManager;
+	[SerializeField] public GameObject gameManager;
 
 	public Color color;
 	private int playerIndex;

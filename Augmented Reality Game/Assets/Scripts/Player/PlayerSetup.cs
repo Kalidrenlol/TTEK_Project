@@ -13,9 +13,11 @@ public class PlayerSetup : NetworkBehaviour {
 
 	public GameObject scoreboard;
 	private GameObject playerUIInstance;
+	private GameObject gameManager;
 	//Camera sceneCamera;
 
 	void Start() {
+		gameManager = GetComponent<Player>().gameManager;
 		string _username = "Loading...";
 
 		/*if () {
@@ -28,7 +30,7 @@ public class PlayerSetup : NetworkBehaviour {
 		CmdSetUsername(transform.name, _username);
 
 		if (!isLocalPlayer) {
-			DisableComponents();
+			SetComponents(false);
 			AssignRemoteLayer();
 		} else {
 			/*sceneCamera = Camera.main;
@@ -43,8 +45,15 @@ public class PlayerSetup : NetworkBehaviour {
 			if (ui == null) {
 				Debug.LogError("No playerUI on PlayerUI Prefab");
 			}
-			ui.SetController(GetComponent<PlayerController>());
-			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
+
+			if (!gameManager.GetComponent<GameManager>().gameStarted) {
+				Debug.Log("Spil ikke startet:");
+				playerUIInstance.SetActive(false);
+				SetComponents(false);
+			} else {
+				Debug.Log("Spil startet");
+			}
+
 
 		}
 		playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
@@ -53,10 +62,10 @@ public class PlayerSetup : NetworkBehaviour {
 
 	}
 
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.E)) {
-			scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
-		}
+	public void StartGame() {
+		playerUIInstance.SetActive(true);
+		SetComponents(true);
+		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
 	}
 
 	public override void OnStartClient() {
@@ -72,9 +81,9 @@ public class PlayerSetup : NetworkBehaviour {
 		transform.name = _ID;
 	}
 
-	void DisableComponents() {
+	void SetComponents(bool _bool) {
 		for (int i = 0; i < componentsToDisable.Length; i++) {
-			componentsToDisable[i].enabled = false;
+			componentsToDisable[i].enabled = _bool;
 		}
 	}
 

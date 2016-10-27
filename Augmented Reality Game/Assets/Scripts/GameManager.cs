@@ -14,6 +14,8 @@ public class GameManager : NetworkBehaviour {
 
 	private List<GameObject> WeaponsSpawn = new List<GameObject>();
 
+	public bool gameStarted;
+
 	void Awake() {
 		if (instance != null) {
 			Debug.LogError("More than one GameManager in scene.");
@@ -23,7 +25,22 @@ public class GameManager : NetworkBehaviour {
 	}
 
 	void Start() {
+		gameStarted = false;
+		//StartGame();
+	}
+
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			foreach (Player _player in GetPlayers()) {
+				_player.GetComponent<PlayerSetup>().StartGame();
+			}
+		}
+	}
+
+	void StartGame() {
+		gameStarted = true;
 		SpawnBoxAuto();
+
 	}
 
 	public Color GetPlayerColor(int _index) {
