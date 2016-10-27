@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
-using System;
 
 public class Scoreboard : MonoBehaviour {
 

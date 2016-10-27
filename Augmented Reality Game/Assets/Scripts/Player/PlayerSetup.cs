@@ -10,11 +10,14 @@ public class PlayerSetup : NetworkBehaviour {
 //	[SerializeField] string dontDrawLayerName = "DontDraw";
 	[SerializeField] GameObject playerGraphics;
 	[SerializeField] GameObject playerUIPrefab;
+	[SerializeField] GameObject waitingUIPrefab;
 
 	public GameObject scoreboard;
 	private GameObject playerUIInstance;
 	private GameObject gameManager;
-	//Camera sceneCamera;
+
+	private GameObject waitingUI;
+	public bool isReady;
 
 	void Start() {
 		gameManager = GetComponent<Player>().gameManager;
@@ -54,6 +57,10 @@ public class PlayerSetup : NetworkBehaviour {
 				Debug.Log("Spil startet");
 			}
 
+			isReady = false;
+			waitingUI = Instantiate(waitingUIPrefab);
+			waitingUI.name = waitingUIPrefab.name;
+
 
 		}
 		playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
@@ -62,10 +69,27 @@ public class PlayerSetup : NetworkBehaviour {
 
 	}
 
+
+	#region PREGAME
+
+	public void SetReady() {
+		isReady = true;
+		Debug.Log(gameObject.name + " is " + isReady);
+	}
+
+
+
+	#endregion
+
+
 	public void StartGame() {
 		playerUIInstance.SetActive(true);
 		SetComponents(true);
 		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
+
+		if (waitingUI.activeSelf)  {
+			waitingUI.SetActive(false);
+		}
 	}
 
 	public override void OnStartClient() {
@@ -108,3 +132,5 @@ public class PlayerSetup : NetworkBehaviour {
 		Destroy(playerUIInstance);
 	}
 }
+
+

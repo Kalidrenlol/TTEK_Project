@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000012927473560}
-  - 114: {fileID: 114000010184726438}
   - 114: {fileID: 114000014292715744}
+  - 114: {fileID: 114000010184726438}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -57,6 +57,9 @@ MonoBehaviour:
   - {r: 1, g: 0.9724138, b: 0, a: 0}
   - {r: 0, g: 1, b: 0.048275948, a: 0}
   - {r: 0, g: 0.11912498, b: 1, a: 0}
+  waitingUIPrefab: {fileID: 1000012096020640, guid: 7f665a677a6377347ae404b4625d5322,
+    type: 2}
+  gameStarted: 0
   matchSettings:
     respawnTime: 3
     spawnNextWeapon: 5

@@ -9,12 +9,12 @@ public class GameManager : NetworkBehaviour {
 
 	public static GameManager instance;
 
+	public bool gameStarted;
 	public MatchSettings matchSettings;
 	public GameObject WeaponBoxPrefab;
 
 	private List<GameObject> WeaponsSpawn = new List<GameObject>();
 
-	public bool gameStarted;
 
 	void Awake() {
 		if (instance != null) {
@@ -26,6 +26,8 @@ public class GameManager : NetworkBehaviour {
 
 	void Start() {
 		gameStarted = false;
+
+
 		//StartGame();
 	}
 
