@@ -9,7 +9,7 @@ public class GameManager : NetworkBehaviour {
 
 	public static GameManager instance;
 
-	public bool gameStarted;
+	[SyncVar] public bool gameStarted = false;
 	public MatchSettings matchSettings;
 	public GameObject WeaponBoxPrefab;
 
@@ -27,22 +27,38 @@ public class GameManager : NetworkBehaviour {
 	void Start() {
 		gameStarted = false;
 
-
-		//StartGame();
 	}
 
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			foreach (Player _player in GetPlayers()) {
-				_player.GetComponent<PlayerSetup>().StartGame();
+
+	public void IsAllReady() {
+		if (isServer) {
+			Debug.Log("Is server");
+		} else if (isClient) {
+			Debug.Log("Is Client");
+		} else {
+			Debug.Log("Nothign");
+		}
+		Debug.Log("IsAllReady Called");	
+		foreach (Player _player in GetPlayers()) {
+			if (!_player.GetComponent<PlayerSetup>().isReady) {
+				Debug.Log(_player+" is not ready.");
+				return;
+			} else {
+				Debug.Log(_player.name + " is " + _player.GetComponent<PlayerSetup>().isReady);
 			}
 		}
+		CmdStartGame();
 	}
 
-	void StartGame() {
+	[Command]
+	void CmdStartGame() {
 		gameStarted = true;
-		SpawnBoxAuto();
 
+		foreach (Player _player in GetPlayers()) {
+			_player.GetComponent<PlayerSetup>().RpcStartGame();
+		}
+
+		SpawnBoxAuto();
 	}
 
 	public Color GetPlayerColor(int _index) {

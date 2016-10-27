@@ -17,7 +17,9 @@ public class PlayerSetup : NetworkBehaviour {
 	private GameObject gameManager;
 
 	private GameObject waitingUI;
-	public bool isReady;
+
+	[SyncVar] public bool isReady = false;
+
 
 	void Start() {
 		gameManager = GetComponent<Player>().gameManager;
@@ -41,6 +43,7 @@ public class PlayerSetup : NetworkBehaviour {
 				sceneCamera.gameObject.SetActive(false);
 			}*/
 
+			isReady = false;
 			playerUIInstance = Instantiate(playerUIPrefab);
 			playerUIInstance.name = playerUIPrefab.name;
 
@@ -53,10 +56,9 @@ public class PlayerSetup : NetworkBehaviour {
 				playerUIInstance.SetActive(false);
 				SetComponents(false);
 			} else {
-				Debug.Log("Spil startet");
+				Debug.Log("Spil startet" + gameManager.GetComponent<GameManager>().gameStarted);
 			}
 
-			isReady = false;
 			waitingUI = Instantiate(waitingUIPrefab);
 			waitingUI.name = waitingUIPrefab.name;
 
@@ -68,19 +70,37 @@ public class PlayerSetup : NetworkBehaviour {
 	}
 
 
+
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.O)) {
+			if (isServer) {
+				Debug.Log("Is server");
+			} else if (isClient) {
+				Debug.Log("Is Client");
+			} else {
+				Debug.Log("Nothign");
+			}
+			SetReady();
+		}
+	}
+
 	#region PREGAME
 
 	public void SetReady() {
-		isReady = true;
-		Debug.Log(gameObject.name + " is set to " + isReady);
+		if (isLocalPlayer) {
+			isReady = true;
+			gameManager.GetComponent<GameManager>().IsAllReady();
+		} else {
+			Debug.Log("Not local player: SetReady");
+		}
 	}
 
 
 
 	#endregion
 
-
-	public void StartGame() {
+	[ClientRpc]
+	public void RpcStartGame() {
 		if (!isLocalPlayer) {
 			return;
 		}
