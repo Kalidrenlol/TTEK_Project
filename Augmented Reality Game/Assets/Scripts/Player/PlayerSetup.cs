@@ -52,11 +52,11 @@ public class PlayerSetup : NetworkBehaviour {
 				Debug.LogError("No playerUI on PlayerUI Prefab");
 			}
 
-			if (!gameManager.GetComponent<GameManager>().gameStarted) {
+			if (!GetComponent<GameController>().gameStarted) {
 				playerUIInstance.SetActive(false);
 				SetComponents(false);
 			} else {
-				Debug.Log("Spil startet" + gameManager.GetComponent<GameManager>().gameStarted);
+				Debug.Log("Spil startet" + GetComponent<GameController>().gameStarted);
 			}
 
 			waitingUI = Instantiate(waitingUIPrefab);
@@ -73,26 +73,19 @@ public class PlayerSetup : NetworkBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.O)) {
-			if (isServer) {
-				Debug.Log("Is server");
-			} else if (isClient) {
-				Debug.Log("Is Client");
-			} else {
-				Debug.Log("Nothign");
+			if (!isLocalPlayer) {
+				return;
 			}
-			SetReady();
+			CmdSetReady();
 		}
 	}
 
 	#region PREGAME
 
-	public void SetReady() {
-		if (isLocalPlayer) {
+	[Command]
+	public void CmdSetReady() {
 			isReady = true;
-			gameManager.GetComponent<GameManager>().IsAllReady();
-		} else {
-			Debug.Log("Not local player: SetReady");
-		}
+			GetComponent<GameController>().IsAllReady();
 	}
 
 

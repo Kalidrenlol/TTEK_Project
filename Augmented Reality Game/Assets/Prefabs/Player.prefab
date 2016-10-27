@@ -36,12 +36,13 @@ GameObject:
   - 4: {fileID: 4000011374512204}
   - 135: {fileID: 135000011549412258}
   - 54: {fileID: 54000011679358324}
+  - 114: {fileID: 114000011496008384}
+  - 114: {fileID: 114000011225430558}
   - 114: {fileID: 114000010706120136}
   - 114: {fileID: 114000012329265616}
   - 114: {fileID: 114000010459295988}
   - 114: {fileID: 114000012223668820}
-  - 114: {fileID: 114000011496008384}
-  - 114: {fileID: 114000011225430558}
+  - 114: {fileID: 114000012725039396}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -458,7 +459,23 @@ MonoBehaviour:
   waitingUIPrefab: {fileID: 1000012096020640, guid: 7f665a677a6377347ae404b4625d5322,
     type: 2}
   scoreboard: {fileID: 1000012944594310, guid: 2d1e6236b08f144edb696a313d3a65f0, type: 2}
-  isReady: 1
+  isReady: 0
+--- !u!114 &114000012725039396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010936444112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5fb4d374a697e44b12341b8fe52892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1000011250917102, guid: 7bfb683d605aa46db90fb448a8df2caa,
+    type: 2}
+  WeaponBoxPrefab: {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8,
+    type: 2}
+  gameStarted: 0
 --- !u!135 &135000011549412258
 SphereCollider:
   m_ObjectHideFlags: 1

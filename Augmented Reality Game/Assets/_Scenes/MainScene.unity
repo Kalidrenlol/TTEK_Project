@@ -248,7 +248,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -25.48
+      value: -25.08
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.y
@@ -256,7 +256,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 13.9
+      value: 13.25
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalRotation.x
@@ -279,27 +279,8 @@ Prefab:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1000014094965540, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000,
-        type: 0}
-    - target: {fileID: 1000014094965540, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_Name
       value: Spawnpoint (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010541259080, guid: c9c4bff0fccf54bada209287f588db07,
-        type: 2}
-      propertyPath: number
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000014094965540, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
-      propertyPath: m_TagString
-      value: Respawn
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010541259080, guid: c9c4bff0fccf54bada209287f588db07,
-        type: 2}
-      propertyPath: spawnpointNo
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
@@ -348,7 +329,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 20.6
+      value: 21.02
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.y
@@ -356,7 +337,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -14
+      value: -14.65
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalRotation.x
@@ -381,11 +362,6 @@ Prefab:
     - target: {fileID: 1000014094965540, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_Name
       value: Spawnpoint (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010541259080, guid: c9c4bff0fccf54bada209287f588db07,
-        type: 2}
-      propertyPath: spawnpointNo
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
@@ -697,7 +673,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 21.8
+      value: 22.22
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.y
@@ -705,7 +681,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 13.9
+      value: 13.25
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalRotation.x
@@ -731,11 +707,6 @@ Prefab:
       propertyPath: m_Name
       value: Spawnpoint (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 114000010541259080, guid: c9c4bff0fccf54bada209287f588db07,
-        type: 2}
-      propertyPath: spawnpointNo
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
   m_IsPrefabParent: 0
@@ -748,7 +719,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -25.48
+      value: -25.08
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.y
@@ -756,7 +727,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -14
+      value: -14.65
       objectReference: {fileID: 0}
     - target: {fileID: 4000012232417406, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_LocalRotation.x
@@ -781,10 +752,6 @@ Prefab:
     - target: {fileID: 1000014094965540, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
       propertyPath: m_Name
       value: Spawnpoint (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000012584578466, guid: c9c4bff0fccf54bada209287f588db07, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9c4bff0fccf54bada209287f588db07, type: 2}

@@ -23,7 +23,7 @@ GameObject:
   - 114: {fileID: 114000010184726438}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,14 +57,9 @@ MonoBehaviour:
   - {r: 1, g: 0.9724138, b: 0, a: 0}
   - {r: 0, g: 1, b: 0.048275948, a: 0}
   - {r: 0, g: 0.11912498, b: 1, a: 0}
-  waitingUIPrefab: {fileID: 1000012096020640, guid: 7f665a677a6377347ae404b4625d5322,
-    type: 2}
-  gameStarted: 0
   matchSettings:
     respawnTime: 3
     spawnNextWeapon: 5
-  WeaponBoxPrefab: {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8,
-    type: 2}
 --- !u!114 &114000014292715744
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -8,13 +8,7 @@ public class GameManager : NetworkBehaviour {
 	[SerializeField] Color[] playerColors;
 
 	public static GameManager instance;
-
-	[SyncVar] public bool gameStarted = false;
 	public MatchSettings matchSettings;
-	public GameObject WeaponBoxPrefab;
-
-	private List<GameObject> WeaponsSpawn = new List<GameObject>();
-
 
 	void Awake() {
 		if (instance != null) {
@@ -24,72 +18,10 @@ public class GameManager : NetworkBehaviour {
 		}
 	}
 
-	void Start() {
-		gameStarted = false;
-
-	}
-
-
-	public void IsAllReady() {
-		if (isServer) {
-			Debug.Log("Is server");
-		} else if (isClient) {
-			Debug.Log("Is Client");
-		} else {
-			Debug.Log("Nothign");
-		}
-		Debug.Log("IsAllReady Called");	
-		foreach (Player _player in GetPlayers()) {
-			if (!_player.GetComponent<PlayerSetup>().isReady) {
-				Debug.Log(_player+" is not ready.");
-				return;
-			} else {
-				Debug.Log(_player.name + " is " + _player.GetComponent<PlayerSetup>().isReady);
-			}
-		}
-		CmdStartGame();
-	}
-
-	[Command]
-	void CmdStartGame() {
-		gameStarted = true;
-
-		foreach (Player _player in GetPlayers()) {
-			_player.GetComponent<PlayerSetup>().RpcStartGame();
-		}
-
-		SpawnBoxAuto();
-	}
-
 	public Color GetPlayerColor(int _index) {
 		return playerColors[_index];
 	}
 
-	#region Weapon Drop
-
-	void SpawnBoxAuto() {
-		CmdSpawnBox();
-		Invoke("SpawnBoxAuto", instance.matchSettings.spawnNextWeapon);
-	}
-
-	[Command]
-	public void CmdSpawnBox() {
-		GameObject box = (GameObject) Instantiate(WeaponBoxPrefab);
-		box.transform.position = GetWeaponSpawn().transform.position;
-		NetworkServer.Spawn(box);
-	}
-
-	GameObject GetWeaponSpawn() {
-		WeaponsSpawn.Clear();
-		GameObject[] SpawnArray = GameObject.FindGameObjectsWithTag("WeaponDrop");
-		foreach (GameObject Spawn in SpawnArray) {
-			WeaponsSpawn.Add(Spawn);
-		}
-
-		return WeaponsSpawn[Random.Range(0,WeaponsSpawn.Count())];
-	}
-		
-	#endregion
 		
 	#region Player tracking
 
