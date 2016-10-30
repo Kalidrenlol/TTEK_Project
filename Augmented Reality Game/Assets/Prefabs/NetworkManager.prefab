@@ -67,10 +67,9 @@ MonoBehaviour:
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 1
   m_OfflineScene: Lobby
-  m_OnlineScene: MainScene
+  m_OnlineScene: MainSceneAR
   m_SpawnPrefabs:
   - {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8, type: 2}
-  - {fileID: 1000012066811878, guid: 3b73d4ffe62ea4d138df258d8a1f9abf, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:

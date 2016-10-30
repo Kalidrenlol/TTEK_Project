@@ -8,4 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Lobby.unity
   - enabled: 1
-    path: Assets/_Scenes/MainScene.unity
+    path: Assets/_Scenes/MainSceneAR.unity

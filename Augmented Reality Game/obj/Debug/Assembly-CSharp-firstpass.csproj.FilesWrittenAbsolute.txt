@@ -16,3 +16,22 @@
 /Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/obj/Debug/Assembly-CSharp-firstpass.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/obj/Debug/Assembly-CSharp-firstpass.dll.mdb
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/UnityEngine.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/UnityEditor.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/ICSharpCode.SharpZipLib.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Vuforia.UnityExtensions.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Mono.Cecil.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Unity.DataContract.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/Mono.Cecil.Mdb.dll

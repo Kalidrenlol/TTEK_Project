@@ -6,6 +6,9 @@ TagManager:
   tags:
   - VirtualJoystick
   - WeaponDrop
+  - GetReadyUI
+  - WaitingRoomUI
+  - GameWorld
   layers:
   - Default
   - TransparentFX

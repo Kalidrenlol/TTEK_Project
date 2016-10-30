@@ -7,6 +7,7 @@ public class GameController : NetworkBehaviour {
 
 	[SerializeField] GameObject gameManager;
 	[SerializeField] GameObject WeaponBoxPrefab;
+	[SerializeField] int _playersBeforeGo;
 
 	[SyncVar] public bool gameStarted = false;
 
@@ -21,12 +22,13 @@ public class GameController : NetworkBehaviour {
 			return;
 		}
 
+		/*if (GameManager.GetPlayers() < _playersBeforeGo) {
+			return;
+		}*/
+
 		foreach (Player _player in GameManager.GetPlayers()) {
 			if (!_player.GetComponent<PlayerSetup>().isReady) {
-				Debug.Log(_player+" is not ready.");
 				return;
-			} else {
-				Debug.Log(_player.name + " is " + _player.GetComponent<PlayerSetup>().isReady);
 			}
 		}
 		CmdStartGame();

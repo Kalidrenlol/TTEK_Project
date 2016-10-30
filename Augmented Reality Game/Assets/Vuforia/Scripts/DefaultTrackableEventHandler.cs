@@ -20,6 +20,7 @@ namespace Vuforia
     
         #endregion // PRIVATE_MEMBER_VARIABLES
 
+		public bool headTargetFound;
 
 
         #region UNTIY_MONOBEHAVIOUR_METHODS
@@ -31,6 +32,7 @@ namespace Vuforia
             {
                 mTrackableBehaviour.RegisterTrackableEventHandler(this);
             }
+			headTargetFound = false;
         }
 
         #endregion // UNTIY_MONOBEHAVIOUR_METHODS
@@ -82,6 +84,10 @@ namespace Vuforia
             {
                 component.enabled = true;
             }
+
+			if (mTrackableBehaviour.TrackableName == "HeadTarget") {
+				headTargetFound = true;
+			}
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
         }

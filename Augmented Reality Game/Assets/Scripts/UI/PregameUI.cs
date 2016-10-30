@@ -1,21 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-using System.Linq;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
+using System.Collections;
+using System.Linq;
 
 public class PregameUI : MonoBehaviour {
 
 	[SerializeField] GameObject pregamePlayerItem;
 	[SerializeField] float secondsBetweenUpdate;
 	[SerializeField] Transform playerList;
-
-	private NetworkManager networkManager;
+	[SerializeField] GameObject goToGameObj;
+	public Button getReadyBtn;
 
 	void Start() {
-		networkManager = NetworkManager.singleton;
 		RefreshPlayerlist();
+		goToGameObj.SetActive(false);
 	}
 
 	public void RefreshPlayerlist () {
@@ -45,6 +45,8 @@ public class PregameUI : MonoBehaviour {
 		}
 	}
 
-
+	public void ShowText(bool _show) {
+		goToGameObj.SetActive(_show);
+	}
 
 }
