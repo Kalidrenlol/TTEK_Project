@@ -71,6 +71,7 @@ public class PlayerSetup : NetworkBehaviour {
 			waitingUI = pregameUI.transform.Find("WaitingRoom").gameObject;
 			waitingUI.SetActive(true);
 			pregameUI.GetComponent<PregameUI>().getReadyBtn.onClick.AddListener(GetReady);
+			gameObject.GetComponent<Rigidbody>().useGravity = false;
 
 		}
 
@@ -131,10 +132,11 @@ public class PlayerSetup : NetworkBehaviour {
 
 	[Command]
 	public void CmdSetReady() {
-		isReady = true;
 		if (!isLocalPlayer) {
 			Debug.Log("Not Local");
+			return;
 		}
+		isReady = true;
 		GetComponent<GameController>().IsAllReady();
 	}
 
@@ -170,8 +172,10 @@ public class PlayerSetup : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		}
+
 		playerUIInstance.SetActive(true);
 		SetComponents(true);
+		gameObject.GetComponent<Rigidbody>().useGravity = true;
 		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
 
 		if (waitingUI.activeSelf)  {
