@@ -28,7 +28,10 @@ public class GameController : NetworkBehaviour {
 
 		foreach (Player _player in GameManager.GetPlayers()) {
 			if (!_player.GetComponent<PlayerSetup>().isReady) {
+				Debug.Log(_player.name + " is not ready.");
 				return;
+			} else {
+				Debug.Log(_player.name + " is ready.");
 			}
 		}
 		CmdStartGame();
@@ -54,9 +57,11 @@ public class GameController : NetworkBehaviour {
 
 	[Command]
 	public void CmdSpawnBox() {
-		GameObject box = (GameObject) Instantiate(WeaponBoxPrefab);
-		box.transform.position = GetWeaponSpawn().transform.position;
-		NetworkServer.Spawn(box);
+		GameObject _box = (GameObject) Instantiate(WeaponBoxPrefab);
+		_box.transform.position = GetWeaponSpawn().transform.position;
+		Transform _folder = GameObject.FindGameObjectWithTag("GameWorld").transform.FindDeepChild("Weapons");
+		_box.transform.SetParent(_folder);
+		NetworkServer.Spawn(_box);
 	}
 
 	GameObject GetWeaponSpawn() {

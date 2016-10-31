@@ -75,3 +75,4 @@
 /Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/UnityEditor.iOS.Extensions.Common.dll.mdb
 /Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.dll
 /Users/Nicklas/Dropbox/Unity/Social Lab 1/Augmented Reality Game/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.dll.mdb
+/Users/Nicklas/TTEK_Project/Augmented Reality Game/Temp/bin/Debug/ICSharpCode.SharpZipLib.dll

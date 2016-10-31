@@ -9,6 +9,7 @@ TagManager:
   - GetReadyUI
   - WaitingRoomUI
   - GameWorld
+  - ImageTarget
   layers:
   - Default
   - TransparentFX

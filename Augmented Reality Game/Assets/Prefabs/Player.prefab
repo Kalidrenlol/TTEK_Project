@@ -464,6 +464,8 @@ MonoBehaviour:
     type: 2}
   aRCameraPrefab: {fileID: 1000013020846014, guid: b2922e006d5eb40ccab8176cc8304223,
     type: 2}
+  enviromentPrefab: {fileID: 1000011121810142, guid: 261425104978945bab60b09f0f0e4a5e,
+    type: 2}
   scoreboard: {fileID: 1000012944594310, guid: 2d1e6236b08f144edb696a313d3a65f0, type: 2}
   isReady: 1
 --- !u!114 &114000012725039396

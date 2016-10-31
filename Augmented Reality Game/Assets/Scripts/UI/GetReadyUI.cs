@@ -12,7 +12,7 @@ public class GetReadyUI : MonoBehaviour {
 	void Start() {
 		IsOn = false;
 		isReady = false;
-		imageTarget = GameObject.FindGameObjectWithTag("GameWorld");
+		imageTarget = GameObject.FindGameObjectWithTag("ImageTarget");
 	}
 
 	void Update() {
