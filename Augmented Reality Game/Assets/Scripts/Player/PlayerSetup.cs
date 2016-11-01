@@ -81,9 +81,9 @@ public class PlayerSetup : NetworkBehaviour {
 
 		}
 
-		playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
+		//playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
 
-		GetComponent<Player>().Setup();
+
 	}
 
 
@@ -187,7 +187,7 @@ public class PlayerSetup : NetworkBehaviour {
 		SetComponents(true);
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
 		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
-
+		GetComponent<Player>().Setup();
 		if (waitingUI.activeSelf)  {
 			waitingUI.SetActive(false);
 		}
