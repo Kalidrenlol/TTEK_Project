@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - VirtualJoystick
+  - WaitingRoomUI
+  - CameraAR
+  - GetReadyUI
   layers:
   - Default
   - TransparentFX
@@ -14,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - RemotePlayer
+  - DontDraw
   - 
   - 
   - 

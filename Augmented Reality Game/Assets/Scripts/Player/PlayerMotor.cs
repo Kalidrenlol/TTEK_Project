@@ -24,12 +24,12 @@ public class PlayerMotor : MonoBehaviour {
 
 	void PerformMovement() {
 		if (velocity != Vector3.zero) {
-			GameObject _player = gameObject;
+/*			GameObject _player = gameObject;
 			GameObject _camera = GameObject.FindGameObjectWithTag("MainCamera");
 			Vector3 _cameraPos = _camera.transform.rotation.eulerAngles;
 			Vector3 _relative = _player.transform.rotation.eulerAngles;
 			Debug.Log("Camera: "+_cameraPos.normalized);
-
+*/
 
 			rb.MovePosition(rb.position + velocity * speed * Time.fixedDeltaTime);
 		}
