@@ -3,17 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - VirtualJoystick
-  - WeaponDrop
-  - GetReadyUI
-  - WaitingRoomUI
-  - GameWorld
-<<<<<<< HEAD
-  - CameraAR
-=======
-  - ImageTarget
->>>>>>> 5a346fc3a952c9621b81c2db54c35d671102eecc
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -23,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - DontDraw
-  - LocalPlayer
-  - RemotePlayer
+  - 
+  - 
+  - 
   - 
   - 
   - 
