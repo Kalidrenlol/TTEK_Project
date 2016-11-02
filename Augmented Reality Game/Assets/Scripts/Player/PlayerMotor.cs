@@ -21,6 +21,9 @@ public class PlayerMotor : MonoBehaviour {
 
 	public void Move(Vector3 _velocity) {
 		velocity = _velocity;
+        //velocity = Camera.main.transform.forward * _velocity;
+        
+        // Overkskriv velocity i forhold til kameravinklen
 	}
 
 /*	public void Rotate(Vector3 _rotation) {

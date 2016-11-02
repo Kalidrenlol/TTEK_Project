@@ -37,6 +37,7 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
 	public float Horizontal() {
 		if (inputVector.x != 0) {
+            //Debug.Log("IV.X: " + inputVector.x);
 			return inputVector.x;
 		} else {
 			return Input.GetAxis("Horizontal");
@@ -45,6 +46,8 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
 	public float Vertical() {
 		if (inputVector.z != 0) {
+
+            //Debug.Log("IV.Z: " + inputVector.z);
 			return inputVector.z;
 		} else {
 			return Input.GetAxis("Vertical");

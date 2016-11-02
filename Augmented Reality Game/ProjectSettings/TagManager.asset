@@ -9,6 +9,7 @@ TagManager:
   - GetReadyUI
   - WaitingRoomUI
   - GameWorld
+  - CameraAR
   layers:
   - Default
   - TransparentFX
