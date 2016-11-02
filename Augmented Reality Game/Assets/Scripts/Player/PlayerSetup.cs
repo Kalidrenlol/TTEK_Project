@@ -183,15 +183,15 @@ public class PlayerSetup : NetworkBehaviour {
 			GetComponent<Player>().Setup();
 			return;
 		}
-
 		playerUIInstance.SetActive(true);
 		SetComponents(true);
+		GetComponent<Player>().Setup();
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
 		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
-		GetComponent<Player>().Setup();
 		if (waitingUI.activeSelf)  {
 			waitingUI.SetActive(false);
 		}
+
 
 	}
 
