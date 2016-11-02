@@ -31,6 +31,11 @@ public class PlayerSetup : NetworkBehaviour {
 
 
 	void Start() {
+		GameObject _imageTarget = GameObject.FindGameObjectWithTag("GameWorld");
+		Transform _playerFolder = _imageTarget.transform.FindDeepChild("Players");
+		gameObject.transform.SetParent(_playerFolder);
+
+
 		string _username = "Loading...";
 
 		/*if () {
@@ -70,14 +75,15 @@ public class PlayerSetup : NetworkBehaviour {
 			pregameUI.name = pregameUIPrefab.name;
 			waitingUI = pregameUI.transform.Find("WaitingRoom").gameObject;
 			waitingUI.SetActive(true);
-			pregameUI.GetComponent<PregameUI>().getReadyBtn.onClick.AddListener(GetReady);
+			pregameUI.GetComponent<PregameUI>().btnGetReady.onClick.AddListener(GetReady);
+			pregameUI.GetComponent<PregameUI>().btnDebug.onClick.AddListener(NoVuforia);
 			gameObject.GetComponent<Rigidbody>().useGravity = false;
 
 		}
 
-		playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
+		//playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
 
-		GetComponent<Player>().Setup();
+
 	}
 
 
@@ -108,12 +114,19 @@ public class PlayerSetup : NetworkBehaviour {
 	}
 
 	#region PREGAME
+	// No Vuforia //
+	public void NoVuforia() {
+		CmdSetReady();
+	}
+
 
 
 	// Find ImageTarget //
 	public void GetReady() {
 		Debug.Log("GetReady");
 		if (sceneCamera != null) {
+			GameObject _world = GameObject.FindGameObjectWithTag("GameWorld");
+			_world.transform.SetParent(GameObject.Find("ImageTarget").transform);
 			sceneCamera.gameObject.SetActive(false);
 			aRCamera = Instantiate(aRCameraPrefab);
 			aRCamera.name = aRCameraPrefab.name;
@@ -134,7 +147,6 @@ public class PlayerSetup : NetworkBehaviour {
 	public void CmdSetReady() {
 		if (!isLocalPlayer) {
 			Debug.Log("Not Local");
-			return;
 		}
 		isReady = true;
 		GetComponent<GameController>().IsAllReady();
@@ -145,11 +157,9 @@ public class PlayerSetup : NetworkBehaviour {
 	public void TogglePregameUI() {
 		Debug.Log("TogglePregame");
 		if (getReadyUI == null) {
-			Debug.Log("DE");
 			getReadyUI = GameObject.Find("GetReadyUI");
 		}
 		if (waitingUI == null) {
-			Debug.Log("fe");
 			waitingUI = GameObject.FindGameObjectWithTag("WaitingRoomUI");
 		}
 		getReadyUI.SetActive(!getReadyUI.activeSelf);
@@ -177,7 +187,7 @@ public class PlayerSetup : NetworkBehaviour {
 		SetComponents(true);
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
 		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
-
+		GetComponent<Player>().Setup();
 		if (waitingUI.activeSelf)  {
 			waitingUI.SetActive(false);
 		}

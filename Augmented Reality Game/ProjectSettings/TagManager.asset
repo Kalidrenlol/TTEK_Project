@@ -9,7 +9,11 @@ TagManager:
   - GetReadyUI
   - WaitingRoomUI
   - GameWorld
+<<<<<<< HEAD
   - CameraAR
+=======
+  - ImageTarget
+>>>>>>> 5a346fc3a952c9621b81c2db54c35d671102eecc
   layers:
   - Default
   - TransparentFX

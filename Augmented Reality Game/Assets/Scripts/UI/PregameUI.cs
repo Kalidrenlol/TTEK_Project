@@ -11,7 +11,8 @@ public class PregameUI : MonoBehaviour {
 	[SerializeField] float secondsBetweenUpdate;
 	[SerializeField] Transform playerList;
 	[SerializeField] GameObject goToGameObj;
-	public Button getReadyBtn;
+	public Button btnGetReady;
+	public Button btnDebug;
 
 	void Start() {
 		RefreshPlayerlist();
