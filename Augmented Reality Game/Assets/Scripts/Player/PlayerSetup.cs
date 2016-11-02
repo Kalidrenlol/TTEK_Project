@@ -180,17 +180,18 @@ public class PlayerSetup : NetworkBehaviour {
 	[ClientRpc]
 	public void RpcStartGame() {
 		if (!isLocalPlayer) {
+			GetComponent<Player>().Setup();
 			return;
 		}
-
 		playerUIInstance.SetActive(true);
 		SetComponents(true);
+		GetComponent<Player>().Setup();
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
 		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
-		GetComponent<Player>().Setup();
 		if (waitingUI.activeSelf)  {
 			waitingUI.SetActive(false);
 		}
+
 
 	}
 
