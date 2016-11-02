@@ -180,6 +180,7 @@ public class PlayerSetup : NetworkBehaviour {
 	[ClientRpc]
 	public void RpcStartGame() {
 		if (!isLocalPlayer) {
+			GetComponent<Player>().Setup();
 			return;
 		}
 

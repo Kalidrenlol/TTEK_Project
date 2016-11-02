@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour {
 	private string virtualJoystickTag = "VirtualJoystick";
 	private GameObject joystick;
 	private PlayerMotor motor;
+	Animator playerAnimator;
 
 	void Start() {
+		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
 		motor = GetComponent<PlayerMotor>();
 		joystick = GameObject.FindGameObjectWithTag(virtualJoystickTag);
 	}
@@ -22,6 +24,19 @@ public class PlayerController : MonoBehaviour {
 
 		float _xMov = joystick.GetComponent<VirtualJoystick>().Horizontal();
 		float _zMov = joystick.GetComponent<VirtualJoystick>().Vertical();
+
+		if (_xMov > 0.1 && _zMov > 0.1 || _xMov < -0.1 && _zMov > 0.1 || _xMov > 0.1 && _zMov < -0.1 || _xMov < -0.1 && _zMov < -0.1) {
+			bool isWalkingPressed = true;
+			playerAnimator.SetBool ("IsWalking", isWalkingPressed);
+		} else {
+			bool isWalkingPressed = false;
+			playerAnimator.SetBool ("IsWalking", isWalkingPressed);
+		}
+
+		if (Input.GetKeyDown ("f")) {
+			bool hasAttackPressed = true;
+			playerAnimator.SetBool ("IsAttacking", hasAttackPressed);
+		}
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
 
