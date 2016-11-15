@@ -11,6 +11,8 @@ TagManager:
   - GameWorld
   - WeaponDrop
   - New Tag
+  - ImageTarget
+  - RightHandControls
   layers:
   - Default
   - TransparentFX

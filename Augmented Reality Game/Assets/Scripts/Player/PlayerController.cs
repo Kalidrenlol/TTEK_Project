@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour {
 
 		if (Input.GetKeyDown ("f")) {
 			bool hasAttackPressed = true;
-			playerAnimator.SetBool ("IsAttacking", hasAttackPressed);
+			playerAnimator.SetBool ("HasAttacked", hasAttackPressed);
 		}
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
@@ -52,6 +52,23 @@ public class PlayerController : MonoBehaviour {
 		motor.cameraRotate(_cameraRotationX);
 */
 
+	}
+
+	public void PushOpponent() {
+		Debug.Log ("Skubber modstander");
+		playerAnimator.SetBool ("HasAttacked", true);
+	}
+
+	void OnCollisionStay(Collision collider) {
+		
+
+		if (collider.gameObject.tag == "Player") {
+			if (playerAnimator.GetBool ("HasAttacked") == true) {
+				Vector3 dir = (transform.position - collider.transform.position).normalized;
+				collider.gameObject.GetComponent<Rigidbody> ().AddForce (-dir * 500f);
+				Debug.Log ("Force added");
+			}
+		}
 	}
 
 }
