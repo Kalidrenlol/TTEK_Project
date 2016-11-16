@@ -52,6 +52,7 @@ public class Player : NetworkBehaviour {
 			wasEnabled[i] = disableOnDeath[i].enabled;
 		}
 		SetDefaults();
+		Debug.Log("Setup called from "+gameObject.name +": "+ wasEnabled[0]);
 	}
 
 	[ClientRpc]
@@ -87,8 +88,9 @@ public class Player : NetworkBehaviour {
 		isDead = false;
 
 		currentHealth = maxHealth;
-
+		Debug.Log(gameObject.name);
 		for(int i = 0; i < disableOnDeath.Length; i++) {
+			Debug.Log("Disable: "+disableOnDeath[i]+" er "+wasEnabled[i]);
 			disableOnDeath[i].enabled = wasEnabled[i];
 		}
 
@@ -119,9 +121,9 @@ public class Player : NetworkBehaviour {
 	private IEnumerator Respawn() {
 		yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime);
 
-		SetDefaults();
 		GoToSpawnpoint();
 		StartParticle();
+		SetDefaults();
 	}
 		
 	[Client]

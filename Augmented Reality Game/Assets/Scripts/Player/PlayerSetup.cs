@@ -77,6 +77,8 @@ public class PlayerSetup : NetworkBehaviour {
 			waitingUI.SetActive(true);
 			pregameUI.GetComponent<PregameUI>().btnGetReady.onClick.AddListener(GetReady);
 			pregameUI.GetComponent<PregameUI>().btnDebug.onClick.AddListener(NoVuforia);
+			playerUIInstance.gameObject.transform.FindDeepChild ("RightHandControls").GetComponent<RightHandController> ().btnPowerUp.onClick.AddListener (Test);
+			playerUIInstance.gameObject.transform.FindDeepChild ("RightHandControls").GetComponent<RightHandController> ().btnPush.onClick.AddListener (Push);		
 			gameObject.GetComponent<Rigidbody>().useGravity = false;
 
 		}
@@ -86,7 +88,13 @@ public class PlayerSetup : NetworkBehaviour {
 
 	}
 
+	public void Test() {
+		Debug.Log ("PowerUp-knap trykket");
+	}
 
+	public void Push() {
+		GetComponent<PlayerController> ().PushOpponent ();
+	}
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.I)) {
@@ -180,17 +188,18 @@ public class PlayerSetup : NetworkBehaviour {
 	[ClientRpc]
 	public void RpcStartGame() {
 		if (!isLocalPlayer) {
+			GetComponent<Player>().Setup();
 			return;
 		}
-
 		playerUIInstance.SetActive(true);
 		SetComponents(true);
+		GetComponent<Player>().Setup();
 		gameObject.GetComponent<Rigidbody>().useGravity = true;
 		scoreboard.GetComponent<Scoreboard>().RefreshScoreboard();
-		GetComponent<Player>().Setup();
 		if (waitingUI.activeSelf)  {
 			waitingUI.SetActive(false);
 		}
+
 
 	}
 

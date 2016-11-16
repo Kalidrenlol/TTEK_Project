@@ -8,6 +8,11 @@ TagManager:
   - WaitingRoomUI
   - CameraAR
   - GetReadyUI
+  - GameWorld
+  - WeaponDrop
+  - New Tag
+  - ImageTarget
+  - RightHandControls
   layers:
   - Default
   - TransparentFX
@@ -19,7 +24,7 @@ TagManager:
   - 
   - RemotePlayer
   - DontDraw
-  - 
+  - LocalPlayer
   - 
   - 
   - 
