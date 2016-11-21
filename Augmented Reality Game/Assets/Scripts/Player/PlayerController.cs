@@ -38,6 +38,12 @@ public class PlayerController : MonoBehaviour {
 			playerAnimator.SetBool ("HasAttacked", hasAttackPressed);
 		}
 
+		// Rotate Player //
+		if (_xMov != 0 || _zMov != 0) {
+			transform.eulerAngles = new Vector3(transform.eulerAngles.x, Mathf.Atan2(-_xMov, -_zMov) * Mathf.Rad2Deg, transform.eulerAngles.z);
+		}
+
+
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
         var cam = Camera.main.transform;
         Vector3 camVec = cam.forward;
