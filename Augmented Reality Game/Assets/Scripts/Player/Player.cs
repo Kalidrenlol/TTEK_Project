@@ -14,6 +14,7 @@ public class Player : NetworkBehaviour {
 	[SyncVar] public string username = "Loading...";
 	[SyncVar] public int score = 0;
 	[SyncVar] private int currentHealth;
+	[SyncVar] private float mana;
 
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
@@ -102,6 +103,10 @@ public class Player : NetworkBehaviour {
 
 	public void SetScore(int _score) {
 		score += _score;
+	}
+
+	public void SetMana(float _mana) {
+		mana += _mana;
 	}
 
 	void GoToSpawnpoint() {
