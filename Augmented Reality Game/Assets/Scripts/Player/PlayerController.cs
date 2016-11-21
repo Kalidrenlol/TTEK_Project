@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
 		motor = GetComponent<PlayerMotor>();
 		joystick = GameObject.FindGameObjectWithTag(virtualJoystickTag);
+
 	}
 
 	void Update() {
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour {
             cam.Rotate(Vector3.up, 100 * Time.deltaTime);
         }
         float camAngle  = Vector3.Angle(camBase, camDir);
-        Debug.Log("Angle: " + camAngle);
+        //Debug.Log("Angle: " + camAngle);
 
         // Rotatet _velocity to align with camAngle
 
@@ -87,10 +88,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnCollisionStay(Collision collider) {
-		
-
-		if (collider.gameObject.tag == "Player") {
-			if (playerAnimator.GetBool ("HasAttacked") == true) {
+		if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Interactable") {
+			if (playerAnimator.GetBool("HasAttacked") == true) {
 				Vector3 dir = (transform.position - collider.transform.position).normalized;
 				collider.gameObject.GetComponent<Rigidbody> ().AddForce (-dir * 500f);
 				Debug.Log ("Force added");

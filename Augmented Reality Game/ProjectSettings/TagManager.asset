@@ -13,6 +13,7 @@ TagManager:
   - New Tag
   - ImageTarget
   - RightHandControls
+  - Interactable
   layers:
   - Default
   - TransparentFX
