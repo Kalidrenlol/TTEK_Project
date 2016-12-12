@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 	private GameObject joystick;
 	private PlayerMotor motor;
 	Animator playerAnimator;
+    float lastCamAngle = 180;
 
 	void Start() {
 		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
@@ -47,21 +48,34 @@ public class PlayerController : MonoBehaviour {
         Vector3 camDir  = new Vector3(camVec.x*100,0.2f,camVec.z*100);
         if (Input.GetKeyDown(KeyCode.M))
         {
-            cam.Rotate(Vector3.down, 100 * Time.deltaTime);
+            cam.Rotate(Vector3.down, 100 * Time.deltaTime, Space.World);
+            
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
-            cam.Rotate(Vector3.up, 100 * Time.deltaTime);
+            cam.Rotate(Vector3.up, 100 * Time.deltaTime, Space.World);
         }
-        float camAngle  = Vector3.Angle(camBase, camDir);
-        Debug.Log("Angle: " + camAngle);
+        //float camAngle  = Vector3.Angle(camBase, camDir);
+        float camAngle = Mathf.Atan2(camDir.y-camBase.y, camDir.x-camBase.x)*180 / Mathf.PI;
+        if (camAngle != lastCamAngle)
+        {
+            Debug.Log("Angle: " + camAngle);
+            lastCamAngle = camAngle;
+        }
+
+         Vector3 pos = camBase;
+         Vector3 dir = (camBase - camDir).normalized;
+         Debug.Log("Dir: "+dir);
+         Debug.DrawLine(pos, pos + dir * -20, Color.red, 5);
+
+        
 
         // Rotatet _velocity to align with camAngle
 
 
         Debug.DrawRay(camBase, camDir, Color.green,5,false);
-        _velocity = Quaternion.Euler(0, camAngle+180, 0) * _velocity;
-		motor.Move(_velocity);
+        //_velocity = Quaternion.Euler(0, camAngle+180, 0) * _velocity;
+		motor.Move(_velocity, dir);
 
 
 		/*		float _yRot = Input.GetAxisRaw("Mouse X");
