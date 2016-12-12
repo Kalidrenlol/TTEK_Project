@@ -139,6 +139,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010284484882}
+  - 65: {fileID: 65000011243424378}
   m_Layer: 0
   m_Name: CATRArm
   m_TagString: Untagged
@@ -315,6 +316,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010919625660}
+  - 65: {fileID: 65000013778586366}
   m_Layer: 0
   m_Name: CATRForearm
   m_TagString: Untagged
@@ -742,6 +744,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010640489286}
+  - 65: {fileID: 65000014000362742}
   m_Layer: 0
   m_Name: CATRHand
   m_TagString: Untagged
@@ -1785,6 +1788,42 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!65 &65000011243424378
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010886269590}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1182357, y: 0.12457463, z: 0.09072527}
+  m_Center: {x: -0.14138557, y: -0.003998948, z: 0.0063089174}
+--- !u!65 &65000013778586366
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011443506422}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.19110717, y: 0.13220125, z: 0.09049573}
+  m_Center: {x: -0.06248409, y: 0.003100284, z: 0.0059924773}
+--- !u!65 &65000014000362742
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013450962236}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1563512, y: 0.03887291, z: 0.14159057}
+  m_Center: {x: -0.06950987, y: -0.0038254056, z: 0.019016428}
 --- !u!95 &95000013783494000
 Animator:
   serializedVersion: 3

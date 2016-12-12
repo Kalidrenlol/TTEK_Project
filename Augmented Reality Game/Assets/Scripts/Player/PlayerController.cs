@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerMotor))]
