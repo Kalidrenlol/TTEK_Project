@@ -55,6 +55,12 @@ public class PlayerSetup : NetworkBehaviour {
 		} else {
 
 			sceneCamera = Camera.main;
+            sceneCamera.transform.parent = this.transform;
+            Vector3 playerPos = this.transform.position;
+            //playerPos.x = playerPos.x + 2;
+            playerPos.y = 28;
+            playerPos.z = -14;
+            sceneCamera.transform.position = playerPos;
 
 			playerUIInstance = Instantiate(playerUIPrefab);
 			playerUIInstance.name = playerUIPrefab.name;

@@ -63,15 +63,11 @@ public class PlayerController : MonoBehaviour {
         _velocity = Quaternion.Euler(0, camAngle+180, 0) * _velocity;
 		motor.Move(_velocity);
 
+=======
+>>>>>>> 035260f495a9be66c260e4edf0f0d8da8f18f9b7
 
-		/*		float _yRot = Input.GetAxisRaw("Mouse X");
-		Vector3 _rotation = new Vector3(0,_yRot, 0) * lookSensitivity;
-		motor.Rotate(_rotation);
+		motor.Move(_velocity);
 
-		float _xRot = Input.GetAxisRaw("Mouse Y");
-		float _cameraRotationX = _xRot * lookSensitivity;
-		motor.cameraRotate(_cameraRotationX);
-*/
 
 	}
 
