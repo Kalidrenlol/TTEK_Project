@@ -20,7 +20,8 @@ public class Scoreboard : MonoBehaviour {
 		players = players.OrderByDescending(x => x.score).ToArray();
 
 		foreach (Player player in players) {
-			GameObject itemGO = Instantiate(scoreboardItem, playerList) as GameObject;
+			GameObject itemGO = Instantiate(scoreboardItem, playerList, false) as GameObject;
+			itemGO.transform.localScale = playerList.transform.localScale;
 			ScoreboardItem item = itemGO.GetComponent<ScoreboardItem>();
 
 			if (item != null) {
