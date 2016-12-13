@@ -43,8 +43,11 @@ public class PlayerController : MonoBehaviour {
 
 		motor.Move(_velocity);
         
+       
 
 	}
+
+   
 
 	public void PushOpponent() {
 		Debug.Log ("Skubber modstander");

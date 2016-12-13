@@ -25,19 +25,13 @@ public class PlayerMotor : MonoBehaviour {
 
 	void PerformMovement() {
 		if (velocity != Vector3.zero) {
-    /*		GameObject _player = gameObject;
-			GameObject _camera = GameObject.FindGameObjectWithTag("MainCamera");
-			Vector3 _cameraPos = _camera.transform.rotation.eulerAngles;
-			Vector3 _relative = _player.transform.rotation.eulerAngles;
-			Debug.Log("Camera: "+_cameraPos.normalized);*/
-
 
 			rb.MovePosition(rb.position + velocity * speed * Time.fixedDeltaTime);
             Transform playerGraphics = rb.transform.GetChild(0); // Gets the "Graphic" child of the player object
             playerGraphics.rotation = Quaternion.LookRotation(velocity*-1); // Rotates the graphic in the velocity direction, reverse the vel to turn the right direction
-            //rb.transform.LookAt(velocity);
-            //transform.LookAt(rb.velocity);// = rb.velocity;
+         
 		}
 	}
+
 
 }
