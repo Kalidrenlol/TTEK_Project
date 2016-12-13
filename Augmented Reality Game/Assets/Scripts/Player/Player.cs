@@ -21,6 +21,7 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private GameObject spawnParticle;
 	[SerializeField] public GameObject gameManager;
 
+	Animator playerAnimator;
 	public Color color;
 	private int playerIndex;
 	private Vector3 spawnpointPos;
@@ -32,6 +33,7 @@ public class Player : NetworkBehaviour {
 		spawnpointRot = transform.rotation;
 
 		SetColor();
+		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
 
 		if (isLocalPlayer) {
 			StartParticle();
@@ -141,6 +143,28 @@ public class Player : NetworkBehaviour {
 
 	[Command]
 	void CmdHitWater(string _playerID) {
+		Player _player = GameManager.GetPlayer(_playerID);
+		_player.RpcTakeDamage(100);
+	}
+
+	[Client]
+	public void PushOpponent(Collision collider) {
+		if (!isLocalPlayer) {
+			return;
+		}
+
+		if (playerAnimator.GetBool ("HasAttacked") == true) {
+			Debug.Log(collider.gameObject.name);
+			/*Vector3 dir = (transform.position - collider.transform.position).normalized;
+			collider.gameObject.GetComponent<Rigidbody> ().AddForce (-dir * 500f);
+			Debug.Log ("Force added");*/
+		}
+		
+		//CmdPushOpponent(_opponent);
+	}
+
+	[Command]
+	void CmdPushOpponent(string _playerID) {
 		Player _player = GameManager.GetPlayer(_playerID);
 		_player.RpcTakeDamage(100);
 	}
