@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
-        var cam = Camera.main.transform;
+       /* var cam = Camera.main.transform;
         Vector3 camVec = cam.forward;
         //Debug.Log("v: " + _velocity);
         //Debug.Log("c: " + camVec); // Bevæg i forhold til X og Z (X, Y, Z)
@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour {
         // Rotatet _velocity to align with camAngle
 
 
-        Debug.DrawRay(camBase, camDir, Color.green,5,false);
-        _velocity = Quaternion.Euler(0, camAngle+180, 0) * _velocity;
+        //Debug.DrawRay(camBase, camDir, Color.green,5,false);
+        _velocity = Quaternion.Euler(0, camAngle+180, 0) * _velocity;*/
 		motor.Move(_velocity);
 
 
