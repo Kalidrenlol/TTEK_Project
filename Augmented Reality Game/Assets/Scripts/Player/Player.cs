@@ -28,18 +28,35 @@ public class Player : NetworkBehaviour {
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
+	private float tempMana;
+	public bool isOnWonderland;
 
 	void Start() {
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
 
-		username = System.Environment.UserName;
 		SetColor();
 		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
 
 		if (isLocalPlayer) {
 			StartParticle();
 			SetPlayerIndex();
+			username = System.Environment.UserName;
+		}
+	}
+
+	void Update() {
+		if (GetComponent<GameController>().gameStarted) {
+			if (tempMana > 0 && !isOnWonderland) {
+				tempMana = Mathf.Floor(tempMana);
+				SaveMana();
+			} else if (tempMana < 0){
+				tempMana = 0;
+			}
+
+
+
+
 		}
 	}
 
@@ -96,8 +113,7 @@ public class Player : NetworkBehaviour {
 
 		currentHealth = maxHealth;
         GetComponent<Rigidbody>().drag = 0;
-        Debug.Log("drag is low");
-		Debug.Log(gameObject.name);
+		isOnWonderland = false;
 
 		for(int i = 0; i < disableOnDeath.Length; i++) {
 			disableOnDeath[i].enabled = wasEnabled[i];
@@ -111,10 +127,6 @@ public class Player : NetworkBehaviour {
 
 	public void SetScore(int _score) {
 		score += _score;
-	}
-
-	public void SetMana(float _mana) {
-		mana += _mana;
 	}
 
 	void GoToSpawnpoint() {
@@ -177,4 +189,52 @@ public class Player : NetworkBehaviour {
 	public void RpcPushOpponent(Vector3 _force) {
 		GetComponent<PlayerController>().BePushed(_force);
 	}
+
+
+	/************************
+	 *        MANA          *
+	 ************************/
+
+	void SetMana(float _mana) {
+		mana += _mana;
+	}
+
+	[Client]
+	public void TempMana(float _mana) {
+		CmdTempMana(playerID, _mana);
+	}
+
+	[Command]
+	public void CmdTempMana(string _playerID, float _mana) {
+		Player _player = GameManager.GetPlayer(_playerID);
+		_player.RpcTempMana(_mana);
+	}
+
+	[ClientRpc]
+	public void RpcTempMana(float _mana) {
+		float totalTemp = mana + tempMana;
+		if (totalTemp < GameManager.instance.matchSettings.maxMana) {			
+			tempMana += _mana;
+		}
+	}
+
+	[Client]
+	void SaveMana() {
+		CmdSaveMana(playerID, GameManager.instance.matchSettings.restoreManaPrSecond * Time.deltaTime);
+	}
+
+	[Command]
+	public void CmdSaveMana(string _playerID, float _mana) {
+		Player _player = GameManager.GetPlayer(_playerID);
+		_player.RpcSaveMana(_mana);
+	}
+
+	[ClientRpc]
+	public void RpcSaveMana(float _mana) {
+		if (mana < GameManager.instance.matchSettings.maxMana && tempMana > 0) {
+			SetMana(_mana);
+			tempMana -= _mana;
+		}
+	}
+
 }

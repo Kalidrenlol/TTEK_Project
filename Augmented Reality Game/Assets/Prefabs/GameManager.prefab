@@ -60,6 +60,9 @@ MonoBehaviour:
   matchSettings:
     respawnTime: 3
     spawnNextWeapon: 5
+    maxMana: 10
+    getManaPrSecond: 1
+    restoreManaPrSecond: 1
 --- !u!114 &114000014292715744
 MonoBehaviour:
   m_ObjectHideFlags: 1
