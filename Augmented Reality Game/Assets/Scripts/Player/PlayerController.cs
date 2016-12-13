@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour {
         var cam = Camera.main.transform;
 
 		motor.Move(_velocity);
-
+        
 
 	}
 
