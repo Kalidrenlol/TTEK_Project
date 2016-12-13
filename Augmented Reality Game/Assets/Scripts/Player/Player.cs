@@ -30,12 +30,9 @@ public class Player : NetworkBehaviour {
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
-<<<<<<< HEAD
 	private float tempMana;
 	public bool isOnWonderland;
-=======
     public Renderer rend;
->>>>>>> 517f057b6bf73de54d3ef9b363cae6caecb67474
 
 	void Start() {
 		spawnpointPos = transform.position;
@@ -82,7 +79,6 @@ public class Player : NetworkBehaviour {
 			wasEnabled[i] = disableOnDeath[i].enabled;
 		}
 		SetDefaults();
-		Debug.Log("Setup called from "+gameObject.name +": "+ wasEnabled[0]);
 	}
 
 	[ClientRpc]
@@ -96,7 +92,6 @@ public class Player : NetworkBehaviour {
 		if (currentHealth <= 0) {
 			Die();
             GetComponent<Rigidbody>().drag = 30;
-            Debug.Log("drag is low");
 		}
 	}
 
@@ -133,74 +128,6 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
-    public void CollectPowerup()
-    {
-        int puType = Mathf.RoundToInt(Random.Range(0, 5));
-        Debug.Log("Powerup collected, type: " + puType);
-        //Hvis flere, tjek type, udfra puType
-        switch (puType)
-        {
-            case 0:
-                currentPU = "0 - Invisibility";
-                break;
-            case 1:
-                currentPU = "1 - Speed";
-                break;
-            default:
-                currentPU = "0 - Invisibility";
-                break;
-        }
-        
-    }
-
-    public void MakeVisible()
-    {
-        Debug.Log("Make visible");
-        Renderer[] rs = GetComponentsInChildren<Renderer>();
-        foreach (Renderer r in rs)
-        {
-            r.enabled = true;
-        }
-    }
-
-    public void ResetSpeed()
-    {
-
-    }
-
-    public void ActivatePowerup()
-    {
-        if (currentPU != "None")
-        {
-            Debug.Log("Using powerup: "+currentPU);
-
-            switch (currentPU)
-            {
-                case "0 - Invisibility":
-                    Renderer[] rs = GetComponentsInChildren<Renderer>();
-                    foreach(Renderer r in rs){
-                         r.enabled = false;
-                         Invoke("MakeVisible", 5);
-                    }
-                    break;
-                case "1 - Speed":
-
-                    
-                    break;
-                default:
-                    break;
-            }
-
-
-            currentPU = "None";
-
-        }
-        else
-        {
-            Debug.Log("No powerup available");
-        }
-    }
-
 	public void SetScore(int _score) {
 		score += _score;
 	}
@@ -232,7 +159,7 @@ public class Player : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		}
-		CmdHitWater(username);
+		CmdHitWater(playerID);
 	}
 
 	[Command]
@@ -249,7 +176,7 @@ public class Player : NetworkBehaviour {
 
 		if (playerAnimator.GetBool ("HasAttacked") == true) {
 			Vector3 dir = (transform.position - collider.transform.position).normalized;
-			Vector3 _force = -dir * 200f;
+			Vector3 _force = -dir * 5000f;
 			CmdPushOpponent(collider.gameObject.name, _force);
 			Debug.Log ("Force added");
 		}
@@ -312,6 +239,79 @@ public class Player : NetworkBehaviour {
 		if (mana < GameManager.instance.matchSettings.maxMana && tempMana > 0) {
 			SetMana(_mana);
 			tempMana -= _mana;
+		}
+	}
+
+	/************************
+	 *       POWER UP       *
+	 ************************/
+
+
+	public void CollectPowerup()
+	{
+		int puType = Mathf.RoundToInt(Random.Range(0, 5));
+		Debug.Log("Powerup collected, type: " + puType);
+		//Hvis flere, tjek type, udfra puType
+		switch (puType)
+		{
+		case 0:
+			currentPU = "0 - Invisibility";
+			break;
+		case 1:
+			currentPU = "1 - Speed";
+			break;
+		default:
+			currentPU = "0 - Invisibility";
+			break;
+		}
+
+	}
+
+	public void MakeVisible()
+	{
+		Debug.Log("Make visible");
+		Renderer[] rs = GetComponentsInChildren<Renderer>();
+		foreach (Renderer r in rs)
+		{
+			r.enabled = true;
+		}
+	}
+
+	public void ResetSpeed()
+	{
+
+	}
+
+	public void ActivatePowerup()
+	{
+		if (currentPU != "None")
+		{
+			Debug.Log("Using powerup: "+currentPU);
+
+			switch (currentPU)
+			{
+			case "0 - Invisibility":
+				Renderer[] rs = GetComponentsInChildren<Renderer>();
+				foreach(Renderer r in rs){
+					r.enabled = false;
+					Invoke("MakeVisible", 5);
+				}
+				break;
+			case "1 - Speed":
+
+
+				break;
+			default:
+				break;
+			}
+
+
+			currentPU = "None";
+
+		}
+		else
+		{
+			Debug.Log("No powerup available");
 		}
 	}
 
