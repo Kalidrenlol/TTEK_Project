@@ -233,7 +233,7 @@ public class Player : NetworkBehaviour {
 
 		if (playerAnimator.GetBool ("HasAttacked") == true) {
 			Vector3 dir = (transform.position - collider.transform.position).normalized;
-			Vector3 _force = -dir * 500f;
+			Vector3 _force = -dir * 200f;
 			CmdPushOpponent(collider.gameObject.name, _force);
 			Debug.Log ("Force added");
 		}
