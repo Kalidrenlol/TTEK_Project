@@ -42,16 +42,22 @@ public class PlayerController : MonoBehaviour {
         var cam = Camera.main.transform;
 
 		motor.Move(_velocity);
+
+        if (Input.GetKeyDown("g"))
+        {
+            Debug.Log("Use powerup");
+            GetComponent<Player>().ActivatePowerup();
+        }
         
+       
 
 	}
+
+   
 
 	public void PushOpponent() {
+		Debug.Log ("Skubber modstander");
 		playerAnimator.SetBool ("HasAttacked", true);
-	}
-
-	public void BePushed(Vector3 force) {
-		GetComponent<Rigidbody>().AddForce(force);
 	}
 
 	void OnCollisionStay(Collision collider) {

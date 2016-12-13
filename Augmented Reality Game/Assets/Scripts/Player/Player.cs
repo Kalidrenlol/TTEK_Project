@@ -11,8 +11,8 @@ public class Player : NetworkBehaviour {
 		protected set {_isDead = value;}
 	}
 
-	[SyncVar] public string username;
-	[SyncVar] public string playerID = "Loading...";
+    [SyncVar] public string username;
+    [SyncVar] public string playerID = "Loading...";
 	[SyncVar] public int score = 0;
 	[SyncVar] private int currentHealth;
 	[SyncVar] private float mana;
@@ -22,22 +22,26 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private GameObject spawnParticle;
 	[SerializeField] public GameObject gameManager;
 
+    public string currentPU = "None";
+
 	Animator playerAnimator;
 	public Color color;
 	private int playerIndex;
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
+    public Renderer rend;
 
 	void Start() {
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
+        
 
-		username = System.Environment.UserName;
 		SetColor();
 		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
 
 		if (isLocalPlayer) {
+            rend = GetComponent<Renderer>();
 			StartParticle();
 			SetPlayerIndex();
 		}
@@ -98,8 +102,8 @@ public class Player : NetworkBehaviour {
         GetComponent<Rigidbody>().drag = 0;
         Debug.Log("drag is low");
 		Debug.Log(gameObject.name);
-
 		for(int i = 0; i < disableOnDeath.Length; i++) {
+			Debug.Log("Disable: "+disableOnDeath[i]+" er "+wasEnabled[i]);
 			disableOnDeath[i].enabled = wasEnabled[i];
 		}
 
@@ -108,6 +112,74 @@ public class Player : NetworkBehaviour {
 			_col.enabled = true;
 		}
 	}
+
+    public void CollectPowerup()
+    {
+        int puType = Mathf.RoundToInt(Random.Range(0, 5));
+        Debug.Log("Powerup collected, type: " + puType);
+        //Hvis flere, tjek type, udfra puType
+        switch (puType)
+        {
+            case 0:
+                currentPU = "0 - Invisibility";
+                break;
+            case 1:
+                currentPU = "1 - Speed";
+                break;
+            default:
+                currentPU = "0 - Invisibility";
+                break;
+        }
+        
+    }
+
+    public void MakeVisible()
+    {
+        Debug.Log("Make visible");
+        Renderer[] rs = GetComponentsInChildren<Renderer>();
+        foreach (Renderer r in rs)
+        {
+            r.enabled = true;
+        }
+    }
+
+    public void ResetSpeed()
+    {
+
+    }
+
+    public void ActivatePowerup()
+    {
+        if (currentPU != "None")
+        {
+            Debug.Log("Using powerup: "+currentPU);
+
+            switch (currentPU)
+            {
+                case "0 - Invisibility":
+                    Renderer[] rs = GetComponentsInChildren<Renderer>();
+                    foreach(Renderer r in rs){
+                         r.enabled = false;
+                         Invoke("MakeVisible", 5);
+                    }
+                    break;
+                case "1 - Speed":
+
+                    
+                    break;
+                default:
+                    break;
+            }
+
+
+            currentPU = "None";
+
+        }
+        else
+        {
+            Debug.Log("No powerup available");
+        }
+    }
 
 	public void SetScore(int _score) {
 		score += _score;
@@ -144,7 +216,7 @@ public class Player : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		}
-		CmdHitWater(playerID);
+		CmdHitWater(username);
 	}
 
 	[Command]
@@ -161,8 +233,9 @@ public class Player : NetworkBehaviour {
 
 		if (playerAnimator.GetBool ("HasAttacked") == true) {
 			Vector3 dir = (transform.position - collider.transform.position).normalized;
-			Vector3 _force = -dir * 20000f;
+			Vector3 _force = -dir * 500f;
 			CmdPushOpponent(collider.gameObject.name, _force);
+			Debug.Log ("Force added");
 		}
 	}
 
@@ -175,6 +248,7 @@ public class Player : NetworkBehaviour {
 
 	[ClientRpc]
 	public void RpcPushOpponent(Vector3 _force) {
-		GetComponent<PlayerController>().BePushed(_force);
+		Debug.Log(transform.name + " får fart.");
+		GetComponent<Rigidbody>().AddForce(_force);
 	}
 }
