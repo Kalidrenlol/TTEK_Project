@@ -70,6 +70,8 @@ public class Player : NetworkBehaviour {
 
 		if (currentHealth <= 0) {
 			Die();
+            GetComponent<Rigidbody>().drag = 30;
+            Debug.Log("drag is low");
 		}
 	}
 
@@ -93,6 +95,12 @@ public class Player : NetworkBehaviour {
 		isDead = false;
 
 		currentHealth = maxHealth;
+<<<<<<< HEAD
+=======
+        GetComponent<Rigidbody>().drag = 0;
+        Debug.Log("drag is low");
+		Debug.Log(gameObject.name);
+>>>>>>> 94d21f3e6a32919ec484294cc784636fc1c42523
 		for(int i = 0; i < disableOnDeath.Length; i++) {
 			disableOnDeath[i].enabled = wasEnabled[i];
 		}

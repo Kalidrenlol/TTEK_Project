@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692534, g: 0.4967872, b: 0.57508564, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692534, g: 0.49678725, b: 0.57508564, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 16.63
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalPosition.y
@@ -107,7 +107,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 35.08
+      value: 36.8
       objectReference: {fileID: 0}
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalRotation.x
@@ -129,21 +129,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 50.000076
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 50.000076
-      objectReference: {fileID: 0}
     - target: {fileID: 1000013130844346, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_Name
       value: bridge (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
@@ -276,7 +264,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -32.5
+      value: -34.6
       objectReference: {fileID: 0}
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalPosition.y
@@ -306,21 +294,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 50.000076
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 50.000076
-      objectReference: {fileID: 0}
     - target: {fileID: 1000013130844346, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_Name
       value: bridge (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
@@ -334,7 +310,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 25.77
+      value: 20.73
       objectReference: {fileID: 0}
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalPosition.y
@@ -364,21 +340,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 13
       objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 50.000076
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 50.000076
-      objectReference: {fileID: 0}
     - target: {fileID: 1000013130844346, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_Name
       value: bridge (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
@@ -442,7 +406,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -25.22
+      value: -20.2
       objectReference: {fileID: 0}
     - target: {fileID: 4000011890988156, guid: 5ffdcd0edf6853047afb70cc605e08fd, type: 2}
       propertyPath: m_LocalRotation.x
