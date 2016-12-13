@@ -43,15 +43,15 @@ public class PlayerController : MonoBehaviour {
 
 		motor.Move(_velocity);
         
-       
 
 	}
 
-   
-
 	public void PushOpponent() {
-		Debug.Log ("Skubber modstander");
 		playerAnimator.SetBool ("HasAttacked", true);
+	}
+
+	public void BePushed(Vector3 force) {
+		GetComponent<Rigidbody>().AddForce(force);
 	}
 
 	void OnCollisionStay(Collision collider) {

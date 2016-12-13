@@ -11,7 +11,8 @@ public class Player : NetworkBehaviour {
 		protected set {_isDead = value;}
 	}
 
-	[SyncVar] public string username = "Loading...";
+	[SyncVar] public string username;
+	[SyncVar] public string playerID = "Loading...";
 	[SyncVar] public int score = 0;
 	[SyncVar] private int currentHealth;
 	[SyncVar] private float mana;
@@ -32,6 +33,7 @@ public class Player : NetworkBehaviour {
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
 
+		username = System.Environment.UserName;
 		SetColor();
 		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
 
@@ -96,8 +98,8 @@ public class Player : NetworkBehaviour {
         GetComponent<Rigidbody>().drag = 0;
         Debug.Log("drag is low");
 		Debug.Log(gameObject.name);
+
 		for(int i = 0; i < disableOnDeath.Length; i++) {
-			Debug.Log("Disable: "+disableOnDeath[i]+" er "+wasEnabled[i]);
 			disableOnDeath[i].enabled = wasEnabled[i];
 		}
 
@@ -142,7 +144,7 @@ public class Player : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		}
-		CmdHitWater(username);
+		CmdHitWater(playerID);
 	}
 
 	[Command]
@@ -159,9 +161,8 @@ public class Player : NetworkBehaviour {
 
 		if (playerAnimator.GetBool ("HasAttacked") == true) {
 			Vector3 dir = (transform.position - collider.transform.position).normalized;
-			Vector3 _force = -dir * 500f;
+			Vector3 _force = -dir * 20000f;
 			CmdPushOpponent(collider.gameObject.name, _force);
-			Debug.Log ("Force added");
 		}
 	}
 
@@ -174,7 +175,6 @@ public class Player : NetworkBehaviour {
 
 	[ClientRpc]
 	public void RpcPushOpponent(Vector3 _force) {
-		Debug.Log(transform.name + " får fart.");
-		GetComponent<Rigidbody>().AddForce(_force);
+		GetComponent<PlayerController>().BePushed(_force);
 	}
 }

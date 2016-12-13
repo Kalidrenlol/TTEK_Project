@@ -37,13 +37,6 @@ public class PlayerSetup : NetworkBehaviour {
 
 
 		string _username = "Loading...";
-
-		/*if () {
-			Hvis username er indtastet..	
-		} else {
-			
-		}*/
-
 		_username = transform.name;
 		CmdSetUsername(transform.name, _username);
 
@@ -83,8 +76,8 @@ public class PlayerSetup : NetworkBehaviour {
 			waitingUI.SetActive(true);
 			pregameUI.GetComponent<PregameUI>().btnGetReady.onClick.AddListener(GetReady);
 			pregameUI.GetComponent<PregameUI>().btnDebug.onClick.AddListener(NoVuforia);
-			playerUIInstance.gameObject.transform.FindDeepChild ("RightHandControls").GetComponent<RightHandController> ().btnPowerUp.onClick.AddListener (Test);
-			playerUIInstance.gameObject.transform.FindDeepChild ("RightHandControls").GetComponent<RightHandController> ().btnPush.onClick.AddListener (Push);		
+			playerUIInstance.gameObject.transform.FindDeepChild ("RightHandControls").GetComponent<RightHandController> ().btnPowerUp.onClick.AddListener (BtnUsePowerUp);
+			playerUIInstance.gameObject.transform.FindDeepChild ("RightHandControls").GetComponent<RightHandController> ().btnPush.onClick.AddListener (BtnPush);		
 			gameObject.GetComponent<Rigidbody>().useGravity = false;
 
 		}
@@ -94,11 +87,11 @@ public class PlayerSetup : NetworkBehaviour {
 
 	}
 
-	public void Test() {
-		Debug.Log ("PowerUp-knap trykket");
+	void BtnUsePowerUp() {
+		// Når powerup knappen trykkes //
 	}
 
-	public void Push() {
+	void BtnPush() {
 		GetComponent<PlayerController> ().PushOpponent ();
 	}
 
@@ -205,8 +198,6 @@ public class PlayerSetup : NetworkBehaviour {
 		if (waitingUI.activeSelf)  {
 			waitingUI.SetActive(false);
 		}
-
-
 	}
 
 	public override void OnStartClient() {
@@ -236,7 +227,7 @@ public class PlayerSetup : NetworkBehaviour {
 	void CmdSetUsername (string _playerID, string _username) {
 		Player player = GameManager.GetPlayer(_playerID);
 		if (player != null) {
-			player.username = _username;
+			player.playerID = _username;
 		}
 	}
 
