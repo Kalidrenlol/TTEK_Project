@@ -154,18 +154,23 @@ public class Player : NetworkBehaviour {
 		}
 
 		if (playerAnimator.GetBool ("HasAttacked") == true) {
-			Debug.Log(collider.gameObject.name);
-			/*Vector3 dir = (transform.position - collider.transform.position).normalized;
-			collider.gameObject.GetComponent<Rigidbody> ().AddForce (-dir * 500f);
-			Debug.Log ("Force added");*/
+			Vector3 dir = (transform.position - collider.transform.position).normalized;
+			Vector3 _force = -dir * 500f;
+			CmdPushOpponent(collider.gameObject.name, _force);
+			Debug.Log ("Force added");
 		}
-		
-		//CmdPushOpponent(_opponent);
 	}
 
 	[Command]
-	void CmdPushOpponent(string _playerID) {
+	void CmdPushOpponent(string _playerID, Vector3 _force) {
 		Player _player = GameManager.GetPlayer(_playerID);
-		_player.RpcTakeDamage(100);
+		_player.RpcPushOpponent(_force);
+
+	}
+
+	[ClientRpc]
+	public void RpcPushOpponent(Vector3 _force) {
+		Debug.Log(transform.name + " får fart.");
+		GetComponent<Rigidbody>().AddForce(_force);
 	}
 }
