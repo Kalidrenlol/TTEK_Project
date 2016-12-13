@@ -47,8 +47,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void PushOpponent() {
-		Debug.Log ("Skubber modstander");
 		playerAnimator.SetBool ("HasAttacked", true);
+	}
+
+	public void BePushed(Vector3 force) {
+		GetComponent<Rigidbody>().AddForce(force);
 	}
 
 	void OnCollisionStay(Collision collider) {
