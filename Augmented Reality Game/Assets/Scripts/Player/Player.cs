@@ -33,6 +33,8 @@ public class Player : NetworkBehaviour {
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
 
+	public string pushedByPlayer;
+
 	// Mana
 	public float tempMana;
 	public float savedMana;
@@ -68,7 +70,6 @@ public class Player : NetworkBehaviour {
 	}
 
 	public void Setup() {
-
 		wasEnabled = new bool[disableOnDeath.Length];
 		for(int i = 0; i < wasEnabled.Length; i++) {
 			wasEnabled[i] = disableOnDeath[i].enabled;
@@ -86,6 +87,7 @@ public class Player : NetworkBehaviour {
 
 		if (currentHealth <= 0) {
 			Die();
+			Debug.Log("CurrentHealt 0");
             GetComponent<Rigidbody>().drag = 30;
 		}
 	}
@@ -102,8 +104,15 @@ public class Player : NetworkBehaviour {
 			_col.enabled = false;
 		}
 
-		StartCoroutine(Respawn());
+		if (pushedByPlayer != null) {
+			SetScore(pushedByPlayer, 1);
+			Debug.Log("Die By Player");
+		} else {
+			Debug.Log("Died alone");
+			SetScore(playerID, -1);
+		}
 
+		StartCoroutine(Respawn());
 	}
 
 	public void SetDefaults() {
@@ -112,6 +121,7 @@ public class Player : NetworkBehaviour {
 		currentHealth = maxHealth;
         GetComponent<Rigidbody>().drag = 0;
 		isOnWonderland = false;
+		pushedByPlayer = null;
 
 		for(int i = 0; i < disableOnDeath.Length; i++) {
 			disableOnDeath[i].enabled = wasEnabled[i];
@@ -123,7 +133,19 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
-	public void SetScore(int _score) {
+	[Client]
+	void SetScore(string _playerID, int _score) {
+		CmdSetScore(_playerID, _score);
+	}
+
+	[Command]
+	public void CmdSetScore(string _playerID, int _score) {
+		Player _player = GameManager.GetPlayer(_playerID);
+		_player.RpcSetScore(_score);
+	}
+
+	[ClientRpc]
+	public void RpcSetScore(int _score) {
 		score += _score;
 	}
 
@@ -164,6 +186,8 @@ public class Player : NetworkBehaviour {
 		_player.RpcTakeDamage(100);
 	}
 
+	#region PUSHING
+
 	[Client]
 	public void PushOpponent(Collision collider) {
 		if (!isLocalPlayer) {
@@ -172,29 +196,35 @@ public class Player : NetworkBehaviour {
 
 		if (playerAnimator.GetBool ("HasAttacked") == true) {
 			Vector3 dir = (transform.position - collider.transform.position).normalized;
-			Vector3 _force = -dir * 5000f;
-			CmdPushOpponent(collider.gameObject.name, _force);
-			Debug.Log ("Force added");
+			Vector3 _force = -dir * GameManager.instance.matchSettings.pushForce;
+			CmdPushOpponent(collider.gameObject.name, gameObject.name,  _force);
 		}
 	}
 
 	[Command]
-	void CmdPushOpponent(string _playerID, Vector3 _force) {
+	void CmdPushOpponent(string _playerID, string _pushingPlayer, Vector3 _force) {
 		Player _player = GameManager.GetPlayer(_playerID);
-		_player.RpcPushOpponent(_force);
+		_player.RpcPushOpponent(_pushingPlayer, _force);
 
 	}
 
 	[ClientRpc]
-	public void RpcPushOpponent(Vector3 _force) {
+	public void RpcPushOpponent(string _pushingPlayer, Vector3 _force) {
 		Debug.Log(transform.name + " får fart.");
+		pushedByPlayer = _pushingPlayer;
+		StartCoroutine(ResetPushedByPlayer());
 		GetComponent<Rigidbody>().AddForce(_force);
 	}
 
+	private IEnumerator ResetPushedByPlayer() {
+		yield return new WaitForSeconds(GameManager.instance.matchSettings.timeForPushToKill);
 
-	/************************
-	 *        MANA          *
-	 ************************/
+		pushedByPlayer = null;
+	}
+
+	#endregion
+
+	#region MANA
 
 	void SetMana(float _mana) {
 		mana += _mana;
@@ -266,13 +296,12 @@ public class Player : NetworkBehaviour {
 	void ResetMana() {
 		tempMana = 0;
 		savedMana = 0;
-		mana = 0;
+		//mana = 0;
 	}
 
-	/************************
-	 *       POWER UP       *
-	 ************************/
+	#endregion
 
+	#region POWER UP
 
 	public void CollectPowerup()
 	{
@@ -304,8 +333,7 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
-	public void ResetSpeed()
-	{
+	public void ResetSpeed() {
 
 	}
 
@@ -341,5 +369,7 @@ public class Player : NetworkBehaviour {
 			Debug.Log("No powerup available");
 		}
 	}
+
+	#endregion
 
 }
