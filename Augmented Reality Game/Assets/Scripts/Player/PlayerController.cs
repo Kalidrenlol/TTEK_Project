@@ -54,7 +54,6 @@ public class PlayerController : MonoBehaviour {
 	}
 		
 	public void PushOpponent() {
-		Debug.Log ("Skubber modstander");
 		GetComponent<Player>().isAttacking = true;
 		playerAnimator.SetBool ("HasAttacked", true);
 		StartCoroutine(StopPush());
