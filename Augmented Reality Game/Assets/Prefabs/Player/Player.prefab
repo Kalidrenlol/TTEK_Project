@@ -1166,7 +1166,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010936444112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.89341, y: -0.54291916, z: 14.502213}
+  m_LocalPosition: {x: -13.979059, y: 4.559113, z: -1.8230219}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1884,6 +1884,7 @@ MonoBehaviour:
   username: Loading...
   playerID: Loading...
   score: 0
+  mana: 0
   maxHealth: 100
   disableOnDeath:
   - {fileID: 114000010459295988}
@@ -1894,7 +1895,8 @@ MonoBehaviour:
   currentPU: None
   rend: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
-  manaSlider: {fileID: 0}
+  tempMana: 0
+  savedMana: 0
   isOnWonderland: 0
 --- !u!114 &114000011225430558
 MonoBehaviour:
@@ -1986,6 +1988,7 @@ MonoBehaviour:
   aRCameraPrefab: {fileID: 1000013020846014, guid: b2922e006d5eb40ccab8176cc8304223,
     type: 2}
   scoreboard: {fileID: 1000012944594310, guid: 2d1e6236b08f144edb696a313d3a65f0, type: 2}
+  playerUIInstance: {fileID: 0}
   isReady: 1
 --- !u!114 &114000012725039396
 MonoBehaviour:
