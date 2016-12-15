@@ -19,7 +19,7 @@ public class PlayerSetup : NetworkBehaviour {
 
 	public GameObject scoreboard;
 
-	private GameObject playerUIInstance;
+	public GameObject playerUIInstance;
 	private GameObject pregameUI;
 	private GameObject waitingUI;
 	private GameObject getReadyUI;
@@ -62,6 +62,9 @@ public class PlayerSetup : NetworkBehaviour {
 			if (ui == null) {
 				Debug.LogError("No playerUI on PlayerUI Prefab");
 			}
+			ui.SetController(GetComponent<PlayerController>());
+			ui.SetPlayerScript(GetComponent<Player>());
+
 
 			if (!GetComponent<GameController>().gameStarted) {
 				playerUIInstance.SetActive(false);

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Linq;
@@ -15,7 +16,7 @@ public class Player : NetworkBehaviour {
 	[SyncVar] public string playerID = "Loading...";
 	[SyncVar] public int score = 0;
 	[SyncVar] private int currentHealth;
-	[SyncVar] private float mana;
+	[SyncVar] public float mana;
 
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
@@ -25,19 +26,21 @@ public class Player : NetworkBehaviour {
     public string currentPU = "None";
 
 	Animator playerAnimator;
+	public Renderer rend;
 	public Color color;
 	private int playerIndex;
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
-	private float tempMana;
+
+	// Mana
+	public float tempMana;
+	public float savedMana;
 	public bool isOnWonderland;
-    public Renderer rend;
 
 	void Start() {
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
-        
 
 		SetColor();
 		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
@@ -52,16 +55,7 @@ public class Player : NetworkBehaviour {
 
 	void Update() {
 		if (GetComponent<GameController>().gameStarted) {
-			if (tempMana > 0 && !isOnWonderland) {
-				tempMana = Mathf.Floor(tempMana);
-				SaveMana();
-			} else if (tempMana < 0){
-				tempMana = 0;
-			}
-
-
-
-
+			UpdateMana();
 		}
 	}
 
@@ -74,6 +68,7 @@ public class Player : NetworkBehaviour {
 	}
 
 	public void Setup() {
+
 		wasEnabled = new bool[disableOnDeath.Length];
 		for(int i = 0; i < wasEnabled.Length; i++) {
 			wasEnabled[i] = disableOnDeath[i].enabled;
@@ -152,6 +147,7 @@ public class Player : NetworkBehaviour {
 		GoToSpawnpoint();
 		StartParticle();
 		SetDefaults();
+		ResetMana();
 	}
 		
 	[Client]
@@ -206,7 +202,10 @@ public class Player : NetworkBehaviour {
 
 	[Client]
 	public void TempMana(float _mana) {
-		CmdTempMana(playerID, _mana);
+		float totalTemp = mana + tempMana + savedMana;
+		if (totalTemp < GameManager.instance.matchSettings.maxMana) {
+			CmdTempMana(playerID, _mana);
+		}
 	}
 
 	[Command]
@@ -225,7 +224,7 @@ public class Player : NetworkBehaviour {
 
 	[Client]
 	void SaveMana() {
-		CmdSaveMana(playerID, GameManager.instance.matchSettings.restoreManaPrSecond * Time.deltaTime);
+		CmdSaveMana(playerID, tempMana);
 	}
 
 	[Command]
@@ -236,10 +235,38 @@ public class Player : NetworkBehaviour {
 
 	[ClientRpc]
 	public void RpcSaveMana(float _mana) {
-		if (mana < GameManager.instance.matchSettings.maxMana && tempMana > 0) {
-			SetMana(_mana);
-			tempMana -= _mana;
+		savedMana += _mana;
+		tempMana = 0;
+	}
+
+
+	void UpdateMana() {
+		// Save mana hvis ikke på wonderland //
+		if (tempMana > 0 && !isOnWonderland) {
+			tempMana = Mathf.Floor(tempMana);
+			SaveMana();
+		} else if (tempMana < 0){
+			tempMana = 0;
 		}
+
+		// Begynd at få saved mana //
+		if (!isOnWonderland) {
+			if (savedMana > 0) {
+				float _setMana = GameManager.instance.matchSettings.restoreManaPrSecond * Time.deltaTime;
+				SetMana(_setMana);
+				savedMana -= _setMana;
+			} else if (savedMana < 0) {
+				mana = Mathf.Floor(mana);
+				savedMana = 0;
+			}
+		}
+	}
+		
+
+	void ResetMana() {
+		tempMana = 0;
+		savedMana = 0;
+		mana = 0;
 	}
 
 	/************************
