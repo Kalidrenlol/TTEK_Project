@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Linq;
@@ -11,11 +12,11 @@ public class Player : NetworkBehaviour {
 		protected set {_isDead = value;}
 	}
 
-    [SyncVar] public string username;
-    [SyncVar] public string playerID = "Loading...";
+	[SyncVar] public string username;
+	[SyncVar] public string playerID = "Loading...";
 	[SyncVar] public int score = 0;
 	[SyncVar] private int currentHealth;
-	[SyncVar] private float mana;
+	[SyncVar] public float mana;
 
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
@@ -25,17 +26,21 @@ public class Player : NetworkBehaviour {
     public string currentPU = "None";
 
 	Animator playerAnimator;
+	public Renderer rend;
 	public Color color;
 	private int playerIndex;
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
 	private bool[] wasEnabled;
-    public Renderer rend;
+
+	// Mana
+	public float tempMana;
+	public float savedMana;
+	public bool isOnWonderland;
 
 	void Start() {
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
-        
 
 		SetColor();
 		playerAnimator = transform.FindDeepChild("Character").GetComponent<Animator> ();
@@ -44,6 +49,13 @@ public class Player : NetworkBehaviour {
             rend = GetComponent<Renderer>();
 			StartParticle();
 			SetPlayerIndex();
+			username = System.Environment.UserName;
+		}
+	}
+
+	void Update() {
+		if (GetComponent<GameController>().gameStarted) {
+			UpdateMana();
 		}
 	}
 
@@ -56,12 +68,12 @@ public class Player : NetworkBehaviour {
 	}
 
 	public void Setup() {
+
 		wasEnabled = new bool[disableOnDeath.Length];
 		for(int i = 0; i < wasEnabled.Length; i++) {
 			wasEnabled[i] = disableOnDeath[i].enabled;
 		}
 		SetDefaults();
-		Debug.Log("Setup called from "+gameObject.name +": "+ wasEnabled[0]);
 	}
 
 	[ClientRpc]
@@ -75,7 +87,6 @@ public class Player : NetworkBehaviour {
 		if (currentHealth <= 0) {
 			Die();
             GetComponent<Rigidbody>().drag = 30;
-            Debug.Log("drag is low");
 		}
 	}
 
@@ -100,10 +111,9 @@ public class Player : NetworkBehaviour {
 
 		currentHealth = maxHealth;
         GetComponent<Rigidbody>().drag = 0;
-        Debug.Log("drag is low");
-		Debug.Log(gameObject.name);
+		isOnWonderland = false;
+
 		for(int i = 0; i < disableOnDeath.Length; i++) {
-			Debug.Log("Disable: "+disableOnDeath[i]+" er "+wasEnabled[i]);
 			disableOnDeath[i].enabled = wasEnabled[i];
 		}
 
@@ -113,80 +123,8 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
-    public void CollectPowerup()
-    {
-        int puType = Mathf.RoundToInt(Random.Range(0, 5));
-        Debug.Log("Powerup collected, type: " + puType);
-        //Hvis flere, tjek type, udfra puType
-        switch (puType)
-        {
-            case 0:
-                currentPU = "0 - Invisibility";
-                break;
-            case 1:
-                currentPU = "1 - Speed";
-                break;
-            default:
-                currentPU = "0 - Invisibility";
-                break;
-        }
-        
-    }
-
-    public void MakeVisible()
-    {
-        Debug.Log("Make visible");
-        Renderer[] rs = GetComponentsInChildren<Renderer>();
-        foreach (Renderer r in rs)
-        {
-            r.enabled = true;
-        }
-    }
-
-    public void ResetSpeed()
-    {
-
-    }
-
-    public void ActivatePowerup()
-    {
-        if (currentPU != "None")
-        {
-            Debug.Log("Using powerup: "+currentPU);
-
-            switch (currentPU)
-            {
-                case "0 - Invisibility":
-                    Renderer[] rs = GetComponentsInChildren<Renderer>();
-                    foreach(Renderer r in rs){
-                         r.enabled = false;
-                         Invoke("MakeVisible", 5);
-                    }
-                    break;
-                case "1 - Speed":
-
-                    
-                    break;
-                default:
-                    break;
-            }
-
-
-            currentPU = "None";
-
-        }
-        else
-        {
-            Debug.Log("No powerup available");
-        }
-    }
-
 	public void SetScore(int _score) {
 		score += _score;
-	}
-
-	public void SetMana(float _mana) {
-		mana += _mana;
 	}
 
 	void GoToSpawnpoint() {
@@ -209,6 +147,7 @@ public class Player : NetworkBehaviour {
 		GoToSpawnpoint();
 		StartParticle();
 		SetDefaults();
+		ResetMana();
 	}
 		
 	[Client]
@@ -216,7 +155,7 @@ public class Player : NetworkBehaviour {
 		if (!isLocalPlayer) {
 			return;
 		}
-		CmdHitWater(username);
+		CmdHitWater(playerID);
 	}
 
 	[Command]
@@ -233,7 +172,7 @@ public class Player : NetworkBehaviour {
 
 		if (playerAnimator.GetBool ("HasAttacked") == true) {
 			Vector3 dir = (transform.position - collider.transform.position).normalized;
-			Vector3 _force = -dir * 500f;
+			Vector3 _force = -dir * 5000f;
 			CmdPushOpponent(collider.gameObject.name, _force);
 			Debug.Log ("Force added");
 		}
@@ -251,4 +190,156 @@ public class Player : NetworkBehaviour {
 		Debug.Log(transform.name + " får fart.");
 		GetComponent<Rigidbody>().AddForce(_force);
 	}
+
+
+	/************************
+	 *        MANA          *
+	 ************************/
+
+	void SetMana(float _mana) {
+		mana += _mana;
+	}
+
+	[Client]
+	public void TempMana(float _mana) {
+		float totalTemp = mana + tempMana + savedMana;
+		if (totalTemp < GameManager.instance.matchSettings.maxMana) {
+			CmdTempMana(playerID, _mana);
+		}
+	}
+
+	[Command]
+	public void CmdTempMana(string _playerID, float _mana) {
+		Player _player = GameManager.GetPlayer(_playerID);
+		_player.RpcTempMana(_mana);
+	}
+
+	[ClientRpc]
+	public void RpcTempMana(float _mana) {
+		float totalTemp = mana + tempMana;
+		if (totalTemp < GameManager.instance.matchSettings.maxMana) {			
+			tempMana += _mana;
+		}
+	}
+
+	[Client]
+	void SaveMana() {
+		CmdSaveMana(playerID, tempMana);
+	}
+
+	[Command]
+	public void CmdSaveMana(string _playerID, float _mana) {
+		Player _player = GameManager.GetPlayer(_playerID);
+		_player.RpcSaveMana(_mana);
+	}
+
+	[ClientRpc]
+	public void RpcSaveMana(float _mana) {
+		savedMana += _mana;
+		tempMana = 0;
+	}
+
+
+	void UpdateMana() {
+		// Save mana hvis ikke på wonderland //
+		if (tempMana > 0 && !isOnWonderland) {
+			tempMana = Mathf.Floor(tempMana);
+			SaveMana();
+		} else if (tempMana < 0){
+			tempMana = 0;
+		}
+
+		// Begynd at få saved mana //
+		if (!isOnWonderland) {
+			if (savedMana > 0) {
+				float _setMana = GameManager.instance.matchSettings.restoreManaPrSecond * Time.deltaTime;
+				SetMana(_setMana);
+				savedMana -= _setMana;
+			} else if (savedMana < 0) {
+				mana = Mathf.Floor(mana);
+				savedMana = 0;
+			}
+		}
+	}
+		
+
+	void ResetMana() {
+		tempMana = 0;
+		savedMana = 0;
+		mana = 0;
+	}
+
+	/************************
+	 *       POWER UP       *
+	 ************************/
+
+
+	public void CollectPowerup()
+	{
+		int puType = Mathf.RoundToInt(Random.Range(0, 5));
+		Debug.Log("Powerup collected, type: " + puType);
+		//Hvis flere, tjek type, udfra puType
+		switch (puType)
+		{
+		case 0:
+			currentPU = "0 - Invisibility";
+			break;
+		case 1:
+			currentPU = "1 - Speed";
+			break;
+		default:
+			currentPU = "0 - Invisibility";
+			break;
+		}
+
+	}
+
+	public void MakeVisible()
+	{
+		Debug.Log("Make visible");
+		Renderer[] rs = GetComponentsInChildren<Renderer>();
+		foreach (Renderer r in rs)
+		{
+			r.enabled = true;
+		}
+	}
+
+	public void ResetSpeed()
+	{
+
+	}
+
+	public void ActivatePowerup()
+	{
+		if (currentPU != "None")
+		{
+			Debug.Log("Using powerup: "+currentPU);
+
+			switch (currentPU)
+			{
+			case "0 - Invisibility":
+				Renderer[] rs = GetComponentsInChildren<Renderer>();
+				foreach(Renderer r in rs){
+					r.enabled = false;
+					Invoke("MakeVisible", 5);
+				}
+				break;
+			case "1 - Speed":
+
+
+				break;
+			default:
+				break;
+			}
+
+
+			currentPU = "None";
+
+		}
+		else
+		{
+			Debug.Log("No powerup available");
+		}
+	}
+
 }

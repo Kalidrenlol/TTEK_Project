@@ -156,6 +156,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011374512204}
   - 54: {fileID: 54000011679358324}
+  - 65: {fileID: 65000011013581060}
   - 114: {fileID: 114000011496008384}
   - 114: {fileID: 114000011225430558}
   - 114: {fileID: 114000010706120136}
@@ -163,7 +164,6 @@ GameObject:
   - 114: {fileID: 114000010459295988}
   - 114: {fileID: 114000012223668820}
   - 114: {fileID: 114000012725039396}
-  - 65: {fileID: 65000011013581060}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1882,6 +1882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   username: Loading...
+  playerID: Loading...
   score: 0
   maxHealth: 100
   disableOnDeath:
@@ -1890,7 +1891,11 @@ MonoBehaviour:
   spawnParticle: {fileID: 1000011208478404}
   gameManager: {fileID: 1000011250917102, guid: 7bfb683d605aa46db90fb448a8df2caa,
     type: 2}
+  currentPU: None
+  rend: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
+  manaSlider: {fileID: 0}
+  isOnWonderland: 0
 --- !u!114 &114000011225430558
 MonoBehaviour:
   m_ObjectHideFlags: 1

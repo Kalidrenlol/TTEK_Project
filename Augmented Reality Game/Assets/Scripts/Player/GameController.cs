@@ -28,10 +28,7 @@ public class GameController : NetworkBehaviour {
 
 		foreach (Player _player in GameManager.GetPlayers()) {
 			if (!_player.GetComponent<PlayerSetup>().isReady) {
-				Debug.Log(_player.name + " is not ready.");
 				return;
-			} else {
-				Debug.Log(_player.name + " is ready.");
 			}
 		}
 		CmdStartGame();
