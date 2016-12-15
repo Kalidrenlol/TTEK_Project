@@ -26,6 +26,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1000010248030708
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000010724385408}
+  - 65: {fileID: 65000012874091708}
+  - 114: {fileID: 114000012406351698}
+  m_Layer: 0
+  m_Name: HitCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000010298716790
 GameObject:
   m_ObjectHideFlags: 1
@@ -139,7 +156,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010284484882}
-  - 65: {fileID: 65000011243424378}
   m_Layer: 0
   m_Name: CATRArm
   m_TagString: Untagged
@@ -316,7 +332,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010919625660}
-  - 65: {fileID: 65000013778586366}
   m_Layer: 0
   m_Name: CATRForearm
   m_TagString: Untagged
@@ -744,7 +759,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010640489286}
-  - 65: {fileID: 65000014000362742}
   m_Layer: 0
   m_Name: CATRHand
   m_TagString: Untagged
@@ -1004,6 +1018,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000011370998186}
   m_RootOrder: 0
+--- !u!4 &4000010724385408
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010248030708}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000012060388584}
+  m_RootOrder: 2
 --- !u!4 &4000010863533914
 Transform:
   m_ObjectHideFlags: 1
@@ -1297,6 +1324,7 @@ Transform:
   m_Children:
   - {fileID: 4000012884648290}
   - {fileID: 4000011662206208}
+  - {fileID: 4000010724385408}
   m_Father: {fileID: 4000011374512204}
   m_RootOrder: 0
 --- !u!4 &4000012163802332
@@ -1786,44 +1814,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1, z: 0.5}
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!65 &65000011243424378
+  m_Size: {x: 0.38596785, y: 1, z: 0.17942223}
+  m_Center: {x: -0.0037631989, y: 0.5, z: -0.0062894425}
+--- !u!65 &65000012874091708
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010886269590}
+  m_GameObject: {fileID: 1000010248030708}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1182357, y: 0.12457463, z: 0.09072527}
-  m_Center: {x: -0.14138557, y: -0.003998948, z: 0.0063089174}
---- !u!65 &65000013778586366
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011443506422}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.19110717, y: 0.13220125, z: 0.09049573}
-  m_Center: {x: -0.06248409, y: 0.003100284, z: 0.0059924773}
---- !u!65 &65000014000362742
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013450962236}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1563512, y: 0.03887291, z: 0.14159057}
-  m_Center: {x: -0.06950987, y: -0.0038254056, z: 0.019016428}
+  m_Size: {x: 1, y: 0.91770303, z: 0.6247262}
+  m_Center: {x: 0, y: 0.5069045, z: -0.48567256}
 --- !u!95 &95000013783494000
 Animator:
   serializedVersion: 3
@@ -1892,9 +1896,11 @@ MonoBehaviour:
   spawnParticle: {fileID: 1000011208478404}
   gameManager: {fileID: 1000011250917102, guid: 7bfb683d605aa46db90fb448a8df2caa,
     type: 2}
+  hitCollider: {fileID: 0}
   currentPU: None
   rend: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
+  pushedByPlayer: 
   tempMana: 0
   savedMana: 0
   isOnWonderland: 0
@@ -1990,6 +1996,19 @@ MonoBehaviour:
   scoreboard: {fileID: 1000012944594310, guid: 2d1e6236b08f144edb696a313d3a65f0, type: 2}
   playerUIInstance: {fileID: 0}
   isReady: 1
+--- !u!114 &114000012406351698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010248030708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d096c26517b4eef91d17f591b1fbf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInRange: 0
+  player: {fileID: 1000010936444112}
 --- !u!114 &114000012725039396
 MonoBehaviour:
   m_ObjectHideFlags: 1

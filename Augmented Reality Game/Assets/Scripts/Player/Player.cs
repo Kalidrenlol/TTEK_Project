@@ -22,6 +22,7 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private Behaviour[] disableOnDeath;
 	[SerializeField] private GameObject spawnParticle;
 	[SerializeField] public GameObject gameManager;
+	[SerializeField] private GameObject hitCollider;
 
     public string currentPU = "None";
 
@@ -34,6 +35,7 @@ public class Player : NetworkBehaviour {
 	private bool[] wasEnabled;
 
 	public string pushedByPlayer;
+	public bool isAttacking;
 
 	// Mana
 	public float tempMana;
@@ -58,6 +60,7 @@ public class Player : NetworkBehaviour {
 	void Update() {
 		if (GetComponent<GameController>().gameStarted) {
 			UpdateMana();
+
 		}
 	}
 
@@ -87,7 +90,6 @@ public class Player : NetworkBehaviour {
 
 		if (currentHealth <= 0) {
 			Die();
-			Debug.Log("CurrentHealt 0");
             GetComponent<Rigidbody>().drag = 30;
 		}
 	}
@@ -121,6 +123,7 @@ public class Player : NetworkBehaviour {
 		currentHealth = maxHealth;
         GetComponent<Rigidbody>().drag = 0;
 		isOnWonderland = false;
+		isAttacking = false;
 		pushedByPlayer = null;
 
 		for(int i = 0; i < disableOnDeath.Length; i++) {
@@ -189,15 +192,29 @@ public class Player : NetworkBehaviour {
 	#region PUSHING
 
 	[Client]
-	public void PushOpponent(Collision collider) {
+	public void PushOpponent(Collider coll) {
 		if (!isLocalPlayer) {
 			return;
 		}
 
-		if (playerAnimator.GetBool ("HasAttacked") == true) {
-			Vector3 dir = (transform.position - collider.transform.position).normalized;
+		if (isAttacking) {
+			Debug.Log("Slå");
+			Vector3 dir = (transform.position - coll.transform.position).normalized;
 			Vector3 _force = -dir * GameManager.instance.matchSettings.pushForce;
-			CmdPushOpponent(collider.gameObject.name, gameObject.name,  _force);
+			CmdPushOpponent(coll.gameObject.name, gameObject.name,  _force);
+		}
+	}
+
+	[Client]
+	public void PushOpponent(Collision coll) {
+		if (!isLocalPlayer) {
+			return;
+		}
+
+		if (isAttacking) {
+			Vector3 dir = (transform.position - coll.transform.position).normalized;
+			Vector3 _force = -dir * GameManager.instance.matchSettings.pushForce;
+			CmdPushOpponent(coll.gameObject.name, gameObject.name,  _force);
 		}
 	}
 
