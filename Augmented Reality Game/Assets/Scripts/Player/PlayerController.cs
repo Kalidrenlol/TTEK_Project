@@ -48,6 +48,12 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Use powerup");
             GetComponent<Player>().ActivatePowerup();
         }
+
+        if (Input.GetKeyDown("r"))
+        {
+            Debug.Log("Use powerup");
+            GetComponent<Player>().PU_ThrowExplosive();
+        }
         
        
 
