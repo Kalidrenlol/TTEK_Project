@@ -13,6 +13,9 @@ public class Player : NetworkBehaviour {
 	}
     public GameObject explosivePrefab;
     public GameObject explosiveMinePrefab;
+    
+
+
 	[SyncVar] public string username;
 	[SyncVar] public string playerID = "Loading...";
 	[SyncVar] public int score = 0;
@@ -25,7 +28,8 @@ public class Player : NetworkBehaviour {
 	[SerializeField] public GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
-    
+   
+
 
     public string currentPU = "None";
 
@@ -46,7 +50,33 @@ public class Player : NetworkBehaviour {
 	public bool isOnWonderland;
 
 
+    [Header("Sound")]
+    public GameObject asThrowExplosive;
+    GameObject throwSound;
+    AudioSource throwAudioSource;
+
+    public GameObject asPunch;
+    GameObject punchSound;
+    AudioSource punchAudioSource;
+
+    public GameObject asSpeed;
+    GameObject speedSound;
+    AudioSource speedAudioSource;
+
+
 	void Start() {
+
+        //sound
+        throwSound = Instantiate(asThrowExplosive) as GameObject;
+        throwAudioSource = throwSound.GetComponent<AudioSource>();
+
+        punchSound = Instantiate(asPunch) as GameObject;
+        punchAudioSource = punchSound.GetComponent<AudioSource>();
+
+        speedSound = Instantiate(asSpeed) as GameObject;
+        speedAudioSource = speedSound.GetComponent<AudioSource>();
+
+
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
 
@@ -194,6 +224,11 @@ public class Player : NetworkBehaviour {
 	}
 
 	#region PUSHING
+
+    public void PushSound()
+    {
+        punchAudioSource.Play();
+    }
 
 	[Client]
 	public void PushOpponent(Collider coll) {
@@ -373,6 +408,7 @@ public class Player : NetworkBehaviour {
     public void PU_HeightenSpeed()
     {
         GetComponent<PlayerMotor>().speed = 20;
+        speedAudioSource.Play();
         Invoke("PU_ResetSpeed", 5);
     }
 
@@ -384,7 +420,7 @@ public class Player : NetworkBehaviour {
     public void PU_ThrowExplosive()
     {
         Transform tp = transform.Find("Graphics");
-        
+        throwAudioSource.Play();
         Debug.Log(tp);
         Vector3 vec = new Vector3(0, 1.3f, 0);
         var explosive = Instantiate(explosivePrefab, tp.position+vec, tp.rotation) as GameObject;
@@ -394,7 +430,8 @@ public class Player : NetworkBehaviour {
 
     public void PU_PlaceMine()
     {
-        Vector3 offset = new Vector3(0, 4, 0);
+        throwAudioSource.Play();
+        Vector3 offset = new Vector3(0, 5, 0);
         var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;
     }
 

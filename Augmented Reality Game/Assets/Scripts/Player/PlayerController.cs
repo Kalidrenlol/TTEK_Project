@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 
 		if (Input.GetKeyDown ("f")) {
 			PushOpponent();
+            //Push sound
+            GetComponent<Player>().PushSound();
 		}
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);

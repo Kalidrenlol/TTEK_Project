@@ -30,6 +30,7 @@ public class Explosive : MonoBehaviour {
 
         Vector3 pos = rb.transform.position;
         Collider[] colliders = Physics.OverlapSphere(pos, explosiveRadius);
+       
         foreach (Collider hit in colliders)
         {
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();

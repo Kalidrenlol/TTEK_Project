@@ -1930,7 +1930,7 @@ MonoBehaviour:
   gameManager: {fileID: 1000011250917102, guid: 7bfb683d605aa46db90fb448a8df2caa,
     type: 2}
   hitCollider: {fileID: 0}
-  currentPU: None
+  currentPU: 1 - Speed
   rend: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
   pushedByPlayer: 
@@ -1938,6 +1938,10 @@ MonoBehaviour:
   tempMana: 0
   savedMana: 0
   isOnWonderland: 0
+  asThrowExplosive: {fileID: 1000011466076950, guid: 2bed18f2363d68147a730f3b9df592eb,
+    type: 2}
+  asPunch: {fileID: 1000010130028660, guid: 1dd9a0e6a7b314e49aa6d36175623378, type: 2}
+  asSpeed: {fileID: 1000011490447322, guid: 23a8992ce2414844dbb441af41e801ca, type: 2}
 --- !u!114 &114000011225430558
 MonoBehaviour:
   m_ObjectHideFlags: 1
