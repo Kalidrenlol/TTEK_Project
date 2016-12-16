@@ -182,10 +182,11 @@ public class Player : NetworkBehaviour {
 	public void RpcSetScore(int _score, string _reason) {
 		score += _score;
 
+		int _rand;
 		switch(_reason) {
 		case "Kill":
 			Debug.Log("Dræbte selv");
-			int _rand = Random.Range(0,3);
+			_rand = Random.Range(0,3);
 			switch (_rand) {
 				case 0:
 					GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText("Nice One");
@@ -200,7 +201,7 @@ public class Player : NetworkBehaviour {
 			break;
 		case "Suicide":
 			Debug.Log("Suicide");
-			int _rand = Random.Range(0,3);
+			_rand = Random.Range(0,3);
 			switch (_rand) {
 				case 0:
 					GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText("Suicide");
