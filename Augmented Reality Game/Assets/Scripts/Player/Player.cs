@@ -11,6 +11,10 @@ public class Player : NetworkBehaviour {
 		get {return _isDead;}
 		protected set {_isDead = value;}
 	}
+    public GameObject explosivePrefab;
+    public GameObject explosiveMinePrefab;
+    
+
 
 	[SyncVar] public string username;
 	[SyncVar] public string playerID = "Loading...";
@@ -23,6 +27,9 @@ public class Player : NetworkBehaviour {
 	[SerializeField] private GameObject spawnParticle;
 	[SerializeField] public GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
+
+   
+
 
     public string currentPU = "None";
 
@@ -42,7 +49,34 @@ public class Player : NetworkBehaviour {
 	public float savedMana;
 	public bool isOnWonderland;
 
+
+    [Header("Sound")]
+    public GameObject asThrowExplosive;
+    GameObject throwSound;
+    AudioSource throwAudioSource;
+
+    public GameObject asPunch;
+    GameObject punchSound;
+    AudioSource punchAudioSource;
+
+    public GameObject asSpeed;
+    GameObject speedSound;
+    AudioSource speedAudioSource;
+
+
 	void Start() {
+
+        //sound
+        throwSound = Instantiate(asThrowExplosive) as GameObject;
+        throwAudioSource = throwSound.GetComponent<AudioSource>();
+
+        punchSound = Instantiate(asPunch) as GameObject;
+        punchAudioSource = punchSound.GetComponent<AudioSource>();
+
+        speedSound = Instantiate(asSpeed) as GameObject;
+        speedAudioSource = speedSound.GetComponent<AudioSource>();
+
+
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
 
@@ -224,6 +258,11 @@ public class Player : NetworkBehaviour {
 
 	#region PUSHING
 
+    public void PushSound()
+    {
+        punchAudioSource.Play();
+    }
+
 	[Client]
 	public void PushOpponent(Collider coll) {
 		if (!isLocalPlayer) {
@@ -365,6 +404,12 @@ public class Player : NetworkBehaviour {
 		case 1:
 			currentPU = "1 - Speed";
 			break;
+        case 2:
+            currentPU = "2 - Explosive";
+            break;
+        case 3:
+            currentPU = "3 - Mine";
+            break;
 		default:
 			currentPU = "0 - Invisibility";
 			break;
@@ -372,19 +417,55 @@ public class Player : NetworkBehaviour {
 
 	}
 
-	public void MakeVisible()
+    public void PU_MakeInvisible()
+    {
+        Renderer[] rs = transform.GetChild(0).GetComponentsInChildren<Renderer>();
+        foreach (Renderer r in rs)
+        {
+            r.enabled = false;
+            Invoke("PU_MakeVisible", 5); //5 is var for time in seconds before invoking
+        }
+    }
+
+	public void PU_MakeVisible()
 	{
 		Debug.Log("Make visible");
-		Renderer[] rs = GetComponentsInChildren<Renderer>();
+		Renderer[] rs = transform.GetChild(0).GetComponentsInChildren<Renderer>();
 		foreach (Renderer r in rs)
 		{
 			r.enabled = true;
 		}
 	}
 
-	public void ResetSpeed() {
+    public void PU_HeightenSpeed()
+    {
+        GetComponent<PlayerMotor>().speed = 20;
+        speedAudioSource.Play();
+        Invoke("PU_ResetSpeed", 5);
+    }
 
+    public void PU_ResetSpeed()
+	{
+        GetComponent<PlayerMotor>().speed = 10; // Evt sæt dynamisk, så det kan ændres senere hen
 	}
+
+    public void PU_ThrowExplosive()
+    {
+        Transform tp = transform.Find("Graphics");
+        throwAudioSource.Play();
+        Debug.Log(tp);
+        Vector3 vec = new Vector3(0, 1.3f, 0);
+        var explosive = Instantiate(explosivePrefab, tp.position+vec, tp.rotation) as GameObject;
+        explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
+        //explosive.rigidbody.AddForce(transform.forward * 2000);
+    }
+
+    public void PU_PlaceMine()
+    {
+        throwAudioSource.Play();
+        Vector3 offset = new Vector3(0, 5, 0);
+        var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;
+    }
 
 	public void ActivatePowerup()
 	{
@@ -395,16 +476,17 @@ public class Player : NetworkBehaviour {
 			switch (currentPU)
 			{
 			case "0 - Invisibility":
-				Renderer[] rs = GetComponentsInChildren<Renderer>();
-				foreach(Renderer r in rs){
-					r.enabled = false;
-					Invoke("MakeVisible", 5);
-				}
+                PU_MakeInvisible();
 				break;
 			case "1 - Speed":
-
-
+                PU_HeightenSpeed();
 				break;
+            case "2 - Explosive":
+                PU_ThrowExplosive();
+                break;
+            case "3 - Mine":
+                PU_PlaceMine();
+                break;
 			default:
 				break;
 			}

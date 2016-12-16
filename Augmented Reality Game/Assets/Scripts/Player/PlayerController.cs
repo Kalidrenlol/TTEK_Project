@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 
 		if (Input.GetKeyDown ("f")) {
 			PushOpponent();
+            //Push sound
+            GetComponent<Player>().PushSound();
 		}
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
@@ -47,6 +49,18 @@ public class PlayerController : MonoBehaviour {
         {
             Debug.Log("Use powerup");
             GetComponent<Player>().ActivatePowerup();
+        }
+
+        if (Input.GetKeyDown("r"))
+        {
+            Debug.Log("Use powerup");
+            GetComponent<Player>().PU_ThrowExplosive();
+        }
+
+        if (Input.GetKeyDown("t"))
+        {
+            Debug.Log("Use powerup");
+            GetComponent<Player>().PU_PlaceMine();
         }
         
        
