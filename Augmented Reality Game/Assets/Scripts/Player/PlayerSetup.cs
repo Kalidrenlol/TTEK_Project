@@ -79,8 +79,8 @@ public class PlayerSetup : NetworkBehaviour {
 			waitingUI.SetActive(true);
 			pregameUI.GetComponent<PregameUI>().btnGetReady.onClick.AddListener(GetReady);
 			pregameUI.GetComponent<PregameUI>().btnDebug.onClick.AddListener(NoVuforia);
-			playerUIInstance.gameObject.transform.FindDeepChild ("RightHandControls").GetComponent<RightHandController> ().btnPowerUp.onClick.AddListener (BtnUsePowerUp);
-			playerUIInstance.gameObject.transform.FindDeepChild ("RightHandControls").GetComponent<RightHandController> ().btnPush.onClick.AddListener (BtnPush);		
+			playerUIInstance.GetComponent<PlayerUI> ().btnPowerUp.onClick.AddListener (BtnUsePowerUp);
+			playerUIInstance.GetComponent<PlayerUI> ().btnPush.onClick.AddListener (BtnPush);		
 			gameObject.GetComponent<Rigidbody>().useGravity = false;
 
 		}
@@ -91,7 +91,7 @@ public class PlayerSetup : NetworkBehaviour {
 	}
 
 	void BtnUsePowerUp() {
-		// Når powerup knappen trykkes //
+		GetComponent<Player>().ActivatePowerup();
 	}
 
 	void BtnPush() {

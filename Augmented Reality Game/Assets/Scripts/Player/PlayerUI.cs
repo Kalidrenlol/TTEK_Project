@@ -3,13 +3,20 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour {
 
+	public static PlayerUI instance;
 	[SerializeField] GameObject pauseMenu;
 
 	private Player playerScript;
 	private PlayerController controller;
 
-	[SerializeField] private Text txtMana;
-	[SerializeField] private GameObject manaSlider;
+	public GameObject textFeedback;
+
+	[Header("RightHandController")]
+	public Button btnPush;
+	public Button btnPowerUp;
+	[SerializeField] GameObject manaSlider;
+	[SerializeField] Text txtManaCount;
+
 
 	public void SetPlayerScript(Player _script) {
 		playerScript = _script;
@@ -28,14 +35,21 @@ public class PlayerUI : MonoBehaviour {
 		if (manaSlider != null) {
 			manaSlider.transform.FindDeepChild("TempBar").GetComponent<Slider>().value = playerScript.mana + playerScript.savedMana + playerScript.tempMana;
 			manaSlider.transform.FindDeepChild("SavedBar").GetComponent<Slider>().value = playerScript.mana;
-			txtMana.text = Mathf.Floor(playerScript.mana).ToString();
+			txtManaCount.text = Mathf.Floor(playerScript.mana).ToString();
 		}
 
+		if (Input.GetKeyDown(KeyCode.C)) {
+			ShowFeedbackText("Kill");
+		}
 
 	}
 
 	void Start() {
 		PauseMenu.IsOn = false;
+	}
+
+	public void ShowFeedbackText(string _txt) {
+		textFeedback.GetComponent<TextFeedback>().ShowText(_txt);
 	}
 
 	public void TogglePauseMenu() {

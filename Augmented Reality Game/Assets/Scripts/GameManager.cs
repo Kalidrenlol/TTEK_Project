@@ -9,6 +9,7 @@ public class GameManager : NetworkBehaviour {
 
 	public static GameManager instance;
 	public MatchSettings matchSettings;
+	public PowerUps powerUps;
 
 	void Awake() {
 		if (instance != null) {

@@ -60,7 +60,6 @@ public class Player : NetworkBehaviour {
 	void Update() {
 		if (GetComponent<GameController>().gameStarted) {
 			UpdateMana();
-
 		}
 	}
 
@@ -107,11 +106,9 @@ public class Player : NetworkBehaviour {
 		}
 
 		if (pushedByPlayer != null) {
-			SetScore(pushedByPlayer, 1);
-			Debug.Log("Die By Player");
+			SetScore(pushedByPlayer, 1, "Kill");
 		} else {
-			Debug.Log("Died alone");
-			SetScore(playerID, -1);
+			SetScore(playerID, -1, "Suicide");
 		}
 
 		StartCoroutine(Respawn());
@@ -137,19 +134,55 @@ public class Player : NetworkBehaviour {
 	}
 
 	[Client]
-	void SetScore(string _playerID, int _score) {
-		CmdSetScore(_playerID, _score);
+	void SetScore(string _playerID, int _score, string _reason) {
+		CmdSetScore(_playerID, _score, _reason);
 	}
 
 	[Command]
-	public void CmdSetScore(string _playerID, int _score) {
+	public void CmdSetScore(string _playerID, int _score, string _reason) {
 		Player _player = GameManager.GetPlayer(_playerID);
-		_player.RpcSetScore(_score);
+		_player.RpcSetScore(_score, _reason);
 	}
 
 	[ClientRpc]
-	public void RpcSetScore(int _score) {
+	public void RpcSetScore(int _score, string _reason) {
 		score += _score;
+
+		switch(_reason) {
+		case "Kill":
+			Debug.Log("Dræbte selv");
+			int _rand = Random.Range(0,3);
+			switch (_rand) {
+				case 0:
+					GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText("Nice One");
+					break;
+				case 1:
+					GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText("Kill");
+					break;
+				case 2:
+					GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText("Perfection");
+					break;
+				}
+			break;
+		case "Suicide":
+			Debug.Log("Suicide");
+			int _rand = Random.Range(0,3);
+			switch (_rand) {
+				case 0:
+					GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText("Suicide");
+					break;
+				case 1:
+					GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText("Stupidity");
+					break;
+				case 2:
+					GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText("Oh No");
+					break;
+			}
+			break;
+		default:
+			Debug.Log("Årsag til død blev ikke genkendt");
+			break;
+		}
 	}
 
 	void GoToSpawnpoint() {
@@ -198,9 +231,8 @@ public class Player : NetworkBehaviour {
 		}
 
 		if (isAttacking) {
-			Debug.Log("Slå");
 			Vector3 dir = (transform.position - coll.transform.position).normalized;
-			Vector3 _force = -dir * GameManager.instance.matchSettings.pushForce;
+			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
 			CmdPushOpponent(coll.gameObject.name, gameObject.name,  _force);
 		}
 	}
@@ -213,7 +245,7 @@ public class Player : NetworkBehaviour {
 
 		if (isAttacking) {
 			Vector3 dir = (transform.position - coll.transform.position).normalized;
-			Vector3 _force = -dir * GameManager.instance.matchSettings.pushForce;
+			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
 			CmdPushOpponent(coll.gameObject.name, gameObject.name,  _force);
 		}
 	}
