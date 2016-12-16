@@ -54,6 +54,12 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Use powerup");
             GetComponent<Player>().PU_ThrowExplosive();
         }
+
+        if (Input.GetKeyDown("t"))
+        {
+            Debug.Log("Use powerup");
+            GetComponent<Player>().PU_PlaceMine();
+        }
         
        
 

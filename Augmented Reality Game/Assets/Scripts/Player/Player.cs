@@ -12,6 +12,7 @@ public class Player : NetworkBehaviour {
 		protected set {_isDead = value;}
 	}
     public GameObject explosivePrefab;
+    public GameObject explosiveMinePrefab;
 	[SyncVar] public string username;
 	[SyncVar] public string playerID = "Loading...";
 	[SyncVar] public int score = 0;
@@ -393,8 +394,8 @@ public class Player : NetworkBehaviour {
 
     public void PU_PlaceMine()
     {
-        var explosive = Instantiate(explosivePrefab, transform.position, Quaternion.identity) as GameObject;
-        explosive.GetComponent<Rigidbody>().AddForce(transform.up * 25000);
+        Vector3 offset = new Vector3(0, 4, 0);
+        var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;
     }
 
 	public void ActivatePowerup()
