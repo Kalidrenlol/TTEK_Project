@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour {
@@ -34,8 +35,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown ("f")) {
-			bool hasAttackPressed = true;
-			playerAnimator.SetBool ("HasAttacked", hasAttackPressed);
+			PushOpponent();
 		}
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
@@ -58,12 +58,16 @@ public class PlayerController : MonoBehaviour {
        
 
 	}
-
-   
-
+		
 	public void PushOpponent() {
-		Debug.Log ("Skubber modstander");
+		GetComponent<Player>().isAttacking = true;
 		playerAnimator.SetBool ("HasAttacked", true);
+		StartCoroutine(StopPush());
+	}
+
+	private IEnumerator StopPush() {
+		yield return new WaitForSeconds(0.5f);
+		GetComponent<Player>().isAttacking = false;
 	}
 
 	void OnCollisionStay(Collision collider) {

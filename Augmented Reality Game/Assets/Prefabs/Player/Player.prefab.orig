@@ -26,33 +26,30 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+<<<<<<< HEAD
+--- !u!1 &1000010199039142
+GameObject:
+  m_ObjectHideFlags: 0
+=======
 --- !u!1 &1000010248030708
 GameObject:
   m_ObjectHideFlags: 1
+>>>>>>> eb485a4720aa56f8977aa5e7ed0eae763e4c3bbb
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
+<<<<<<< HEAD
+  - 4: {fileID: 4000012524005156}
+  m_Layer: 0
+  m_Name: ThrowPoint
+=======
   - 4: {fileID: 4000010724385408}
   - 65: {fileID: 65000012874091708}
   - 114: {fileID: 114000012406351698}
   m_Layer: 0
   m_Name: HitCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1000010199039142
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 4000012524005156}
-  m_Layer: 0
-  m_Name: ThrowPoint
+>>>>>>> eb485a4720aa56f8977aa5e7ed0eae763e4c3bbb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

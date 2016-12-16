@@ -133,7 +133,6 @@ public class PlayerSetup : NetworkBehaviour {
 
 	// Find ImageTarget //
 	public void GetReady() {
-		Debug.Log("GetReady");
 		if (sceneCamera != null) {
 			GameObject _world = GameObject.FindGameObjectWithTag("GameWorld");
 			_world.transform.SetParent(GameObject.Find("ImageTarget").transform);
@@ -156,7 +155,7 @@ public class PlayerSetup : NetworkBehaviour {
 	[Command]
 	public void CmdSetReady() {
 		if (!isLocalPlayer) {
-			Debug.Log("Not Local");
+			//
 		}
 		isReady = true;
 		GetComponent<GameController>().IsAllReady();
