@@ -29,7 +29,6 @@ public class Player : NetworkBehaviour {
 	[SerializeField] public  GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
-   
 
 
     public string currentPU = "None";
@@ -157,7 +156,7 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
-	private void Die() {
+	public void Die() {
 		isDead = true;
 
 		for (int i = 0; i < disableOnDeath.Length; i++) {
