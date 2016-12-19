@@ -14,8 +14,6 @@ public class Player : NetworkBehaviour {
     public GameObject explosivePrefab;
     public GameObject explosiveMinePrefab;
     
-
-
 	[SyncVar] public  string username;
 	[SyncVar] public  string playerID = "Loading...";
 	[SyncVar] public  int score = 0;
@@ -29,14 +27,9 @@ public class Player : NetworkBehaviour {
 	[SerializeField] public  GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> afaa1a246b5f184e622ff23fd1d389aca29ee218
-
     public string currentPU = "None";
 
-	        Animator playerAnimator;
+	Animator playerAnimator;
 	public  Renderer rend;
 	public  Color color;
 	private int playerIndex;
