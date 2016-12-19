@@ -63,7 +63,13 @@ public class Player : NetworkBehaviour {
     GameObject invisSound;
     AudioSource invisAudioSource;
 
+    public GameObject asTick;
+    GameObject tickSound;
+    AudioSource tickAudioSource;
+
     Transform sound_holder;
+
+    Button spritePU;
 
     [Header("Images")]
     public Sprite spr_invis;
@@ -75,12 +81,9 @@ public class Player : NetworkBehaviour {
     public GameObject powerUpGraphic;
 
 	void Start() {
-        powerUpGraphic = GameObject.Find("AbilityImage");
-        
-        if (powerUpGraphic == null)
-        {
-            Debug.Log("NO POWERUP GRAPHIC");
-        }
+
+
+
 
         sound_holder = GameObject.FindGameObjectWithTag("SoundHolder").transform;
 
@@ -100,6 +103,10 @@ public class Player : NetworkBehaviour {
         invisSound = Instantiate(asInvis) as GameObject;
         invisAudioSource = invisSound.GetComponent<AudioSource>();
         invisSound.transform.parent = sound_holder;
+
+        tickSound = Instantiate(asTick) as GameObject;
+        tickAudioSource = tickSound.GetComponent<AudioSource>();
+        tickSound.transform.parent = sound_holder;
         //sound end
 
 		spawnpointPos = transform.position;
@@ -113,6 +120,8 @@ public class Player : NetworkBehaviour {
 			StartParticle();
 			SetPlayerIndex();
 		}
+
+        
 	}
 
 	void Update() {
@@ -135,6 +144,8 @@ public class Player : NetworkBehaviour {
 			wasEnabled[i] = disableOnDeath[i].enabled;
 		}
 		SetDefaults();
+
+        GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().btnPowerUp.image.overrideSprite = sprite_array[4];//
 	}
 		
 	public void TakeDamage(int _amount) {
@@ -422,25 +433,40 @@ public class Player : NetworkBehaviour {
 
     public IEnumerator ChangeGraphics(float _time, int _pu)
     {
-        Button spritePU = GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().btnPowerUp;
+        spritePU = GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().btnPowerUp;
+        
         spritePU.image.overrideSprite = sprite_array[0];
+        tickAudioSource.Play();
         yield return new WaitForSeconds(_time);
-        Debug.Log("Test 1");
-        spritePU.image.overrideSprite = sprite_array[1];
+
+        spritePU.image.overrideSprite = sprite_array[1]; 
+        tickAudioSource.Play();
         yield return new WaitForSeconds(_time);
+
         spritePU.image.overrideSprite = sprite_array[2];
+        tickAudioSource.Play();
         yield return new WaitForSeconds(_time);
+
         spritePU.image.overrideSprite = sprite_array[3];
+        tickAudioSource.Play();
         yield return new WaitForSeconds(_time);
+
         spritePU.image.overrideSprite = sprite_array[0];
+        tickAudioSource.Play();
         yield return new WaitForSeconds(_time);
-        Debug.Log("Test 2");
+
         spritePU.image.overrideSprite = sprite_array[1];
+        tickAudioSource.Play();
         yield return new WaitForSeconds(_time);
+
         spritePU.image.overrideSprite = sprite_array[2];
+        tickAudioSource.Play();
         yield return new WaitForSeconds(_time);
+
         spritePU.image.overrideSprite = sprite_array[3];
+        tickAudioSource.Play();
         yield return new WaitForSeconds(_time);
+        tickAudioSource.Play();
         spritePU.image.overrideSprite = sprite_array[_pu];
     }
     
@@ -555,6 +581,7 @@ public class Player : NetworkBehaviour {
 
 
 			currentPU = "None";
+            spritePU.image.overrideSprite = sprite_array[4];//
 
 		}
 		else
