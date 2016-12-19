@@ -15,6 +15,7 @@ TagManager:
   - RightHandControls
   - Interactable
   - PlayerUI
+  - SoundHolder
   layers:
   - Default
   - TransparentFX

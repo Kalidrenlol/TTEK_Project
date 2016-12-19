@@ -16,16 +16,17 @@ public class Player : NetworkBehaviour {
     
 
 
-	[SyncVar] public string username;
-	[SyncVar] public string playerID = "Loading...";
-	[SyncVar] public int score = 0;
+	[SyncVar] public  string username;
+	[SyncVar] public  string playerID = "Loading...";
+	[SyncVar] public  int score = 0;
 	[SyncVar] private int currentHealth;
-	[SyncVar] public float mana;
+	[SyncVar] public  float mana;
 
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
 	[SerializeField] private GameObject spawnParticle;
-	[SerializeField] public GameObject gameManager;
+    [SerializeField] public  GameObject smokeParticle;
+	[SerializeField] public  GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
    
@@ -33,9 +34,9 @@ public class Player : NetworkBehaviour {
 
     public string currentPU = "None";
 
-	Animator playerAnimator;
-	public Renderer rend;
-	public Color color;
+	        Animator playerAnimator;
+	public  Renderer rend;
+	public  Color color;
 	private int playerIndex;
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
@@ -63,19 +64,32 @@ public class Player : NetworkBehaviour {
     GameObject speedSound;
     AudioSource speedAudioSource;
 
+    public GameObject asInvis;
+    GameObject invisSound;
+    AudioSource invisAudioSource;
+
+    Transform sound_holder;
 
 	void Start() {
+        sound_holder = GameObject.FindGameObjectWithTag("SoundHolder").transform;
 
         //sound
         throwSound = Instantiate(asThrowExplosive) as GameObject;
         throwAudioSource = throwSound.GetComponent<AudioSource>();
+        throwSound.transform.parent = sound_holder;
 
         punchSound = Instantiate(asPunch) as GameObject;
         punchAudioSource = punchSound.GetComponent<AudioSource>();
+        punchAudioSource.transform.parent = sound_holder;
 
         speedSound = Instantiate(asSpeed) as GameObject;
         speedAudioSource = speedSound.GetComponent<AudioSource>();
+        speedSound.transform.parent = sound_holder;
 
+        invisSound = Instantiate(asInvis) as GameObject;
+        invisAudioSource = invisSound.GetComponent<AudioSource>();
+        invisSound.transform.parent = sound_holder;
+        //sound end
 
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
@@ -420,6 +434,8 @@ public class Player : NetworkBehaviour {
 
     public void PU_MakeInvisible()
     {
+        invisAudioSource.Play();
+        Instantiate(smokeParticle, transform.position, Quaternion.identity);
         Renderer[] rs = transform.GetChild(0).GetComponentsInChildren<Renderer>();
         foreach (Renderer r in rs)
         {
