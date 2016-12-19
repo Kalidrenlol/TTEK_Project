@@ -85,8 +85,9 @@ public class PlayerSetup : NetworkBehaviour {
 
 		}
 
-		//playerGraphics.GetComponent<Renderer>().material.color = GetComponent<Player>().color;
-
+		//playerGraphics.GetComponent<Renderer>().mateial.color = GetComponent<Player>().color;
+		Color c = new Color(GetComponent<Player> ().color.r, GetComponent<Player> ().color.g, GetComponent<Player> ().color.b);
+		transform.FindDeepChild ("NPC_Hair_009").gameObject.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", c);
 
 	}
 

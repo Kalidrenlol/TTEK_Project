@@ -29,7 +29,6 @@ public class Player : NetworkBehaviour {
 	[SerializeField] public  GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
-   
 
 
     public string currentPU = "None";
