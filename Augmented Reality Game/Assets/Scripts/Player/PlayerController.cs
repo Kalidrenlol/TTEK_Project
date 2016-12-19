@@ -62,6 +62,11 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Use powerup");
             GetComponent<Player>().PU_PlaceMine();
         }
+
+        if (Input.GetKeyDown("q"))
+        {
+            //GameObject cam = GameObject.FindWithTag();
+        }
         
        
 
