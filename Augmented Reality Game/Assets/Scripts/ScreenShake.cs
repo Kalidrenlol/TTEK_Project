@@ -57,7 +57,7 @@ public class ScreenShake : MonoBehaviour {
         }
 	}
 
-    void InitScreenShake(float _magnitudeFloat, float _timeFloat)
+    public void InitScreenShake(float _magnitudeFloat, float _timeFloat)
     {
         //originalPos = camTransform.localPosition;
         timeDecay = _timeFloat;

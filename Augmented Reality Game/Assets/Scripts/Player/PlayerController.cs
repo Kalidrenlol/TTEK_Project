@@ -65,7 +65,8 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown("q"))
         {
-            //GameObject cam = GameObject.FindWithTag();
+            //Camera camMain = Camera.main;
+            cam.GetComponent<ScreenShake>().InitScreenShake(1,1);
         }
         
        
