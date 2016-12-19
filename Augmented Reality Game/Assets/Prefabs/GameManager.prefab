@@ -128,10 +128,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerColors:
-  - {r: 1, g: 0.06714966, b: 0.06714966, a: 0}
-  - {r: 1, g: 0.9724138, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.048275948, a: 0}
-  - {r: 0, g: 0.11912498, b: 1, a: 0}
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 1, g: 1, b: 0, a: 0}
+  - {r: 0, g: 1, b: 0.047844887, a: 0}
+  - {r: 0, g: 0.2169776, b: 1, a: 0}
   matchSettings:
     respawnTime: 3
     spawnNextWeapon: 5

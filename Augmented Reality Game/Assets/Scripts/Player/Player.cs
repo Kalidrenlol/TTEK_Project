@@ -29,6 +29,10 @@ public class Player : NetworkBehaviour {
 	[SerializeField] public  GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> afaa1a246b5f184e622ff23fd1d389aca29ee218
 
     public string currentPU = "None";
 
@@ -68,7 +72,23 @@ public class Player : NetworkBehaviour {
 
     Transform sound_holder;
 
+    [Header("Images")]
+    public Sprite spr_invis;
+    public Sprite spr_speed;
+    public Sprite spr_mine;
+    public Sprite spr_grenade;
+    public Sprite[] sprite_array;
+
+    public GameObject powerUpGraphic;
+
 	void Start() {
+        powerUpGraphic = GameObject.Find("AbilityImage");
+        
+        if (powerUpGraphic == null)
+        {
+            Debug.Log("NO POWERUP GRAPHIC");
+        }
+
         sound_holder = GameObject.FindGameObjectWithTag("SoundHolder").transform;
 
         //sound
@@ -401,9 +421,43 @@ public class Player : NetworkBehaviour {
 
 	#region POWER UP
 
+    public void RotateGraphics(float _time, int _pu)
+    {
+        Debug.Log("Start change");
+        StartCoroutine(ChangeGraphics(_time, _pu));
+    }
+
+    public IEnumerator ChangeGraphics(float _time, int _pu)
+    {
+        Button spritePU = GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().btnPowerUp;
+        spritePU.image.overrideSprite = sprite_array[0];
+        yield return new WaitForSeconds(_time);
+        Debug.Log("Test 1");
+        spritePU.image.overrideSprite = sprite_array[1];
+        yield return new WaitForSeconds(_time);
+        spritePU.image.overrideSprite = sprite_array[2];
+        yield return new WaitForSeconds(_time);
+        spritePU.image.overrideSprite = sprite_array[3];
+        yield return new WaitForSeconds(_time);
+        spritePU.image.overrideSprite = sprite_array[0];
+        yield return new WaitForSeconds(_time);
+        Debug.Log("Test 2");
+        spritePU.image.overrideSprite = sprite_array[1];
+        yield return new WaitForSeconds(_time);
+        spritePU.image.overrideSprite = sprite_array[2];
+        yield return new WaitForSeconds(_time);
+        spritePU.image.overrideSprite = sprite_array[3];
+        yield return new WaitForSeconds(_time);
+        spritePU.image.overrideSprite = sprite_array[_pu];
+    }
+    
 	public void CollectPowerup()
 	{
-		int puType = Mathf.RoundToInt(Random.Range(0, 5));
+
+		int puType = Mathf.RoundToInt(Random.Range(0, 4));
+        RotateGraphics(0.1f, puType);
+
+        //GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().btnPush.image.overrideSprite = sprite_array[puType];
 		Debug.Log("Powerup collected, type: " + puType);
 		//Hvis flere, tjek type, udfra puType
 		switch (puType)

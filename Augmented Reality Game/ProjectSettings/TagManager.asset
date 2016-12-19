@@ -16,6 +16,7 @@ TagManager:
   - Interactable
   - PlayerUI
   - SoundHolder
+  - PowerUpButton
   layers:
   - Default
   - TransparentFX

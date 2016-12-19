@@ -12,7 +12,7 @@ public class ScreenShake : MonoBehaviour {
     public float magnitude = 1.0f;
     public float decreaseFactor = 1.0f;
 
-    Vector3 originalPos;
+
 
 
     void Start()
@@ -33,7 +33,6 @@ public class ScreenShake : MonoBehaviour {
 
     void OnEnable()
     {
-        originalPos = camTransform.localPosition;
     }
 
     
