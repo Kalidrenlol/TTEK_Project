@@ -65,7 +65,7 @@ MonoBehaviour:
     getManaPrSecond: 1
     restoreManaPrSecond: 1
   powerUps:
-    punchForce: 5000
+    punchForce: 200
 --- !u!114 &114000014292715744
 MonoBehaviour:
   m_ObjectHideFlags: 1

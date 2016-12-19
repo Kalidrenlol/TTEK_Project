@@ -28,8 +28,6 @@ public class Player : NetworkBehaviour {
 	[SerializeField] public GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
-   
-
 
     public string currentPU = "None";
 
@@ -87,7 +85,6 @@ public class Player : NetworkBehaviour {
             rend = GetComponent<Renderer>();
 			StartParticle();
 			SetPlayerIndex();
-			username = System.Environment.UserName;
 		}
 	}
 
@@ -129,7 +126,6 @@ public class Player : NetworkBehaviour {
 
 	private void Die() {
 		isDead = true;
-
 		for (int i = 0; i < disableOnDeath.Length; i++) {
 			disableOnDeath[i].enabled = false;
 		}
@@ -140,9 +136,13 @@ public class Player : NetworkBehaviour {
 		}
 
 		if (pushedByPlayer != null) {
-			SetScore(pushedByPlayer, 1, "Kill");
+			CmdSetScore(pushedByPlayer, 1, "Kill");
+			Player _player = GameManager.GetPlayer(pushedByPlayer);
+			_player.score += 1;
+
 		} else {
-			SetScore(playerID, -1, "Suicide");
+			CmdSetScore(playerID, -1, "Suicide");
+			score -= 1;
 		}
 
 		StartCoroutine(Respawn());
@@ -167,11 +167,6 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
-	[Client]
-	void SetScore(string _playerID, int _score, string _reason) {
-		CmdSetScore(_playerID, _score, _reason);
-	}
-
 	[Command]
 	public void CmdSetScore(string _playerID, int _score, string _reason) {
 		Player _player = GameManager.GetPlayer(_playerID);
@@ -180,7 +175,9 @@ public class Player : NetworkBehaviour {
 
 	[ClientRpc]
 	public void RpcSetScore(int _score, string _reason) {
-		score += _score;
+		if (!isLocalPlayer) {
+			return;
+		}
 
 		int _rand;
 		switch(_reason) {
@@ -243,16 +240,13 @@ public class Player : NetworkBehaviour {
 		ResetMana();
 	}
 		
-	[Client]
 	public void HitWater() {
-		if (!isLocalPlayer) {
-			return;
-		}
 		CmdHitWater(playerID);
+		Debug.Log("HitWater");
 	}
 
 	[Command]
-	void CmdHitWater(string _playerID) {
+	void CmdHitWater(string _playerID) {	
 		Player _player = GameManager.GetPlayer(_playerID);
 		_player.RpcTakeDamage(100);
 	}
@@ -291,15 +285,13 @@ public class Player : NetworkBehaviour {
 	}
 
 	[Command]
-	void CmdPushOpponent(string _playerID, string _pushingPlayer, Vector3 _force) {
-		Player _player = GameManager.GetPlayer(_playerID);
-		_player.RpcPushOpponent(_pushingPlayer, _force);
+	void CmdPushOpponent(string _playerPushed, string _pushingPlayer, Vector3 _force) {
+		Player _player = GameManager.GetPlayer(_playerPushed);
+		_player.PushedOpponent(_pushingPlayer, _force);
 
 	}
-
-	[ClientRpc]
-	public void RpcPushOpponent(string _pushingPlayer, Vector3 _force) {
-		Debug.Log(transform.name + " får fart.");
+		
+	public void PushedOpponent(string _pushingPlayer, Vector3 _force) {
 		pushedByPlayer = _pushingPlayer;
 		StartCoroutine(ResetPushedByPlayer());
 		GetComponent<Rigidbody>().AddForce(_force);
@@ -330,30 +322,26 @@ public class Player : NetworkBehaviour {
 	[Command]
 	public void CmdTempMana(string _playerID, float _mana) {
 		Player _player = GameManager.GetPlayer(_playerID);
-		_player.RpcTempMana(_mana);
+		_player.RpcTempMana(_playerID, _mana);
 	}
 
 	[ClientRpc]
-	public void RpcTempMana(float _mana) {
-		float totalTemp = mana + tempMana;
-		if (totalTemp < GameManager.instance.matchSettings.maxMana) {			
-			tempMana += _mana;
+	public void RpcTempMana(string _playerID, float _mana) {
+		float totalTemp = mana + tempMana + savedMana;
+		if (playerID == _playerID) {
+			if (totalTemp < GameManager.instance.matchSettings.maxMana) {
+				tempMana += _mana;
+			}
 		}
-	}
-
-	[Client]
-	void SaveMana() {
-		CmdSaveMana(playerID, tempMana);
 	}
 
 	[Command]
 	public void CmdSaveMana(string _playerID, float _mana) {
 		Player _player = GameManager.GetPlayer(_playerID);
-		_player.RpcSaveMana(_mana);
+		_player.SaveMana(_mana);
 	}
-
-	[ClientRpc]
-	public void RpcSaveMana(float _mana) {
+		
+	public void SaveMana(float _mana) {
 		savedMana += _mana;
 		tempMana = 0;
 	}
@@ -363,7 +351,7 @@ public class Player : NetworkBehaviour {
 		// Save mana hvis ikke på wonderland //
 		if (tempMana > 0 && !isOnWonderland) {
 			tempMana = Mathf.Floor(tempMana);
-			SaveMana();
+			CmdSaveMana(playerID, tempMana);
 		} else if (tempMana < 0){
 			tempMana = 0;
 		}
@@ -452,13 +440,16 @@ public class Player : NetworkBehaviour {
 
     public void PU_ThrowExplosive()
     {
-        Transform tp = transform.Find("Graphics");
+        /*Transform tp = transform.Find("Graphics");
         throwAudioSource.Play();
         Debug.Log(tp);
         Vector3 vec = new Vector3(0, 1.3f, 0);
         var explosive = Instantiate(explosivePrefab, tp.position+vec, tp.rotation) as GameObject;
         explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
         //explosive.rigidbody.AddForce(transform.forward * 2000);
+
+		NetworkServer.Spawn(explosive);*/
+		CmdSpawnTest(gameObject);
     }
 
     public void PU_PlaceMine()
@@ -501,6 +492,35 @@ public class Player : NetworkBehaviour {
 			Debug.Log("No powerup available");
 		}
 	}
+
+	#endregion
+
+	#region Spawn
+
+	[Client]
+	void SpawnTest() {
+		CmdSpawnTest(gameObject);
+	}
+
+	[Command]
+	public void CmdSpawnTest(GameObject _go) {
+		RpcSpawnTest(_go);
+	}
+
+	[ClientRpc]
+	public void RpcSpawnTest(GameObject _go) {
+		Transform tp = _go.transform.Find("Graphics");
+		throwAudioSource.Play();
+		Debug.Log(tp);
+		Vector3 vec = new Vector3(0, 1.3f, 0);
+		var explosive = Instantiate(explosivePrefab, tp.position+vec, tp.rotation) as GameObject;
+		explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
+		//explosive.rigidbody.AddForce(transform.forward * 2000);
+
+		NetworkServer.Spawn(explosive);
+	}
+
+
 
 	#endregion
 

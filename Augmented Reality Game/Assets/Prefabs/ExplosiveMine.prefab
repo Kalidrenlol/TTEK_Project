@@ -24,6 +24,7 @@ GameObject:
   - 54: {fileID: 54000012620117496}
   - 114: {fileID: 114000010517414814}
   - 65: {fileID: 65000013679350690}
+  - 114: {fileID: 114000010943029278}
   m_Layer: 0
   m_Name: ExplosiveMine
   m_TagString: Untagged
@@ -123,3 +124,35 @@ MonoBehaviour:
   explosiveRadius: 20
   explosiveParticle: {fileID: 1000011562095434, guid: 30624048746893f42a9d967c9860454c,
     type: 2}
+--- !u!114 &114000010943029278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013168553160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 151
+    i1: 251
+    i2: 39
+    i3: 159
+    i4: 112
+    i5: 71
+    i6: 25
+    i7: 100
+    i8: 90
+    i9: 158
+    i10: 197
+    i11: 245
+    i12: 145
+    i13: 71
+    i14: 167
+    i15: 62
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

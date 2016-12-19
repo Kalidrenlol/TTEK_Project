@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class Explosive : MonoBehaviour {
+public class Explosive : NetworkBehaviour {
 
     public float lifeTime = 3f;
     public float explosiveForce = 5000f;
@@ -23,7 +24,7 @@ public class Explosive : MonoBehaviour {
             Explode();
         }
 	}
-
+		
     void Explode()
     {
         Debug.Log("explosion");

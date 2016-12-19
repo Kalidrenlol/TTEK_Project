@@ -1960,7 +1960,7 @@ MonoBehaviour:
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
   m_SnapThreshold: 5
-  m_InterpolateRotation: 10
+  m_InterpolateRotation: 1
   m_InterpolateMovement: 1
 --- !u!114 &114000011496008384
 MonoBehaviour:
