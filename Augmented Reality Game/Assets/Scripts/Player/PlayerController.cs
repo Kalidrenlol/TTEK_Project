@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update() {
-
+		
 		if (PauseMenu.IsOn) {
 			return;
 		}
@@ -68,9 +68,8 @@ public class PlayerController : MonoBehaviour {
             //Camera camMain = Camera.main;
             cam.GetComponent<ScreenShake>().InitScreenShake(1,1);
         }
-        
-       
 
+		isOutsideMap ();
 	}
 		
 	public void PushOpponent() {
@@ -87,6 +86,12 @@ public class PlayerController : MonoBehaviour {
 	void OnCollisionStay(Collision collider) {
 		if (collider.gameObject.tag == "Player") {
 			GetComponent<Player>().PushOpponent(collider);
+		}
+	}
+
+	public void isOutsideMap() {
+		if (GetComponent<Player> ().transform.position.y < -0.1) {
+			GetComponent<Player> ().Die ();
 		}
 	}
 
