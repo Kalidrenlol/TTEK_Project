@@ -266,9 +266,9 @@ public class Player : NetworkBehaviour {
 	private IEnumerator Respawn() {
 		yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime);
 
+		SetDefaults();
 		GoToSpawnpoint();
 		StartParticle();
-		SetDefaults();
 		ResetMana();
 	}
 		
