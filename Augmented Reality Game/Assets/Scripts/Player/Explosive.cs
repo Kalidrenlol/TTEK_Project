@@ -31,7 +31,7 @@ public class Explosive : NetworkBehaviour {
 
         Vector3 pos = rb.transform.position;
         Collider[] colliders = Physics.OverlapSphere(pos, explosiveRadius);
-       
+        Camera.main.transform.GetComponent<ScreenShake>().InitScreenShake(1f, 0.4f);
         foreach (Collider hit in colliders)
         {
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();

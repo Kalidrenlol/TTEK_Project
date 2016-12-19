@@ -101,13 +101,6 @@ public class PlayerSetup : NetworkBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.I)) {
-			if (!isLocalPlayer) {
-				return;
-			}
-			GetReady();
-		}
-
 		if (Input.GetKeyDown(KeyCode.O)) {
 			if (!isLocalPlayer) {
 				return;

@@ -16,24 +16,25 @@ public class Player : NetworkBehaviour {
     
 
 
-	[SyncVar] public string username;
-	[SyncVar] public string playerID = "Loading...";
-	[SyncVar] public int score = 0;
+	[SyncVar] public  string username;
+	[SyncVar] public  string playerID = "Loading...";
+	[SyncVar] public  int score = 0;
 	[SyncVar] private int currentHealth;
-	[SyncVar] public float mana;
+	[SyncVar] public  float mana;
 
 	[SerializeField] private int maxHealth = 100;
 	[SerializeField] private Behaviour[] disableOnDeath;
 	[SerializeField] private GameObject spawnParticle;
-	[SerializeField] public GameObject gameManager;
+    [SerializeField] public  GameObject smokeParticle;
+	[SerializeField] public  GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
 
     public string currentPU = "None";
 
-	Animator playerAnimator;
-	public Renderer rend;
-	public Color color;
+	        Animator playerAnimator;
+	public  Renderer rend;
+	public  Color color;
 	private int playerIndex;
 	private Vector3 spawnpointPos;
 	private Quaternion spawnpointRot;
@@ -61,19 +62,32 @@ public class Player : NetworkBehaviour {
     GameObject speedSound;
     AudioSource speedAudioSource;
 
+    public GameObject asInvis;
+    GameObject invisSound;
+    AudioSource invisAudioSource;
+
+    Transform sound_holder;
 
 	void Start() {
+        sound_holder = GameObject.FindGameObjectWithTag("SoundHolder").transform;
 
         //sound
         throwSound = Instantiate(asThrowExplosive) as GameObject;
         throwAudioSource = throwSound.GetComponent<AudioSource>();
+        throwSound.transform.parent = sound_holder;
 
         punchSound = Instantiate(asPunch) as GameObject;
         punchAudioSource = punchSound.GetComponent<AudioSource>();
+        punchAudioSource.transform.parent = sound_holder;
 
         speedSound = Instantiate(asSpeed) as GameObject;
         speedAudioSource = speedSound.GetComponent<AudioSource>();
+        speedSound.transform.parent = sound_holder;
 
+        invisSound = Instantiate(asInvis) as GameObject;
+        invisAudioSource = invisSound.GetComponent<AudioSource>();
+        invisSound.transform.parent = sound_holder;
+        //sound end
 
 		spawnpointPos = transform.position;
 		spawnpointRot = transform.rotation;
@@ -109,10 +123,13 @@ public class Player : NetworkBehaviour {
 		}
 		SetDefaults();
 	}
-
-	[ClientRpc]
-	public void RpcTakeDamage(int _amount) {
+		
+	public void TakeDamage(int _amount) {
 		if (isDead) {
+			return;
+		}
+		if (!isServer)
+		{
 			return;
 		}
 
@@ -120,11 +137,11 @@ public class Player : NetworkBehaviour {
 
 		if (currentHealth <= 0) {
 			Die();
-            GetComponent<Rigidbody>().drag = 30;
 		}
+
 	}
 
-	private void Die() {
+	public void Die() {
 		isDead = true;
 		for (int i = 0; i < disableOnDeath.Length; i++) {
 			disableOnDeath[i].enabled = false;
@@ -144,6 +161,8 @@ public class Player : NetworkBehaviour {
 			CmdSetScore(playerID, -1, "Suicide");
 			score -= 1;
 		}
+
+		GetComponent<Rigidbody>().drag = 5;
 
 		StartCoroutine(Respawn());
 	}
@@ -173,16 +192,18 @@ public class Player : NetworkBehaviour {
 		_player.RpcSetScore(_score, _reason);
 	}
 
+
 	[ClientRpc]
 	public void RpcSetScore(int _score, string _reason) {
 		if (!isLocalPlayer) {
 			return;
 		}
+		Debug.Log(transform.name);
 
 		int _rand;
 		switch(_reason) {
 		case "Kill":
-			Debug.Log("Dræbte selv");
+			Debug.Log("Killed someone");
 			_rand = Random.Range(0,3);
 			switch (_rand) {
 				case 0:
@@ -248,7 +269,7 @@ public class Player : NetworkBehaviour {
 	[Command]
 	void CmdHitWater(string _playerID) {	
 		Player _player = GameManager.GetPlayer(_playerID);
-		_player.RpcTakeDamage(100);
+		_player.TakeDamage(100);
 	}
 
 	#region PUSHING
@@ -408,6 +429,8 @@ public class Player : NetworkBehaviour {
 
     public void PU_MakeInvisible()
     {
+        invisAudioSource.Play();
+        Instantiate(smokeParticle, transform.position, Quaternion.identity);
         Renderer[] rs = transform.GetChild(0).GetComponentsInChildren<Renderer>();
         foreach (Renderer r in rs)
         {

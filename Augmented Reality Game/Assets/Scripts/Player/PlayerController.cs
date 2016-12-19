@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Update() {
-
+		
 		if (PauseMenu.IsOn) {
 			return;
 		}
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 		float _xMov = joystick.GetComponent<VirtualJoystick>().Horizontal();
 		float _zMov = joystick.GetComponent<VirtualJoystick>().Vertical();
 
-		if (_xMov > 0.1 && _zMov > 0.1 || _xMov < -0.1 && _zMov > 0.1 || _xMov > 0.1 && _zMov < -0.1 || _xMov < -0.1 && _zMov < -0.1) {
+		if (_xMov != 0 || _zMov != 0) {
 			bool isWalkingPressed = true;
 			playerAnimator.SetBool ("IsWalking", isWalkingPressed);
 		} else {
@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour {
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
         var cam = Camera.main.transform;
-
 		motor.Move(_velocity);
 
         if (Input.GetKeyDown("g"))
@@ -62,9 +61,14 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Use powerup");
             GetComponent<Player>().PU_PlaceMine();
         }
-        
-       
 
+        if (Input.GetKeyDown("q"))
+        {
+            //Camera camMain = Camera.main;
+            cam.GetComponent<ScreenShake>().InitScreenShake(1,1);
+        }
+
+		isOutsideMap ();
 	}
 		
 	public void PushOpponent() {
@@ -81,6 +85,12 @@ public class PlayerController : MonoBehaviour {
 	void OnCollisionStay(Collision collider) {
 		if (collider.gameObject.tag == "Player") {
 			GetComponent<Player>().PushOpponent(collider);
+		}
+	}
+
+	public void isOutsideMap() {
+		if (GetComponent<Player> ().transform.position.y < -0.1) {
+			GetComponent<Player> ().Die ();
 		}
 	}
 
