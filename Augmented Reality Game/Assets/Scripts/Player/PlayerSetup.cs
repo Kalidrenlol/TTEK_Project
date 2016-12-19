@@ -38,7 +38,7 @@ public class PlayerSetup : NetworkBehaviour {
 
 		string _username = "Loading...";
 		_username = transform.name;
-		CmdSetUsername(transform.name, _username);
+		CmdSetPlayerID(transform.name, _username);
 
 		isReady = false;
 
@@ -83,6 +83,8 @@ public class PlayerSetup : NetworkBehaviour {
 			playerUIInstance.GetComponent<PlayerUI> ().btnPush.onClick.AddListener (BtnPush);		
 			gameObject.GetComponent<Rigidbody>().useGravity = false;
 
+			string username = System.Environment.UserName;
+			CmdSetUsername(transform.name, username);
 		}
 
 		//playerGraphics.GetComponent<Renderer>().mateial.color = GetComponent<Player>().color;
@@ -100,13 +102,6 @@ public class PlayerSetup : NetworkBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.I)) {
-			if (!isLocalPlayer) {
-				return;
-			}
-			GetReady();
-		}
-
 		if (Input.GetKeyDown(KeyCode.O)) {
 			if (!isLocalPlayer) {
 				return;
@@ -225,12 +220,20 @@ public class PlayerSetup : NetworkBehaviour {
 	void AssignRemoteLayer() {
 		gameObject.layer = LayerMask.NameToLayer(remoteLayerName);
 	}
-
+		
 	[Command]
-	void CmdSetUsername (string _playerID, string _username) {
+	public void CmdSetPlayerID(string _playerID, string _username) {
 		Player player = GameManager.GetPlayer(_playerID);
 		if (player != null) {
 			player.playerID = _username;
+		}
+	}
+
+	[Command]
+	public void CmdSetUsername(string _playerID, string _username) {
+		Player player = GameManager.GetPlayer(_playerID);
+		if (player != null) {
+			player.username = _username;
 		}
 	}
 
@@ -243,5 +246,3 @@ public class PlayerSetup : NetworkBehaviour {
 		Destroy(playerUIInstance);
 	}
 }
-
-
