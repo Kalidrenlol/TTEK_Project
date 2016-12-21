@@ -57,19 +57,25 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown("g"))
         {
-            Debug.Log("Use powerup");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Use powerup");
+			}
             GetComponent<Player>().ActivatePowerup();
         }
 
         if (Input.GetKeyDown("r"))
         {
-            Debug.Log("Use powerup");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Use powerup");
+			}
             GetComponent<Player>().PU_ThrowExplosive();
         }
 
         if (Input.GetKeyDown("t"))
         {
-            Debug.Log("Use powerup");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Use powerup");
+			}
             GetComponent<Player>().PU_PlaceMine();
         }
 

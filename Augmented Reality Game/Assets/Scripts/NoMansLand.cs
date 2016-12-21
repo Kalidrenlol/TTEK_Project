@@ -19,7 +19,9 @@ public class NoMansLand : MonoBehaviour {
 
         if (collision.collider.tag == "Player")
         {
-            Debug.Log("Player \""+collision.collider.name+"\" hit outside");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Player \"" + collision.collider.name + "\" hit outside");
+			}
         }
 
     }
@@ -30,7 +32,9 @@ public class NoMansLand : MonoBehaviour {
 
         if (collision.collider.tag == "Player")
         {
-            Debug.Log("Player \"" + collision.collider.name + "\" left outside");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Player \"" + collision.collider.name + "\" left outside");
+			}
         }
 
     }

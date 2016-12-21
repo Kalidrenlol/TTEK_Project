@@ -14,7 +14,9 @@ public class Explosive : NetworkBehaviour {
 
 	void Start () {
         rb = this.GetComponent<Rigidbody>();
-        Debug.Log("Parent of this explosive is: " + transform.parent.name);
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log ("Parent of this explosive is: " + transform.parent.name);
+		}
 	}
 	
 	void Update () {
@@ -29,8 +31,9 @@ public class Explosive : NetworkBehaviour {
     
     void RpcExplode()
     {
-        Debug.Log("explosion" + transform.position);
-
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log ("explosion" + transform.position);
+		}
 
         Vector3 pos = rb.transform.position;
         Collider[] colliders = Physics.OverlapSphere(pos, explosiveRadius);

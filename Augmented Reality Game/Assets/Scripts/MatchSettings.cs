@@ -15,4 +15,7 @@ public class MatchSettings {
 	public float getManaPrSecond = 1f;
 	public float restoreManaPrSecond = 1f;
 
+	[Header("Debug")]
+	public bool showDebug = true;
+
 }

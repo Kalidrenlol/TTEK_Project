@@ -53,7 +53,9 @@ public class PlayerSetup : NetworkBehaviour {
 
 			PlayerUI ui = playerUIInstance.GetComponent<PlayerUI>();
 			if (ui == null) {
-				Debug.LogError("No playerUI on PlayerUI Prefab");
+				if (GameManager.instance.matchSettings.showDebug) {
+					Debug.LogError ("No playerUI on PlayerUI Prefab");
+				}
 			}
 			ui.SetController(GetComponent<PlayerController>());
 			ui.SetPlayerScript(GetComponent<Player>());
@@ -63,7 +65,9 @@ public class PlayerSetup : NetworkBehaviour {
 				playerUIInstance.SetActive(false);
 				SetComponents(false);
 			} else {
-				Debug.Log("Spil startet" + GetComponent<GameController>().gameStarted);
+				if (GameManager.instance.matchSettings.showDebug) {
+					Debug.Log ("Spil startet" + GetComponent<GameController> ().gameStarted);
+				}
 			}
 
 			pregameUI = Instantiate(pregameUIPrefab);
@@ -159,7 +163,9 @@ public class PlayerSetup : NetworkBehaviour {
 
 	// Toggle UI /
 	public void TogglePregameUI() {
-		Debug.Log("TogglePregame");
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log ("TogglePregame");
+		}
 		if (getReadyUI == null) {
 			getReadyUI = GameObject.Find("GetReadyUI");
 		}

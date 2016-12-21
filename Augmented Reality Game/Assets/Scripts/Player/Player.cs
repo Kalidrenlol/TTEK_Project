@@ -250,7 +250,9 @@ public class Player : NetworkBehaviour {
 		int _rand;
 		switch(_reason) {
 		case "Kill":
-			Debug.Log("Killed someone");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Killed someone");
+			}
 			_rand = Random.Range(0,3);
 			switch (_rand) {
 				case 0:
@@ -265,7 +267,9 @@ public class Player : NetworkBehaviour {
 				}
 			break;
 		case "Suicide":
-			Debug.Log("Suicide");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Suicide");
+			}
 			_rand = Random.Range(0,3);
 			switch (_rand) {
 				case 0:
@@ -280,7 +284,9 @@ public class Player : NetworkBehaviour {
 			}
 			break;
 		default:
-			Debug.Log("Årsag til død blev ikke genkendt");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Årsag til død blev ikke genkendt");
+			}
 			break;
 		}
 	}
@@ -312,7 +318,9 @@ public class Player : NetworkBehaviour {
 		
 	public void HitWater() {
 		CmdHitWater(playerID);
-		Debug.Log("HitWater");
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log ("HitWater");
+		}
 	}
 
 	[Command]
@@ -363,8 +371,10 @@ public class Player : NetworkBehaviour {
 
     public void PushedOpponent(string _pushingPlayer)
     {
-        Debug.Log("Pushing: "+_pushingPlayer);
-        Debug.Log("Pushed: "+this);
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log ("Pushing: " + _pushingPlayer);
+			Debug.Log ("Pushed: " + this);
+		}
         pushedByPlayer = _pushingPlayer;
         StartCoroutine(ResetPushedByPlayer());
     }
@@ -420,12 +430,16 @@ public class Player : NetworkBehaviour {
 	public void CmdSaveMana(string _playerID, float _mana) {
 		Player _player = GameManager.GetPlayer(_playerID);
 		_player.RpcSaveMana(_mana);
-		Debug.Log("Cmd");
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log ("Cmd");
+		}
 	}
 
 	[ClientRpc]
 	public void RpcSaveMana(float _mana) {
-		Debug.Log("Rpc");
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log ("Rpc");
+		}
 		savedMana += _mana;
 		tempMana = 0;
 	}
@@ -436,7 +450,9 @@ public class Player : NetworkBehaviour {
 		if (tempMana > 0 && !isOnWonderland) {
 			tempMana = Mathf.Floor(tempMana);
 			CmdSaveMana(playerID, tempMana);
-			Debug.Log("Called");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Called");
+			}
 		} else if (tempMana < 0){
 			tempMana = 0;
 		}
@@ -469,7 +485,9 @@ public class Player : NetworkBehaviour {
     {
         if (isLocalPlayer)
         {
-            Debug.Log("Start change");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Start change");
+			}
             StartCoroutine(ChangeGraphics(_time, _pu));
         }
     }
@@ -520,7 +538,9 @@ public class Player : NetworkBehaviour {
         RotateGraphics(0.1f, puType);
 
         //GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().btnPush.image.overrideSprite = sprite_array[puType];
-		Debug.Log("Powerup collected, type: " + puType);
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log("Powerup collected, type: " + puType);
+		}
 		//Hvis flere, tjek type, udfra puType
 		switch (puType)
 		{
@@ -547,7 +567,9 @@ public class Player : NetworkBehaviour {
     {
         if (currentPU != "None")
         {
-            Debug.Log("Using powerup: " + currentPU);
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("Using powerup: " + currentPU);
+			}
 
             switch (currentPU)
             {
@@ -574,7 +596,9 @@ public class Player : NetworkBehaviour {
         }
         else
         {
-            Debug.Log("No powerup available");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.Log ("No powerup available");
+			}
         }
     }
 
@@ -592,7 +616,9 @@ public class Player : NetworkBehaviour {
 
 	public void PU_MakeVisible()
 	{
-		Debug.Log("Make visible");
+		if (GameManager.instance.matchSettings.showDebug) {
+			Debug.Log ("Make visible");
+		}
 		Renderer[] rs = transform.GetChild(0).GetComponentsInChildren<Renderer>();
 		foreach (Renderer r in rs)
 		{
@@ -658,13 +684,6 @@ public class Player : NetworkBehaviour {
         NetworkServer.Spawn(explosive);
         RpcSyncExplosiveOnce(explosive, this.gameObject);
     }
-
-
-
-
-
-
-
 
     [ClientRpc]
     public void RpcSyncExplosiveOnce(GameObject ex, GameObject parent)

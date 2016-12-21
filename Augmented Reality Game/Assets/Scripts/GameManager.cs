@@ -13,7 +13,9 @@ public class GameManager : NetworkBehaviour {
 
 	void Awake() {
 		if (instance != null) {
-			Debug.LogError("More than one GameManager in scene.");
+			if (GameManager.instance.matchSettings.showDebug) {
+				Debug.LogError ("More than one GameManager in scene.");
+			}
 		} else {
 			instance = this;
 		}
