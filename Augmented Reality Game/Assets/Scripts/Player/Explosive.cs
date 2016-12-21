@@ -24,6 +24,21 @@ public class Explosive : NetworkBehaviour {
             Explode();
         }
 	}
+
+    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    {
+        Vector3 syncPosition = Vector3.zero;
+        if (stream.isWriting)
+        {
+            syncPosition = transform.position;
+            stream.Serialize(ref syncPosition);
+        }
+        else
+        {
+            stream.Serialize(ref syncPosition);
+            transform.position = syncPosition;
+        }
+    }
 		
     void Explode()
     {
