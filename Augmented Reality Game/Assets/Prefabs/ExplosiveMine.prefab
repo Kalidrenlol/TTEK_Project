@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 4
-  explosiveForce: 5000
-  explosiveRadius: 20
+  explosiveForce: 5500
+  explosiveRadius: 25
   explosiveParticle: {fileID: 1000011562095434, guid: 30624048746893f42a9d967c9860454c,
     type: 2}
 --- !u!114 &114000010943029278
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
+  m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0

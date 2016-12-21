@@ -4,11 +4,13 @@ using UnityEngine.Networking;
 
 public class Explosive : NetworkBehaviour {
 
+    [SyncVar]
     public float lifeTime = 3f;
     public float explosiveForce = 5000f;
     public float explosiveRadius = 5f;
     Rigidbody rb;
     public GameObject explosiveParticle;
+    bool live = true;
 
 	void Start () {
         rb = this.GetComponent<Rigidbody>();
@@ -16,13 +18,15 @@ public class Explosive : NetworkBehaviour {
 	
 	void Update () {
         lifeTime -= Time.deltaTime;
-        if (lifeTime < 0)
+        if (lifeTime < 0 && live == true)
         {
-            Explode();
+            RpcExplode();
+            live = false;
         }
 	}
 
-    void Explode()
+    
+    void RpcExplode()
     {
         Debug.Log("explosion" + transform.position);
 
@@ -40,6 +44,8 @@ public class Explosive : NetworkBehaviour {
 
         GameObject ep = Instantiate(explosiveParticle, transform.position, Quaternion.identity) as GameObject;
         Destroy(ep, 2f);
-        Destroy(gameObject);
+        GetComponent<Renderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        Destroy(gameObject,2f);
     }
 }

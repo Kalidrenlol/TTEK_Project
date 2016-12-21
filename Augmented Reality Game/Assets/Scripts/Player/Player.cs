@@ -313,11 +313,12 @@ public class Player : NetworkBehaviour {
 
 	[Client]
 	public void PushOpponent(Collider coll) {
+        
 		if (!isLocalPlayer) {
 			return;
 		}
-
 		if (isAttacking) {
+            Debug.Log("Push Collision isattacking");
 			Vector3 dir = (transform.position - coll.transform.position).normalized;
 			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
 			CmdPushOpponent(coll.gameObject.name, gameObject.name,  _force);
@@ -326,14 +327,24 @@ public class Player : NetworkBehaviour {
 
 	[Client]
 	public void PushOpponent(Collision coll) {
+        
 		if (!isLocalPlayer) {
-			return;
+            return;
+            
 		}
 
 		if (isAttacking) {
+            Debug.Log("Push Collider isAttacking");
 			Vector3 dir = (transform.position - coll.transform.position).normalized;
 			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
-			CmdPushOpponent(coll.gameObject.name, gameObject.name,  _force);
+            if (Network.isServer)
+            {
+                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
+            }
+            if (Network.isClient)
+            {
+                CmdPushOpponent(coll.gameObject.name, gameObject.name, _force);
+            }
 		}
 	}
 
@@ -343,8 +354,19 @@ public class Player : NetworkBehaviour {
 		_player.PushedOpponent(_pushingPlayer, _force);
 
 	}
+
+    [ClientRpc]
+    void RpcPushOpponent(string _playerPushed, string _pushingPlayer, Vector3 _force)
+    {
+        Player _player = GameManager.GetPlayer(_playerPushed);
+        _player.PushedOpponent(_pushingPlayer, _force);
+
+    }
 		
 	public void PushedOpponent(string _pushingPlayer, Vector3 _force) {
+        Debug.Log(_pushingPlayer);
+        Debug.Log(_force);
+        Debug.Log(this);
 		pushedByPlayer = _pushingPlayer;
 		StartCoroutine(ResetPushedByPlayer());
 		GetComponent<Rigidbody>().AddForce(_force);
