@@ -144,8 +144,9 @@ public class Player : NetworkBehaviour {
 			wasEnabled[i] = disableOnDeath[i].enabled;
 		}
 		SetDefaults();
-
-        GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().btnPowerUp.image.overrideSprite = sprite_array[4];//
+		if (isLocalPlayer) {
+			GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().btnPowerUp.image.overrideSprite = sprite_array[4];//
+		}
 	}
 		
 	public void TakeDamage(int _amount) {
