@@ -9,6 +9,7 @@ public class Explosive : NetworkBehaviour {
     public float explosiveRadius = 5f;
     Rigidbody rb;
     public GameObject explosiveParticle;
+    public NetworkTransform netTrans;
 
 
 	// Use this for initialization
@@ -31,13 +32,13 @@ public class Explosive : NetworkBehaviour {
 
         if (stream.isWriting)
         {
-            syncPosition = transform.position;
+            syncPosition = netTrans.transform.position;
             stream.Serialize(ref syncPosition);
         }
         else
         {
             stream.Serialize(ref syncPosition);
-            transform.position = syncPosition;
+            netTrans.transform.position = syncPosition;
         }
     }
 		
