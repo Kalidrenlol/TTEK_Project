@@ -9,7 +9,7 @@ public class Explosive : NetworkBehaviour {
     public float explosiveRadius = 5f;
     Rigidbody rb;
     public GameObject explosiveParticle;
-    public NetworkTransform netTrans;
+    //public NetworkTransform netTrans;
 
 
 	// Use this for initialization
@@ -26,7 +26,7 @@ public class Explosive : NetworkBehaviour {
         }
 	}
 
-    void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    /*void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
         Vector3 syncPosition = Vector3.zero;
 
@@ -40,7 +40,7 @@ public class Explosive : NetworkBehaviour {
             stream.Serialize(ref syncPosition);
             netTrans.transform.position = syncPosition;
         }
-    }
+    }*/
 		
     void Explode()
     {
