@@ -132,6 +132,12 @@ public class Player : NetworkBehaviour {
         
 	}
 
+    void OnClientStart()
+    {
+        ClientScene.RegisterPrefab(explosivePrefab);
+        ClientScene.RegisterPrefab(explosiveMinePrefab);
+    }
+
 	void Update() {
 		if (!isLocalPlayer) {
 			return;
@@ -317,10 +323,22 @@ public class Player : NetworkBehaviour {
 
 	#region PUSHING
 
+    [Client]
+    public void PushNew(GameObject _pusher)
+    {
+       CmdPushNew(_pusher);
+    }
+
     [Command]
     public void CmdPushNew(GameObject _pusher)
     {
-        Debug.Log(_pusher);
+        RpcPushNew(_pusher);
+    }
+
+    [ClientRpc]
+    public void RpcPushNew(GameObject _pusher)
+    {
+
         float hitForce = 4000f;
         float hitRadius = 3f;
         Vector3 pos = _pusher.transform.position;
@@ -329,115 +347,41 @@ public class Player : NetworkBehaviour {
         Camera.main.transform.GetComponent<ScreenShake>().InitScreenShake(0.1f, 0.1f);
         foreach (Collider hit in colliders)
         {
-           
+
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
             if (rbHit != null && rbHit != thisRb)
             {
-                //force, position, radius
+                Debug.Log(rbHit.tag);
+                if (rbHit.tag == "Player")
+                {
+                    rbHit.GetComponent<Player>().PushedOpponent(_pusher.name);
+                }
                 rbHit.AddExplosionForce(hitForce, transform.position, hitRadius);
             }
-
         }
     }
 
+    public void PushedOpponent(string _pushingPlayer)
+    {
+        Debug.Log("Pushing: "+_pushingPlayer);
+        Debug.Log("Pushed: "+this);
+        pushedByPlayer = _pushingPlayer;
+        StartCoroutine(ResetPushedByPlayer());
+    }
 
+    private IEnumerator ResetPushedByPlayer()
+    {
+        yield return new WaitForSeconds(GameManager.instance.matchSettings.timeForPushToKill);
 
-
-
+        pushedByPlayer = null;
+    }
 
     public void PushSound()
     {
         punchAudioSource.Play();
     }
 
-	[Client]
-	public void PushOpponent(Collider coll) {
-        
-		if (!isLocalPlayer) {
-			return;
-		}
-		if (isAttacking) {
-          /*  Debug.Log("Push Collision isattacking");
-			Vector3 dir = (transform.position - coll.transform.position).normalized;
-			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
-            if (Network.isServer)
-            {
-                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call isServer");
-            }
-            if (Network.isClient)
-            {
-                CmdPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call isClient");
-            }
-            else
-            {
-                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call is!client");
-            }*/
-		}
-	}
-
-	[Client]
-	public void PushOpponent(Collision coll) {
-        
-		if (!isLocalPlayer) {
-            return;
-            
-		}
-
-		if (isAttacking) {
-           /* Debug.Log("Push Collider isAttacking");
-			Vector3 dir = (transform.position - coll.transform.position).normalized;
-			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
-            if (Network.isServer)
-            {
-                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call isServer");
-            }
-            if (Network.isClient)
-            {
-                CmdPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call isClient");
-            }
-            else
-            {
-                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call is!client");
-            }*/
-		}
-	}
-
-	[Command]
-	void CmdPushOpponent(string _playerPushed, string _pushingPlayer, Vector3 _force) {
-		Player _player = GameManager.GetPlayer(_playerPushed);
-		_player.PushedOpponent(_pushingPlayer, _force);
-
-	}
-
-    [ClientRpc]
-    void RpcPushOpponent(string _playerPushed, string _pushingPlayer, Vector3 _force)
-    {
-        Player _player = GameManager.GetPlayer(_playerPushed);
-        _player.PushedOpponent(_pushingPlayer, _force);
-
-    }
-		
-	public void PushedOpponent(string _pushingPlayer, Vector3 _force) {
-        Debug.Log(_pushingPlayer);
-        Debug.Log(_force);
-        Debug.Log(this);
-		pushedByPlayer = _pushingPlayer;
-		StartCoroutine(ResetPushedByPlayer());
-		GetComponent<Rigidbody>().AddForce(_force);
-	}
-
-	private IEnumerator ResetPushedByPlayer() {
-		yield return new WaitForSeconds(GameManager.instance.matchSettings.timeForPushToKill);
-
-		pushedByPlayer = null;
-	}
-
+	
 	#endregion
 
 	#region MANA
@@ -599,6 +543,41 @@ public class Player : NetworkBehaviour {
 
 	}
 
+    public void ActivatePowerup()
+    {
+        if (currentPU != "None")
+        {
+            Debug.Log("Using powerup: " + currentPU);
+
+            switch (currentPU)
+            {
+                case "0 - Invisibility":
+                    PU_MakeInvisible();
+                    break;
+                case "1 - Speed":
+                    PU_HeightenSpeed();
+                    break;
+                case "2 - Explosive":
+                    PU_ThrowExplosive();
+                    break;
+                case "3 - Mine":
+                    PU_PlaceMine();
+                    break;
+                default:
+                    break;
+            }
+
+
+            currentPU = "None";
+            spritePU.image.overrideSprite = sprite_array[4];//
+
+        }
+        else
+        {
+            Debug.Log("No powerup available");
+        }
+    }
+
     public void PU_MakeInvisible()
     {
         invisAudioSource.Play();
@@ -640,61 +619,15 @@ public class Player : NetworkBehaviour {
 
     public void PU_ThrowExplosive()
     {
-        /*Transform tp = transform.Find("Graphics");
-        throwAudioSource.Play();
-        Debug.Log(tp);
-        Vector3 vec = new Vector3(0, 1.3f, 0);
-        var explosive = Instantiate(explosivePrefab, tp.position+vec, tp.rotation) as GameObject;
-        explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
-        //explosive.rigidbody.AddForce(transform.forward * 2000);
-
-		NetworkServer.Spawn(explosive);*/
-		//CmdSpawnTest(gameObject);
         CmdSpawnGrenade(gameObject);
     }
 
     public void PU_PlaceMine()
     {
-        /*throwAudioSource.Play();
-        Vector3 offset = new Vector3(0, 5, 0);
-        var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;*/
         CmdSpawnMine(gameObject);
     }
 
-	public void ActivatePowerup()
-	{
-		if (currentPU != "None")
-		{
-			Debug.Log("Using powerup: "+currentPU);
-
-			switch (currentPU)
-			{
-			case "0 - Invisibility":
-                PU_MakeInvisible();
-				break;
-			case "1 - Speed":
-                PU_HeightenSpeed();
-				break;
-            case "2 - Explosive":
-                PU_ThrowExplosive();
-                break;
-            case "3 - Mine":
-                PU_PlaceMine();
-                break;
-			default:
-				break;
-			}
-
-
-			currentPU = "None";
-            spritePU.image.overrideSprite = sprite_array[4];//
-
-		}
-		else
-		{
-			Debug.Log("No powerup available");
-		}
-	}
+	
 
 	#endregion
 
@@ -708,8 +641,10 @@ public class Player : NetworkBehaviour {
         Vector3 vec = new Vector3(0, 1.3f, 0);
 
         var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
+        explosive.transform.parent = this.transform;
         explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
         NetworkServer.Spawn(explosive);
+        RpcSyncExplosiveOnce(explosive, this.gameObject);
     }
     
     [Command]
@@ -718,7 +653,23 @@ public class Player : NetworkBehaviour {
         throwAudioSource.Play();
         Vector3 offset = new Vector3(0, 5, 0);
         var explosive = Instantiate(explosiveMinePrefab, _go.transform.position + offset, Quaternion.identity) as GameObject;
+        explosive.transform.parent = this.transform;
+        //Debug.Log(explosive.transform.parent);
         NetworkServer.Spawn(explosive);
+        RpcSyncExplosiveOnce(explosive, this.gameObject);
+    }
+
+
+
+
+
+
+
+
+    [ClientRpc]
+    public void RpcSyncExplosiveOnce(GameObject ex, GameObject parent)
+    {
+        ex.transform.parent = parent.transform;
     }
 
 	#endregion
