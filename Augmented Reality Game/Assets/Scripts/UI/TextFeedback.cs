@@ -12,12 +12,12 @@ public class TextFeedback : MonoBehaviour {
 		}
 	}
 
-	public void ShowText(string _txt) {
+	public void ShowText(string _txt, int _fontsize) {
 		SetText("");
 		txt.CrossFadeAlpha(1, 0f, true);
 		StopCoroutine("HideText");
 
-		txt.fontSize = 10;
+		txt.fontSize = _fontsize;
 		SetText(_txt);
 		StartCoroutine(HideText());
 

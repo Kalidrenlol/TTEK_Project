@@ -54,7 +54,11 @@ public class PlayerUI : MonoBehaviour {
 	}
 
 	public void ShowFeedbackText(string _txt) {
-		textFeedback.GetComponent<TextFeedback>().ShowText(_txt);
+		textFeedback.GetComponent<TextFeedback>().ShowText(_txt, 10);
+	}
+
+	public void ShowFeedbackText(string _txt, int _fontsize) {
+		textFeedback.GetComponent<TextFeedback>().ShowText(_txt, _fontsize);
 	}
 
 	public void TogglePauseMenu() {

@@ -9,6 +9,9 @@ public class GameController : NetworkBehaviour {
 	[SerializeField] GameObject WeaponBoxPrefab;
 	[SerializeField] int _playersBeforeGo;
 	public GameObject Fireworks;
+	bool startCountdown = false;
+	bool countdownTriggered = false;
+	float countdown = 5f;
 
 	[SyncVar] public bool gameStarted = false;
 	[SyncVar(hook="EndGame")] public bool gameEnded = false;
@@ -33,7 +36,21 @@ public class GameController : NetworkBehaviour {
 				return;
 			}
 		}
-		CmdStartGame();
+
+		startCountdown = true;
+		GetComponent<PlayerSetup>().pregameUI.SetActive(false);
+		GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
+	}
+
+	void Update() {
+		if (startCountdown && !countdownTriggered) {
+			countdown -= Time.deltaTime;
+			GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText(Mathf.Ceil(countdown).ToString(), 400);
+		}
+		if (!countdownTriggered && countdown < 0f) {
+			CmdStartGame();
+			countdownTriggered = true;
+		}
 	}
 
 	public void IsGameFinish() {
@@ -43,12 +60,6 @@ public class GameController : NetworkBehaviour {
 			}
 		}
 
-	}
-
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.Q)) {
-			StartFireworks();
-		}
 	}
 
 	[Command]

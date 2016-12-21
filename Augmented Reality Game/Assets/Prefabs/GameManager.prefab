@@ -135,7 +135,7 @@ MonoBehaviour:
   matchSettings:
     respawnTime: 3
     spawnNextWeapon: 5
-    killToWin: 1
+    killToWin: 3
     timeForPushToKill: 10
     maxMana: 10
     getManaPrSecond: 1
