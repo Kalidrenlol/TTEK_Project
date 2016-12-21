@@ -306,8 +306,8 @@ public class Player : NetworkBehaviour {
 
 	#region PUSHING
 
-    [Command]
-    public void CmdPushNew(GameObject _pusher)
+
+    public void PushNew(GameObject _pusher)
     {
         Debug.Log(_pusher);
         float hitForce = 4000f;
@@ -316,14 +316,46 @@ public class Player : NetworkBehaviour {
         Rigidbody thisRb = _pusher.GetComponent<Rigidbody>();
         Collider[] colliders = Physics.OverlapSphere(pos, hitRadius);
         Camera.main.transform.GetComponent<ScreenShake>().InitScreenShake(0.1f, 0.1f);
+        if (Network.isClient)
+            {
+                CmdPushNew(colliders, thisRb, hitForce, hitRadius);
+                Debug.Log("Call isClient");
+            }
+            else
+            {
+                RpcPushNew(colliders, thisRb, hitForce, hitRadius);
+                Debug.Log("Call is!client");
+            }
+        
+    }
+
+    [ClientRpc]
+    public void RpcPushNew(Collider[] colliders, Rigidbody thisRb, float hf, float hr)
+    {
         foreach (Collider hit in colliders)
         {
-           
+
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
             if (rbHit != null && rbHit != thisRb)
             {
                 //force, position, radius
-                rbHit.AddExplosionForce(hitForce, transform.position, hitRadius);
+                rbHit.AddExplosionForce(hf, transform.position, hr);
+            }
+
+        }
+    }
+
+    [Command]
+    public void CmdPushNew(Collider[] colliders, Rigidbody thisRb, float hf, float hr)
+    {
+        foreach (Collider hit in colliders)
+        {
+
+            Rigidbody rbHit = hit.GetComponent<Rigidbody>();
+            if (rbHit != null && rbHit != thisRb)
+            {
+                //force, position, radius
+                rbHit.AddExplosionForce(hf, transform.position, hr);
             }
 
         }
