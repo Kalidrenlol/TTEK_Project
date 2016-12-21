@@ -14,6 +14,7 @@ public class Explosive : NetworkBehaviour {
 
 	void Start () {
         rb = this.GetComponent<Rigidbody>();
+        Debug.Log("Parent of this explosive is: " + transform.parent.name);
 	}
 	
 	void Update () {
@@ -30,6 +31,7 @@ public class Explosive : NetworkBehaviour {
     {
         Debug.Log("explosion" + transform.position);
 
+
         Vector3 pos = rb.transform.position;
         Collider[] colliders = Physics.OverlapSphere(pos, explosiveRadius);
         Camera.main.transform.GetComponent<ScreenShake>().InitScreenShake(1f, 0.4f);
@@ -38,6 +40,10 @@ public class Explosive : NetworkBehaviour {
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
             if (rbHit != null)
             {
+                if (rbHit.tag == "Player" && transform.parent.name != rbHit.name)
+                {
+                    rbHit.GetComponent<Player>().PushedOpponent(transform.parent.name);
+                }
                 rbHit.AddExplosionForce(explosiveForce, transform.position, explosiveRadius);
             }
         }

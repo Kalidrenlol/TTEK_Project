@@ -359,74 +359,12 @@ public class Player : NetworkBehaviour {
         pushedByPlayer = null;
     }
 
-
-
-
     public void PushSound()
     {
         punchAudioSource.Play();
     }
 
-	[Client]
-	public void PushOpponent(Collider coll) {
-        
-		if (!isLocalPlayer) {
-			return;
-		}
-		if (isAttacking) {
-          /*  Debug.Log("Push Collision isattacking");
-			Vector3 dir = (transform.position - coll.transform.position).normalized;
-			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
-            if (Network.isServer)
-            {
-                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call isServer");
-            }
-            if (Network.isClient)
-            {
-                CmdPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call isClient");
-            }
-            else
-            {
-                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call is!client");
-            }*/
-		}
-	}
-
-	[Client]
-	public void PushOpponent(Collision coll) {
-        
-		if (!isLocalPlayer) {
-            return;
-            
-		}
-
-		if (isAttacking) {
-           /* Debug.Log("Push Collider isAttacking");
-			Vector3 dir = (transform.position - coll.transform.position).normalized;
-			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
-            if (Network.isServer)
-            {
-                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call isServer");
-            }
-            if (Network.isClient)
-            {
-                CmdPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call isClient");
-            }
-            else
-            {
-                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
-                Debug.Log("Call is!client");
-            }*/
-		}
-	}
-
-
-
+	
 	#endregion
 
 	#region MANA
@@ -588,6 +526,41 @@ public class Player : NetworkBehaviour {
 
 	}
 
+    public void ActivatePowerup()
+    {
+        if (currentPU != "None")
+        {
+            Debug.Log("Using powerup: " + currentPU);
+
+            switch (currentPU)
+            {
+                case "0 - Invisibility":
+                    PU_MakeInvisible();
+                    break;
+                case "1 - Speed":
+                    PU_HeightenSpeed();
+                    break;
+                case "2 - Explosive":
+                    PU_ThrowExplosive();
+                    break;
+                case "3 - Mine":
+                    PU_PlaceMine();
+                    break;
+                default:
+                    break;
+            }
+
+
+            currentPU = "None";
+            spritePU.image.overrideSprite = sprite_array[4];//
+
+        }
+        else
+        {
+            Debug.Log("No powerup available");
+        }
+    }
+
     public void PU_MakeInvisible()
     {
         invisAudioSource.Play();
@@ -629,61 +602,15 @@ public class Player : NetworkBehaviour {
 
     public void PU_ThrowExplosive()
     {
-        /*Transform tp = transform.Find("Graphics");
-        throwAudioSource.Play();
-        Debug.Log(tp);
-        Vector3 vec = new Vector3(0, 1.3f, 0);
-        var explosive = Instantiate(explosivePrefab, tp.position+vec, tp.rotation) as GameObject;
-        explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
-        //explosive.rigidbody.AddForce(transform.forward * 2000);
-
-		NetworkServer.Spawn(explosive);*/
-		//CmdSpawnTest(gameObject);
         CmdSpawnGrenade(gameObject);
     }
 
     public void PU_PlaceMine()
     {
-        /*throwAudioSource.Play();
-        Vector3 offset = new Vector3(0, 5, 0);
-        var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;*/
         CmdSpawnMine(gameObject);
     }
 
-	public void ActivatePowerup()
-	{
-		if (currentPU != "None")
-		{
-			Debug.Log("Using powerup: "+currentPU);
-
-			switch (currentPU)
-			{
-			case "0 - Invisibility":
-                PU_MakeInvisible();
-				break;
-			case "1 - Speed":
-                PU_HeightenSpeed();
-				break;
-            case "2 - Explosive":
-                PU_ThrowExplosive();
-                break;
-            case "3 - Mine":
-                PU_PlaceMine();
-                break;
-			default:
-				break;
-			}
-
-
-			currentPU = "None";
-            spritePU.image.overrideSprite = sprite_array[4];//
-
-		}
-		else
-		{
-			Debug.Log("No powerup available");
-		}
-	}
+	
 
 	#endregion
 
@@ -697,6 +624,7 @@ public class Player : NetworkBehaviour {
         Vector3 vec = new Vector3(0, 1.3f, 0);
 
         var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
+        explosive.transform.parent = this.transform;
         explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
         NetworkServer.Spawn(explosive);
     }
@@ -707,6 +635,8 @@ public class Player : NetworkBehaviour {
         throwAudioSource.Play();
         Vector3 offset = new Vector3(0, 5, 0);
         var explosive = Instantiate(explosiveMinePrefab, _go.transform.position + offset, Quaternion.identity) as GameObject;
+        explosive.transform.parent = this.transform;
+        //Debug.Log(explosive.transform.parent);
         NetworkServer.Spawn(explosive);
     }
 

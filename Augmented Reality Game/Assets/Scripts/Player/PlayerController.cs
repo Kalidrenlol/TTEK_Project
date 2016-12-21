@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionStay(Collision collider) {
 		if (collider.gameObject.tag == "Player") {
-			GetComponent<Player>().PushOpponent(collider);
+			//GetComponent<Player>().PushOpponent(collider);
 		}
 	}
 

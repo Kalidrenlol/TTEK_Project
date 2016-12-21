@@ -7,7 +7,7 @@ public class HitCollider : MonoBehaviour {
 
 	void OnTriggerStay(Collider coll) {
 		if (coll.gameObject.tag == "Player") {
-			player.GetComponent<Player>().PushOpponent(coll);
+			//player.GetComponent<Player>().PushOpponent(coll);
 		}
 	}
 
