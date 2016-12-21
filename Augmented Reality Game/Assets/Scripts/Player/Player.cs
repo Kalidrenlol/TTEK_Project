@@ -310,15 +310,20 @@ public class Player : NetworkBehaviour {
     public void PushNew(GameObject _pusher)
     {
         Debug.Log(_pusher);
+        if (Network.isServer)
+        {
+            RpcPushNew(_pusher);
+            Debug.Log("Call is Server");
+        }
         if (Network.isClient)
         {
             CmdPushNew(_pusher);
-            Debug.Log("Call isClient");
+            Debug.Log("Call isC lient");
         }
         else
         {
             RpcPushNew(_pusher);
-            Debug.Log("Call is!client");
+            Debug.Log("Call is ! client");
         }
         
         
