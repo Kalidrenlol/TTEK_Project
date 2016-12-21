@@ -38,8 +38,8 @@ public class PlayerSetup : NetworkBehaviour {
 
 		string _username = "Loading...";
 		_username = transform.name;
-		//CmdSetPlayerID(transform.name, _username);
-        RpcSetPlayerID(transform.name, _username);
+		CmdSetPlayerID(transform.name, _username);
+        //RpcSetPlayerID(transform.name, _username);
 
 		isReady = false;
 
@@ -230,15 +230,6 @@ public class PlayerSetup : NetworkBehaviour {
 		}
 	}
 
-    [ClientRpc]
-    public void RpcSetPlayerID(string _playerID, string _username)
-    {
-        Player player = GameManager.GetPlayer(_playerID);
-        if (player != null)
-        {
-            player.playerID = _username;
-        }
-    }
 
 	[Command]
 	public void CmdSetUsername(string _playerID, string _username) {
