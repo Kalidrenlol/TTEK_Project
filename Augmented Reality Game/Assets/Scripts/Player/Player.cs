@@ -310,52 +310,57 @@ public class Player : NetworkBehaviour {
     public void PushNew(GameObject _pusher)
     {
         Debug.Log(_pusher);
+        if (Network.isClient)
+        {
+            CmdPushNew(_pusher);
+            Debug.Log("Call isClient");
+        }
+        else
+        {
+            RpcPushNew(_pusher);
+            Debug.Log("Call is!client");
+        }
+        
+        
+        
+    }
+
+    [ClientRpc]
+    public void RpcPushNew(GameObject _pusher)
+    {
         float hitForce = 4000f;
         float hitRadius = 3f;
         Vector3 pos = _pusher.transform.position;
         Rigidbody thisRb = _pusher.GetComponent<Rigidbody>();
         Collider[] colliders = Physics.OverlapSphere(pos, hitRadius);
         Camera.main.transform.GetComponent<ScreenShake>().InitScreenShake(0.1f, 0.1f);
-        if (Network.isClient)
-            {
-                CmdPushNew(colliders, thisRb, hitForce, hitRadius);
-                Debug.Log("Call isClient");
-            }
-            else
-            {
-                RpcPushNew(colliders, thisRb, hitForce, hitRadius);
-                Debug.Log("Call is!client");
-            }
-        
-    }
-
-    [ClientRpc]
-    public void RpcPushNew(Collider[] colliders, Rigidbody thisRb, float hf, float hr)
-    {
         foreach (Collider hit in colliders)
         {
 
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
             if (rbHit != null && rbHit != thisRb)
             {
-                //force, position, radius
-                rbHit.AddExplosionForce(hf, transform.position, hr);
+                rbHit.AddExplosionForce(hitForce, transform.position, hitRadius);
             }
-
         }
     }
 
     [Command]
-    public void CmdPushNew(Collider[] colliders, Rigidbody thisRb, float hf, float hr)
+    public void CmdPushNew(GameObject _pusher)
     {
+        float hitForce = 4000f;
+        float hitRadius = 3f;
+        Vector3 pos = _pusher.transform.position;
+        Rigidbody thisRb = _pusher.GetComponent<Rigidbody>();
+        Collider[] colliders = Physics.OverlapSphere(pos, hitRadius);
+        Camera.main.transform.GetComponent<ScreenShake>().InitScreenShake(0.1f, 0.1f);
         foreach (Collider hit in colliders)
         {
 
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
             if (rbHit != null && rbHit != thisRb)
             {
-                //force, position, radius
-                rbHit.AddExplosionForce(hf, transform.position, hr);
+                rbHit.AddExplosionForce(hitForce, transform.position, hitRadius);
             }
 
         }
