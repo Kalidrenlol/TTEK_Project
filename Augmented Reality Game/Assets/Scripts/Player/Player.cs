@@ -618,7 +618,7 @@ public class Player : NetworkBehaviour {
 		explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
 		//explosive.rigidbody.AddForce(transform.forward * 2000);
 
-		//NetworkServer.Spawn(explosive);
+		NetworkServer.Spawn(explosive);
 	}
 
 
