@@ -36,10 +36,11 @@ public class GameController : NetworkBehaviour {
 				return;
 			}
 		}
-
+			
 		startCountdown = true;
 		GetComponent<PlayerSetup>().pregameUI.SetActive(false);
 		GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
+		GetComponent<Player>().sceneCamera.GetComponent<SceneCamera>().zoomToMain = true;
 	}
 
 	void Update() {

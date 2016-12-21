@@ -124,11 +124,11 @@ public class Player : NetworkBehaviour {
 
 			mainCamera = Camera.main.gameObject;
 			sceneCamera = Instantiate(sceneCameraPrefab);
+			sceneCamera.GetComponent<SceneCamera>().mainCamera = mainCamera;
+			mainCamera.transform.SetParent(transform, false);
 			mainCamera.SetActive(false);
 			sceneCamera.SetActive(true);
-
 		}
-
         
 	}
 

@@ -140,6 +140,7 @@ MonoBehaviour:
     maxMana: 10
     getManaPrSecond: 1
     restoreManaPrSecond: 1
+    showDebug: 1
   powerUps:
     punchForce: 200
 --- !u!114 &114000014292715744

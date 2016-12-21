@@ -100,14 +100,6 @@ public class PlayerSetup : NetworkBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.O)) {
-			if (!isLocalPlayer) {
-				return;
-			}
-			CmdSetReady();
-		}
-
-
 		// Set isReady ved fangst af ImageTarget
 		if (getReadyUI) {
 			if (getReadyUI.GetComponent<GetReadyUI>().isReady && isReady == false) {
