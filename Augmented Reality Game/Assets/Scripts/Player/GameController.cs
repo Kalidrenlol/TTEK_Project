@@ -37,8 +37,7 @@ public class GameController : NetworkBehaviour {
 
 	public void IsGameFinish() {
 		foreach (Player _player in GameManager.GetPlayers()) {
-			if (_player.GetComponent<Player>().score <= -1) {
-				//if (_player.GetComponent<Player>().score >= GameManager.instance.matchSettings.killToWin) {
+			if (_player.GetComponent<Player>().score >= GameManager.instance.matchSettings.killToWin) {
 				gameEnded = true;
 			}
 		}
