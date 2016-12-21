@@ -40,6 +40,7 @@ public class Explosive : NetworkBehaviour {
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
             if (rbHit != null)
             {
+                
                 if (rbHit.tag == "Player" && transform.parent.name != rbHit.name)
                 {
                     rbHit.GetComponent<Player>().PushedOpponent(transform.parent.name);

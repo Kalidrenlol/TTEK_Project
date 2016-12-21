@@ -121,6 +121,12 @@ public class Player : NetworkBehaviour {
         
 	}
 
+    void OnClientStart()
+    {
+        ClientScene.RegisterPrefab(explosivePrefab);
+        ClientScene.RegisterPrefab(explosiveMinePrefab);
+    }
+
 	void Update() {
 		if (!isLocalPlayer) {
 			return;
