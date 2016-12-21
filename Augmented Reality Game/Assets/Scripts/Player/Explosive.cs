@@ -45,6 +45,7 @@ public class Explosive : NetworkBehaviour {
         GameObject ep = Instantiate(explosiveParticle, transform.position, Quaternion.identity) as GameObject;
         Destroy(ep, 2f);
         GetComponent<Renderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         Destroy(gameObject,2f);
     }
 }

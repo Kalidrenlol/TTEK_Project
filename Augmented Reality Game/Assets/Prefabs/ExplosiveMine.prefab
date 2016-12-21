@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 4
-  explosiveForce: 5000
-  explosiveRadius: 20
+  explosiveForce: 5500
+  explosiveRadius: 25
   explosiveParticle: {fileID: 1000011562095434, guid: 30624048746893f42a9d967c9860454c,
     type: 2}
 --- !u!114 &114000010943029278
