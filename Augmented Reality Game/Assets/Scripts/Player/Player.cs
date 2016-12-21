@@ -638,7 +638,7 @@ public class Player : NetworkBehaviour {
         Vector3 vec = new Vector3(0, 1.3f, 0);
         var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
         explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
-        NetworkServer.Spawn(explosive);     
+        //NetworkServer.Spawn(explosive);     
     }
 
     [Command]
@@ -653,7 +653,7 @@ public class Player : NetworkBehaviour {
         throwAudioSource.Play();
         Vector3 offset = new Vector3(0, 5, 0);
         var explosive = Instantiate(explosiveMinePrefab, _go.transform.position + offset, Quaternion.identity) as GameObject;
-        NetworkServer.Spawn(explosive);   
+        //NetworkServer.Spawn(explosive);   
     }
 
             
