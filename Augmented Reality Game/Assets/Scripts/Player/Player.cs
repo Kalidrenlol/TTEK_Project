@@ -300,6 +300,34 @@ public class Player : NetworkBehaviour {
 
 	#region PUSHING
 
+    [Command]
+    public void CmdPushNew(GameObject _pusher)
+    {
+        Debug.Log(_pusher);
+        float hitForce = 4000f;
+        float hitRadius = 3f;
+        Vector3 pos = _pusher.transform.position;
+        Rigidbody thisRb = _pusher.GetComponent<Rigidbody>();
+        Collider[] colliders = Physics.OverlapSphere(pos, hitRadius);
+        Camera.main.transform.GetComponent<ScreenShake>().InitScreenShake(0.1f, 0.1f);
+        foreach (Collider hit in colliders)
+        {
+           
+            Rigidbody rbHit = hit.GetComponent<Rigidbody>();
+            if (rbHit != null && rbHit != thisRb)
+            {
+                //force, position, radius
+                rbHit.AddExplosionForce(hitForce, transform.position, hitRadius);
+            }
+
+        }
+    }
+
+
+
+
+
+
     public void PushSound()
     {
         punchAudioSource.Play();
@@ -312,10 +340,24 @@ public class Player : NetworkBehaviour {
 			return;
 		}
 		if (isAttacking) {
-            Debug.Log("Push Collision isattacking");
+          /*  Debug.Log("Push Collision isattacking");
 			Vector3 dir = (transform.position - coll.transform.position).normalized;
 			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
-			CmdPushOpponent(coll.gameObject.name, gameObject.name,  _force);
+            if (Network.isServer)
+            {
+                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
+                Debug.Log("Call isServer");
+            }
+            if (Network.isClient)
+            {
+                CmdPushOpponent(coll.gameObject.name, gameObject.name, _force);
+                Debug.Log("Call isClient");
+            }
+            else
+            {
+                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
+                Debug.Log("Call is!client");
+            }*/
 		}
 	}
 
@@ -328,17 +370,24 @@ public class Player : NetworkBehaviour {
 		}
 
 		if (isAttacking) {
-            Debug.Log("Push Collider isAttacking");
+           /* Debug.Log("Push Collider isAttacking");
 			Vector3 dir = (transform.position - coll.transform.position).normalized;
 			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
             if (Network.isServer)
             {
                 RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
+                Debug.Log("Call isServer");
             }
             if (Network.isClient)
             {
                 CmdPushOpponent(coll.gameObject.name, gameObject.name, _force);
+                Debug.Log("Call isClient");
             }
+            else
+            {
+                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
+                Debug.Log("Call is!client");
+            }*/
 		}
 	}
 

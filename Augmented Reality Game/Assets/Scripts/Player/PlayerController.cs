@@ -40,6 +40,17 @@ public class PlayerController : MonoBehaviour {
             GetComponent<Player>().PushSound();
 		}
 
+        if (Input.GetKeyDown("x"))
+        {
+
+            GetComponent<Player>().CmdPushNew(this.gameObject);
+            GetComponent<Player>().isAttacking = true;
+            playerAnimator.SetBool("HasAttacked", true);
+            StartCoroutine(StopPush());
+            //Push sound
+            GetComponent<Player>().PushSound();
+        }
+
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
         var cam = Camera.main.transform;
 		motor.Move(_velocity);
@@ -76,6 +87,7 @@ public class PlayerController : MonoBehaviour {
 		playerAnimator.SetBool ("HasAttacked", true);
 		StartCoroutine(StopPush());
 	}
+
 
 	private IEnumerator StopPush() {
 		yield return new WaitForSeconds(0.5f);
