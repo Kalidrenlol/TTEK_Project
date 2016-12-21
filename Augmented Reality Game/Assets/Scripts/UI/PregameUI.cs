@@ -11,6 +11,8 @@ public class PregameUI : MonoBehaviour {
 	[SerializeField] float secondsBetweenUpdate;
 	[SerializeField] Transform prePlayerList;
 	[SerializeField] GameObject waitingRoom;
+	[SerializeField] Text txtStatus;
+	
 	public Button btnGetReady;
 	public Button btnDebug;
 
@@ -18,7 +20,6 @@ public class PregameUI : MonoBehaviour {
 
 	void Start() {
 		RefreshPlayerlist();
-
 	}
 
 	public void RefreshPlayerlist () {
@@ -45,6 +46,17 @@ public class PregameUI : MonoBehaviour {
 			}
 		}
 
+		switch (numPlayers) {
+		case 1: SetStatusText("Let's wait for some players");
+		break;
+		case 2: SetStatusText("2 players is enough for a game?");
+		break;
+		case 3: SetStatusText("This gonna be fun!");
+		break;
+		case 4: SetStatusText("Are You Ready?");
+		break;
+		}
+
 		while(numPlayers < 4) {
 			GameObject itemGO = Instantiate(pregamePlayerItem, prePlayerList, false) as GameObject;
 			itemGO.transform.localScale = prePlayerList.transform.localScale;
@@ -68,6 +80,10 @@ public class PregameUI : MonoBehaviour {
 		waitingRoom.SetActive(false);
 		uiScoreRoom.SetActive(true);
 		uiScoreRoom.GetComponent<UIScoreRoom>().CreateFinalScore();
+	}
+
+	public void SetStatusText(string _text) {
+		txtStatus.text = _text;
 	}
 
 
