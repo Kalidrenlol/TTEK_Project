@@ -331,11 +331,18 @@ public class Player : NetworkBehaviour {
             Debug.Log("Push Collider isAttacking");
 			Vector3 dir = (transform.position - coll.transform.position).normalized;
 			Vector3 _force = -dir * GameManager.instance.powerUps.punchForce;
-			CmdPushOpponent(coll.gameObject.name, gameObject.name,  _force);
+            if (Network.isServer)
+            {
+                RpcPushOpponent(coll.gameObject.name, gameObject.name, _force);
+            }
+            if (Network.isClient)
+            {
+                CmdPushOpponent(coll.gameObject.name, gameObject.name, _force);
+            }
 		}
 	}
 
-	//[Command]
+	[Command]
 	void CmdPushOpponent(string _playerPushed, string _pushingPlayer, Vector3 _force) {
 		Player _player = GameManager.GetPlayer(_playerPushed);
 		_player.PushedOpponent(_pushingPlayer, _force);
