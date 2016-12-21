@@ -27,6 +27,11 @@ public class Player : NetworkBehaviour {
 	[SerializeField] public  GameObject gameManager;
 	[SerializeField] private GameObject hitCollider;
 
+	public GameObject sceneCameraPrefab;
+	public GameObject mainCameraPrefab;
+	public GameObject sceneCamera;
+	public GameObject mainCamera;
+
     public string currentPU = "None";
 
 	Animator playerAnimator;
@@ -116,6 +121,12 @@ public class Player : NetworkBehaviour {
             rend = GetComponent<Renderer>();
 			StartParticle();
 			SetPlayerIndex();
+
+			mainCamera = Camera.main.gameObject;
+			sceneCamera = Instantiate(sceneCameraPrefab);
+			mainCamera.SetActive(false);
+			sceneCamera.SetActive(true);
+
 		}
 
         
@@ -189,7 +200,7 @@ public class Player : NetworkBehaviour {
 		if (pushedByPlayer != null) {
 			CmdSetScore(pushedByPlayer, 1, "Kill");
 		} else {
-			CmdSetScore(playerID, -1, "Suicide");
+			CmdSetScore(playerID, 1, "Suicide");
 		}
 
 	}

@@ -1931,6 +1931,12 @@ MonoBehaviour:
   gameManager: {fileID: 1000011250917102, guid: 7bfb683d605aa46db90fb448a8df2caa,
     type: 2}
   hitCollider: {fileID: 0}
+  sceneCameraPrefab: {fileID: 1000012562457172, guid: 0b0cae2ec55794ebd8164eeae33b76f5,
+    type: 2}
+  mainCameraPrefab: {fileID: 1000013776867050, guid: d3af6508a3c5b4949b0c7fb159d58c68,
+    type: 2}
+  sceneCamera: {fileID: 0}
+  mainCamera: {fileID: 0}
   currentPU: 1 - Speed
   rend: {fileID: 0}
   color: {r: 0, g: 0, b: 0, a: 0}
@@ -2047,6 +2053,7 @@ MonoBehaviour:
     type: 2}
   scoreboard: {fileID: 1000012944594310, guid: 2d1e6236b08f144edb696a313d3a65f0, type: 2}
   playerUIInstance: {fileID: 0}
+  pregameUI: {fileID: 0}
   isReady: 1
 --- !u!114 &114000012406351698
 MonoBehaviour:
@@ -2076,7 +2083,9 @@ MonoBehaviour:
   WeaponBoxPrefab: {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8,
     type: 2}
   _playersBeforeGo: 0
+  Fireworks: {fileID: 1000012500833998, guid: 4d5c6da772cd84a04b61eee0db716822, type: 2}
   gameStarted: 0
+  gameEnded: 0
 --- !u!137 &137000013303674612
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

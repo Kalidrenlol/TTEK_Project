@@ -38,7 +38,7 @@ public class ScreenShake : MonoBehaviour {
     
 
 	// Update is called once per frame
-	void LateUpdate () {
+	/*void LateUpdate () {
 
         if (timeDecay > 0.1f)
         {
@@ -54,7 +54,7 @@ public class ScreenShake : MonoBehaviour {
             transform.position = transform.parent.position + offset;
         
         }
-	}
+	}*/
 
     public void InitScreenShake(float _magnitudeFloat, float _timeFloat)
     {

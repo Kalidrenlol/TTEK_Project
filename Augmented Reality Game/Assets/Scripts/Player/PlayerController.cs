@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour {
         }
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
-        var cam = Camera.main.transform;
+		GameObject cam = Camera.main.gameObject;
 		motor.Move(_velocity);
 
         if (Input.GetKeyDown("g"))

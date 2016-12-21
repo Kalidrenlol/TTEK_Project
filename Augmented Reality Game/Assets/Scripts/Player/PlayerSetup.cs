@@ -24,7 +24,7 @@ public class PlayerSetup : NetworkBehaviour {
 	private GameObject waitingUI;
 	private GameObject getReadyUI;
 
-	private Camera sceneCamera;
+	private GameObject myCamera;
 	private GameObject aRCamera;
 
 	[SyncVar] public bool isReady = false;
@@ -47,14 +47,6 @@ public class PlayerSetup : NetworkBehaviour {
 			SetComponents(false);
 			AssignRemoteLayer();
 		} else {
-
-			sceneCamera = Camera.main;
-            sceneCamera.transform.parent = this.transform;
-            Vector3 playerPos = this.transform.position;
-            //playerPos.x = playerPos.x + 2;
-            playerPos.y = 28;
-            playerPos.z = -14;
-            sceneCamera.transform.position = playerPos;
 
 			playerUIInstance = Instantiate(playerUIPrefab);
 			playerUIInstance.name = playerUIPrefab.name;
@@ -136,10 +128,10 @@ public class PlayerSetup : NetworkBehaviour {
 		
 	// Find ImageTarget //
 	public void GetReady() {
-		if (sceneCamera != null) {
+		if (myCamera != null) {
 			GameObject _world = GameObject.FindGameObjectWithTag("GameWorld");
 			_world.transform.SetParent(GameObject.Find("ImageTarget").transform);
-			sceneCamera.gameObject.SetActive(false);
+			myCamera.gameObject.SetActive(false);
 			aRCamera = Instantiate(aRCameraPrefab);
 			aRCamera.name = aRCameraPrefab.name;
 		}
@@ -203,6 +195,13 @@ public class PlayerSetup : NetworkBehaviour {
 		if (waitingUI.activeSelf)  {
 			waitingUI.SetActive(false);
 		}
+
+		GetComponent<Player>().sceneCamera.SetActive(false);
+		myCamera = GetComponent<Player>().mainCamera.GetComponent<Camera>().gameObject;
+		myCamera.transform.SetParent(transform, false);
+		myCamera.SetActive(true);
+
+
 	}
 
 	[ClientRpc]
@@ -219,6 +218,9 @@ public class PlayerSetup : NetworkBehaviour {
 			waitingUI.SetActive(false);
 		}
 		pregameUI.GetComponent<PregameUI>().EndGameUI();
+		GetComponent<GameController>().StartFireworks();
+		GetComponent<Player>().mainCamera.SetActive(false);
+		GetComponent<Player>().sceneCamera.SetActive(true);
 	}
 
 	public override void OnStartClient() {

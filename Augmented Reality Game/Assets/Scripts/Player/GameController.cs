@@ -8,6 +8,7 @@ public class GameController : NetworkBehaviour {
 	[SerializeField] GameObject gameManager;
 	[SerializeField] GameObject WeaponBoxPrefab;
 	[SerializeField] int _playersBeforeGo;
+	public GameObject Fireworks;
 
 	[SyncVar] public bool gameStarted = false;
 	[SyncVar(hook="EndGame")] public bool gameEnded = false;
@@ -42,6 +43,12 @@ public class GameController : NetworkBehaviour {
 			}
 		}
 
+	}
+
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			StartFireworks();
+		}
 	}
 
 	[Command]
@@ -98,5 +105,9 @@ public class GameController : NetworkBehaviour {
 	}
 
 	#endregion
+
+	public void StartFireworks() {
+		Instantiate(Fireworks);
+	}
 
 }
