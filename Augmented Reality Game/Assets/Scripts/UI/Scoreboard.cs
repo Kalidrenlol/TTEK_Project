@@ -15,6 +15,10 @@ public class Scoreboard : MonoBehaviour {
 		Invoke("RefreshScoreboard", secondsBetweenUpdate);
 	}
 
+	public void StopScoreboard() {
+		CancelInvoke("RefreshScoreboard");
+	}
+
 	void AddPlayers() {
 		Player[] players = GameManager.GetPlayers();
 		players = players.OrderByDescending(x => x.score).ToArray();

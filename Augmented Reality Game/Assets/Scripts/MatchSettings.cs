@@ -6,7 +6,7 @@ public class MatchSettings {
 	[Header("Match")]
 	public float respawnTime = 3f;
 	public float spawnNextWeapon = 5f;
-
+	public int killToWin = 1;
 	public float timeForPushToKill = 10f;
 
 	// Mana

@@ -10,13 +10,14 @@ public class GameController : NetworkBehaviour {
 	[SerializeField] int _playersBeforeGo;
 
 	[SyncVar] public bool gameStarted = false;
+	[SyncVar(hook="EndGame")] public bool gameEnded = false;
 
 	private List<GameObject> WeaponsSpawn = new List<GameObject>();
 
 	void Start() {
 		gameStarted = false;
 	}
-
+	 
 	public void IsAllReady() {
 		if (!isServer) {
 			return;
@@ -34,6 +35,15 @@ public class GameController : NetworkBehaviour {
 		CmdStartGame();
 	}
 
+	public void IsGameFinish() {
+		foreach (Player _player in GameManager.GetPlayers()) {
+			if (_player.GetComponent<Player>().score >= GameManager.instance.matchSettings.killToWin) {
+				gameEnded = true;
+			}
+		}
+
+	}
+
 	[Command]
 	void CmdStartGame() {
 		gameStarted = true;
@@ -43,6 +53,22 @@ public class GameController : NetworkBehaviour {
 		}
 
 		SpawnBoxAuto();
+	}
+
+	void EndGame(bool _gameEnded) {
+		if (!isLocalPlayer) {
+			return;
+		}
+		if (_gameEnded) {
+			CmdEndGame();
+		}
+	}
+
+	[Command]
+	void CmdEndGame() {
+		foreach (Player _player in GameManager.GetPlayers()) {
+			_player.GetComponent<PlayerSetup>().RpcEndGame();
+		}
 	}
 
 	#region Weapon Drop

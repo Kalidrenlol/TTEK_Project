@@ -9,14 +9,16 @@ public class PregameUI : MonoBehaviour {
 
 	[SerializeField] GameObject pregamePlayerItem;
 	[SerializeField] float secondsBetweenUpdate;
-	[SerializeField] Transform playerList;
-	[SerializeField] GameObject goToGameObj;
+	[SerializeField] Transform prePlayerList;
+	[SerializeField] GameObject waitingRoom;
 	public Button btnGetReady;
 	public Button btnDebug;
 
+	public GameObject uiScoreRoom;
+
 	void Start() {
 		RefreshPlayerlist();
-		goToGameObj.SetActive(false);
+
 	}
 
 	public void RefreshPlayerlist () {
@@ -30,8 +32,8 @@ public class PregameUI : MonoBehaviour {
 
 		int numPlayers = 0;
 		foreach (Player player in players) {
-			GameObject itemGO = Instantiate(pregamePlayerItem, playerList, false) as GameObject;
-			itemGO.transform.localScale = playerList.transform.localScale;
+			GameObject itemGO = Instantiate(pregamePlayerItem, prePlayerList, false) as GameObject;
+			itemGO.transform.localScale = prePlayerList.transform.localScale;
 			PregamePlayerItem item = itemGO.GetComponent<PregamePlayerItem>();
 
 			if (item != null) {
@@ -44,8 +46,8 @@ public class PregameUI : MonoBehaviour {
 		}
 
 		while(numPlayers < 4) {
-			GameObject itemGO = Instantiate(pregamePlayerItem, playerList, false) as GameObject;
-			itemGO.transform.localScale = playerList.transform.localScale;
+			GameObject itemGO = Instantiate(pregamePlayerItem, prePlayerList, false) as GameObject;
+			itemGO.transform.localScale = prePlayerList.transform.localScale;
 			PregamePlayerItem item = itemGO.GetComponent<PregamePlayerItem>();
 
 			if (item != null) {
@@ -57,13 +59,17 @@ public class PregameUI : MonoBehaviour {
 	}
 
 	void RemovePlayers() {
-		foreach(Transform child in playerList) {
+		foreach(Transform child in prePlayerList) {
 			Destroy(child.gameObject);
 		}
 	}
 
-	public void ShowText(bool _show) {
-		goToGameObj.SetActive(_show);
+	public void EndGameUI() {
+		waitingRoom.SetActive(false);
+		uiScoreRoom.SetActive(true);
+		uiScoreRoom.GetComponent<UIScoreRoom>().CreateFinalScore();
 	}
+
+
 
 }

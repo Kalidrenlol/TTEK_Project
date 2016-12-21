@@ -17,6 +17,11 @@ public class PlayerUI : MonoBehaviour {
 	[SerializeField] GameObject manaSlider;
 	[SerializeField] Text txtManaCount;
 
+	public Text tTemp;
+	public Text tSave;
+	public Text tMana;
+
+
 
 	public void SetPlayerScript(Player _script) {
 		playerScript = _script;
