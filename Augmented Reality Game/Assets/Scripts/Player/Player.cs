@@ -550,7 +550,7 @@ public class Player : NetworkBehaviour {
 
 		NetworkServer.Spawn(explosive);*/
 		//CmdSpawnTest(gameObject);
-        SpawnGrenadeCMD(gameObject);
+        CmdSpawnGrenade(gameObject);
     }
 
     public void PU_PlaceMine()
@@ -558,7 +558,7 @@ public class Player : NetworkBehaviour {
         /*throwAudioSource.Play();
         Vector3 offset = new Vector3(0, 5, 0);
         var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;*/
-        SpawnMineCMD(gameObject);
+        CmdSpawnMine(gameObject);
     }
 
 	public void ActivatePowerup()
@@ -624,13 +624,13 @@ public class Player : NetworkBehaviour {
 	}*/
 
     [Command]
-    public void SpawnGrenadeCMD(GameObject _go)
+    public void CmdSpawnGrenade(GameObject _go)
     {
-        SpawnGrenadeRPC(_go);
+        RpcSpawnGrenade(_go);
     }
 
     [ClientRpc]
-    public void SpawnGrenadeRPC(GameObject _go)
+    public void RpcSpawnGrenade(GameObject _go)
     {
         Transform tp = _go.transform.Find("Graphics");
         throwAudioSource.Play();
@@ -642,13 +642,13 @@ public class Player : NetworkBehaviour {
     }
 
     [Command]
-    public void SpawnMineCMD(GameObject _go)
+    public void CmdSpawnMine(GameObject _go)
     {
-        SpawnMineRPC(_go);
+        RpcSpawnMine(_go);
     }
 
     [ClientRpc]
-    public void SpawnMineRPC(GameObject _go)
+    public void RpcSpawnMine(GameObject _go)
     {
         throwAudioSource.Play();
         Vector3 offset = new Vector3(0, 5, 0);
