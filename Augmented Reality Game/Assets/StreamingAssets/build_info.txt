@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-Build from WNO039 at 12/21/2016 7:48:36 PM
-=======
-Build from Nicklass MacBook Pro at 12/21/2016 19:47:32
->>>>>>> 206604790eeaced50fe2947520e6ccc29819a253

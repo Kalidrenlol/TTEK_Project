@@ -306,53 +306,22 @@ public class Player : NetworkBehaviour {
 
 	#region PUSHING
 
-
+    [Client]
     public void PushNew(GameObject _pusher)
     {
-        Debug.Log(_pusher);
-        if (Network.isServer)
-        {
-            RpcPushNew(_pusher);
-            Debug.Log("Call is Server");
-        }
-        if (Network.isClient)
-        {
-            CmdPushNew(_pusher);
-            Debug.Log("Call isC lient");
-        }
-        else
-        {
-            RpcPushNew(_pusher);
-            Debug.Log("Call is ! client");
-        }
-        
-        
-        
-    }
-
-    [ClientRpc]
-    public void RpcPushNew(GameObject _pusher)
-    {
-        float hitForce = 4000f;
-        float hitRadius = 3f;
-        Vector3 pos = _pusher.transform.position;
-        Rigidbody thisRb = _pusher.GetComponent<Rigidbody>();
-        Collider[] colliders = Physics.OverlapSphere(pos, hitRadius);
-        Camera.main.transform.GetComponent<ScreenShake>().InitScreenShake(0.1f, 0.1f);
-        foreach (Collider hit in colliders)
-        {
-
-            Rigidbody rbHit = hit.GetComponent<Rigidbody>();
-            if (rbHit != null && rbHit != thisRb)
-            {
-                rbHit.AddExplosionForce(hitForce, transform.position, hitRadius);
-            }
-        }
+       CmdPushNew(_pusher);
     }
 
     [Command]
     public void CmdPushNew(GameObject _pusher)
     {
+        RpcPushNew(_pusher);
+    }
+
+    [ClientRpc]
+    public void RpcPushNew(GameObject _pusher)
+    {
+
         float hitForce = 4000f;
         float hitRadius = 3f;
         Vector3 pos = _pusher.transform.position;
@@ -365,13 +334,30 @@ public class Player : NetworkBehaviour {
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
             if (rbHit != null && rbHit != thisRb)
             {
+                Debug.Log(rbHit.tag);
+                if (rbHit.tag == "Player")
+                {
+                    rbHit.GetComponent<Player>().PushedOpponent(_pusher.name);
+                }
                 rbHit.AddExplosionForce(hitForce, transform.position, hitRadius);
             }
-
         }
     }
 
+    public void PushedOpponent(string _pushingPlayer)
+    {
+        Debug.Log("Pushing: "+_pushingPlayer);
+        Debug.Log("Pushed: "+this);
+        pushedByPlayer = _pushingPlayer;
+        StartCoroutine(ResetPushedByPlayer());
+    }
 
+    private IEnumerator ResetPushedByPlayer()
+    {
+        yield return new WaitForSeconds(GameManager.instance.matchSettings.timeForPushToKill);
+
+        pushedByPlayer = null;
+    }
 
 
 
@@ -439,35 +425,7 @@ public class Player : NetworkBehaviour {
 		}
 	}
 
-	[Command]
-	void CmdPushOpponent(string _playerPushed, string _pushingPlayer, Vector3 _force) {
-		Player _player = GameManager.GetPlayer(_playerPushed);
-		_player.PushedOpponent(_pushingPlayer, _force);
 
-	}
-
-    [ClientRpc]
-    void RpcPushOpponent(string _playerPushed, string _pushingPlayer, Vector3 _force)
-    {
-        Player _player = GameManager.GetPlayer(_playerPushed);
-        _player.PushedOpponent(_pushingPlayer, _force);
-
-    }
-		
-	public void PushedOpponent(string _pushingPlayer, Vector3 _force) {
-        Debug.Log(_pushingPlayer);
-        Debug.Log(_force);
-        Debug.Log(this);
-		pushedByPlayer = _pushingPlayer;
-		StartCoroutine(ResetPushedByPlayer());
-		GetComponent<Rigidbody>().AddForce(_force);
-	}
-
-	private IEnumerator ResetPushedByPlayer() {
-		yield return new WaitForSeconds(GameManager.instance.matchSettings.timeForPushToKill);
-
-		pushedByPlayer = null;
-	}
 
 	#endregion
 
