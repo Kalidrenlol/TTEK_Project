@@ -82,9 +82,6 @@ public class Player : NetworkBehaviour {
 
 	void Start() {
 
-
-
-
         sound_holder = GameObject.FindGameObjectWithTag("SoundHolder").transform;
 
         //sound
@@ -125,6 +122,10 @@ public class Player : NetworkBehaviour {
 	}
 
 	void Update() {
+		if (!isLocalPlayer) {
+			return;
+		}
+
 		if (GetComponent<GameController>().gameStarted) {
 			UpdateMana();
 		}
@@ -153,8 +154,7 @@ public class Player : NetworkBehaviour {
 		if (isDead) {
 			return;
 		}
-		if (!isServer)
-		{
+		if (!isServer) {
 			return;
 		}
 
@@ -178,19 +178,20 @@ public class Player : NetworkBehaviour {
 			_col.enabled = false;
 		}
 
-		if (pushedByPlayer != null) {
-			CmdSetScore(pushedByPlayer, 1, "Kill");
-			Player _player = GameManager.GetPlayer(pushedByPlayer);
-			_player.score += 1;
-
-		} else {
-			CmdSetScore(playerID, -1, "Suicide");
-			score -= 1;
-		}
-
 		GetComponent<Rigidbody>().drag = 5;
 
 		StartCoroutine(Respawn());
+
+		if (!isLocalPlayer) {
+			return;
+		}
+
+		if (pushedByPlayer != null) {
+			CmdSetScore(pushedByPlayer, 1, "Kill");
+		} else {
+			CmdSetScore(playerID, -1, "Suicide");
+		}
+
 	}
 
 	public void SetDefaults() {
@@ -218,13 +219,16 @@ public class Player : NetworkBehaviour {
 		_player.RpcSetScore(_score, _reason);
 	}
 
-
 	[ClientRpc]
 	public void RpcSetScore(int _score, string _reason) {
+
+		score += _score;
+		GetComponent<GameController>().IsGameFinish();
+
 		if (!isLocalPlayer) {
 			return;
 		}
-		Debug.Log(transform.name);
+
 
 		int _rand;
 		switch(_reason) {
@@ -281,10 +285,12 @@ public class Player : NetworkBehaviour {
 	private IEnumerator Respawn() {
 		yield return new WaitForSeconds(GameManager.instance.matchSettings.respawnTime);
 
-		SetDefaults();
-		GoToSpawnpoint();
-		StartParticle();
-		ResetMana();
+		if (!GetComponent<GameController>().gameEnded) {
+			SetDefaults();
+			GoToSpawnpoint();
+			StartParticle();
+			ResetMana();
+		}
 	}
 		
 	public void HitWater() {
@@ -358,8 +364,10 @@ public class Player : NetworkBehaviour {
 		mana += _mana;
 	}
 
-	[Client]
 	public void TempMana(float _mana) {
+		if (!isLocalPlayer) {
+			return;
+		}
 		float totalTemp = mana + tempMana + savedMana;
 		if (totalTemp < GameManager.instance.matchSettings.maxMana) {
 			CmdTempMana(playerID, _mana);
@@ -385,22 +393,24 @@ public class Player : NetworkBehaviour {
 	[Command]
 	public void CmdSaveMana(string _playerID, float _mana) {
 		Player _player = GameManager.GetPlayer(_playerID);
-		_player.SaveMana(_mana);
+		_player.RpcSaveMana(_mana);
+		Debug.Log("Cmd");
 	}
-		
-	public void SaveMana(float _mana) {
+
+	[ClientRpc]
+	public void RpcSaveMana(float _mana) {
+		Debug.Log("Rpc");
 		savedMana += _mana;
 		tempMana = 0;
 	}
 		
 	void UpdateMana() {
-		if (!isLocalPlayer) {
-			return;
-		}
+		
 		// Save mana hvis ikke på wonderland //
 		if (tempMana > 0 && !isOnWonderland) {
 			tempMana = Mathf.Floor(tempMana);
 			CmdSaveMana(playerID, tempMana);
+			Debug.Log("Called");
 		} else if (tempMana < 0){
 			tempMana = 0;
 		}

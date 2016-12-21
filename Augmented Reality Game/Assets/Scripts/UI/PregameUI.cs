@@ -9,14 +9,18 @@ public class PregameUI : MonoBehaviour {
 
 	[SerializeField] GameObject pregamePlayerItem;
 	[SerializeField] float secondsBetweenUpdate;
-	[SerializeField] Transform playerList;
-	[SerializeField] GameObject goToGameObj;
+	[SerializeField] Transform prePlayerList;
+	[SerializeField] GameObject waitingRoom;
 	public Button btnGetReady;
 	public Button btnDebug;
 
+	[SerializeField] GameObject scoreRoom;
+	[SerializeField] GameObject endgamePlayerItem;
+	[SerializeField] Transform endPlayerList;
+
+
 	void Start() {
 		RefreshPlayerlist();
-		goToGameObj.SetActive(false);
 	}
 
 	public void RefreshPlayerlist () {
@@ -30,8 +34,8 @@ public class PregameUI : MonoBehaviour {
 
 		int numPlayers = 0;
 		foreach (Player player in players) {
-			GameObject itemGO = Instantiate(pregamePlayerItem, playerList, false) as GameObject;
-			itemGO.transform.localScale = playerList.transform.localScale;
+			GameObject itemGO = Instantiate(pregamePlayerItem, prePlayerList, false) as GameObject;
+			itemGO.transform.localScale = prePlayerList.transform.localScale;
 			PregamePlayerItem item = itemGO.GetComponent<PregamePlayerItem>();
 
 			if (item != null) {
@@ -44,8 +48,8 @@ public class PregameUI : MonoBehaviour {
 		}
 
 		while(numPlayers < 4) {
-			GameObject itemGO = Instantiate(pregamePlayerItem, playerList, false) as GameObject;
-			itemGO.transform.localScale = playerList.transform.localScale;
+			GameObject itemGO = Instantiate(pregamePlayerItem, prePlayerList, false) as GameObject;
+			itemGO.transform.localScale = prePlayerList.transform.localScale;
 			PregamePlayerItem item = itemGO.GetComponent<PregamePlayerItem>();
 
 			if (item != null) {
@@ -57,13 +61,45 @@ public class PregameUI : MonoBehaviour {
 	}
 
 	void RemovePlayers() {
-		foreach(Transform child in playerList) {
+		foreach(Transform child in prePlayerList) {
 			Destroy(child.gameObject);
 		}
 	}
 
-	public void ShowText(bool _show) {
-		goToGameObj.SetActive(_show);
+	public void EndGameUI() {
+		waitingRoom.SetActive(false);
+		scoreRoom.SetActive(true);
+		CreateFinalScore();
+	}
+
+	void CreateFinalScore() {
+		Player[] players = GameManager.GetPlayers();
+		players = players.OrderByDescending(x => x.score).ToArray();
+
+		int numPlayers = 0;
+		foreach (Player player in players) {
+			GameObject itemGO = Instantiate(endgamePlayerItem, endPlayerList, false) as GameObject;
+			itemGO.transform.localScale = endPlayerList.transform.localScale;
+			EndgamePlayerItem item = itemGO.GetComponent<EndgamePlayerItem>();
+
+			if (item != null) {
+				numPlayers++;
+				bool _isLocal = player.GetComponent<Player>().isLocalPlayer;
+				item.Setup(player.username, numPlayers, player.color, _isLocal, player.score);
+			}
+		}
+
+		while(numPlayers < 4) {
+			GameObject itemGO = Instantiate(pregamePlayerItem, endPlayerList, false) as GameObject;
+			itemGO.transform.localScale = endPlayerList.transform.localScale;
+			PregamePlayerItem item = itemGO.GetComponent<PregamePlayerItem>();
+
+			if (item != null) {
+				numPlayers++;
+				item.NoPlayer();
+			}
+
+		}
 	}
 
 }

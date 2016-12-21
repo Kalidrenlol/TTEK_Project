@@ -20,7 +20,7 @@ public class PlayerSetup : NetworkBehaviour {
 	public GameObject scoreboard;
 
 	public GameObject playerUIInstance;
-	private GameObject pregameUI;
+	public GameObject pregameUI;
 	private GameObject waitingUI;
 	private GameObject getReadyUI;
 
@@ -85,11 +85,12 @@ public class PlayerSetup : NetworkBehaviour {
 
 			string username = System.Environment.UserName;
 			CmdSetUsername(transform.name, username);
+		
 		}
 
-		//playerGraphics.GetComponent<Renderer>().mateial.color = GetComponent<Player>().color;
 		Color c = new Color(GetComponent<Player> ().color.r, GetComponent<Player> ().color.g, GetComponent<Player> ().color.b);
 		transform.FindDeepChild ("NPC_Hair_009").gameObject.GetComponent<Renderer> ().material.SetColor ("_EmissionColor", c);
+
 
 	}
 
@@ -109,12 +110,19 @@ public class PlayerSetup : NetworkBehaviour {
 			CmdSetReady();
 		}
 
+
 		// Set isReady ved fangst af ImageTarget
 		if (getReadyUI) {
 			if (getReadyUI.GetComponent<GetReadyUI>().isReady && isReady == false) {
 				CmdSetReady();
 				getReadyUI.SetActive(false);
 			}
+		}
+
+		if (isLocalPlayer) {
+			playerUIInstance.GetComponent<PlayerUI>().tMana.text = GetComponent<Player>().mana.ToString();
+			playerUIInstance.GetComponent<PlayerUI>().tTemp.text = GetComponent<Player>().tempMana.ToString();
+			playerUIInstance.GetComponent<PlayerUI>().tSave.text = GetComponent<Player>().savedMana.ToString();
 		}
 	
 	}
@@ -124,9 +132,7 @@ public class PlayerSetup : NetworkBehaviour {
 	public void NoVuforia() {
 		CmdSetReady();
 	}
-
-
-
+		
 	// Find ImageTarget //
 	public void GetReady() {
 		if (sceneCamera != null) {
@@ -171,11 +177,11 @@ public class PlayerSetup : NetworkBehaviour {
 		waitingUI.SetActive(true);
 		GetReadyUI.IsOn = getReadyUI.activeSelf;
 
-		if (!GetReadyUI.IsOn) {
+		/*if (!GetReadyUI.IsOn) {
 			if (isReady) {
 				pregameUI.GetComponent<PregameUI>().ShowText(true);
 			}
-		}
+		}*/
 
 	}
 
@@ -196,6 +202,22 @@ public class PlayerSetup : NetworkBehaviour {
 		if (waitingUI.activeSelf)  {
 			waitingUI.SetActive(false);
 		}
+	}
+
+	[ClientRpc]
+	public void RpcEndGame() {
+		if (!isLocalPlayer) {
+			/*GetComponent<Player>().Setup();*/
+			return;
+		}
+		playerUIInstance.SetActive(false);
+		SetComponents(false);
+		gameObject.GetComponent<Rigidbody>().useGravity = false;
+		scoreboard.GetComponent<Scoreboard>().StopScoreboard();
+		if (waitingUI.activeSelf)  {
+			waitingUI.SetActive(false);
+		}
+		pregameUI.GetComponent<PregameUI>().EndGameUI();
 	}
 
 	public override void OnStartClient() {
