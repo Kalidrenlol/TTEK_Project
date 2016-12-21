@@ -166,6 +166,7 @@ public class Player : NetworkBehaviour {
 
 	}
 
+	[Client]
 	public void Die() {
 		isDead = true;
 		for (int i = 0; i < disableOnDeath.Length; i++) {
@@ -391,9 +392,11 @@ public class Player : NetworkBehaviour {
 		savedMana += _mana;
 		tempMana = 0;
 	}
-
-
+		
 	void UpdateMana() {
+		if (!isLocalPlayer) {
+			return;
+		}
 		// Save mana hvis ikke på wonderland //
 		if (tempMana > 0 && !isOnWonderland) {
 			tempMana = Mathf.Floor(tempMana);
@@ -521,6 +524,11 @@ public class Player : NetworkBehaviour {
 		{
 			r.enabled = true;
 		}
+	}
+
+	[Command]
+	void CmdPU_MakeInvisible() {
+		
 	}
 
     public void PU_HeightenSpeed()

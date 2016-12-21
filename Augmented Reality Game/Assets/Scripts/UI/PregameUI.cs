@@ -28,15 +28,31 @@ public class PregameUI : MonoBehaviour {
 	void AddPlayers() {
 		Player[] players = GameManager.GetPlayers();
 
+		int numPlayers = 0;
 		foreach (Player player in players) {
-			GameObject itemGO = Instantiate(pregamePlayerItem, playerList) as GameObject;
+			GameObject itemGO = Instantiate(pregamePlayerItem, playerList, false) as GameObject;
+			itemGO.transform.localScale = playerList.transform.localScale;
 			PregamePlayerItem item = itemGO.GetComponent<PregamePlayerItem>();
 
 			if (item != null) {
+				numPlayers++;
 				bool _isReady = player.GetComponent<PlayerSetup>().isReady;
 				Color _color = player.color;
-				item.Setup(player.username, _isReady, _color);
+				bool _isLocal = player.GetComponent<Player>().isLocalPlayer;
+				item.Setup(player.username, _isReady, _color, _isLocal, numPlayers);
 			}
+		}
+
+		while(numPlayers < 4) {
+			GameObject itemGO = Instantiate(pregamePlayerItem, playerList, false) as GameObject;
+			itemGO.transform.localScale = playerList.transform.localScale;
+			PregamePlayerItem item = itemGO.GetComponent<PregamePlayerItem>();
+
+			if (item != null) {
+				numPlayers++;
+				item.NoPlayer();
+			}
+
 		}
 	}
 
