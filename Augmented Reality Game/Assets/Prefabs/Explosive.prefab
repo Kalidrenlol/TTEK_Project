@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
+  m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
     i14: 35
     i15: 116
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114000013922288284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19bb0340c0b7a7447b5b1bc3091a628b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 1.5
+  lifeTime: 10
   explosiveForce: 6000
   explosiveRadius: 15
   explosiveParticle: {fileID: 1000011562095434, guid: 30624048746893f42a9d967c9860454c,
