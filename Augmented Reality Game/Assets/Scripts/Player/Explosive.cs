@@ -9,15 +9,11 @@ public class Explosive : NetworkBehaviour {
     public float explosiveRadius = 5f;
     Rigidbody rb;
     public GameObject explosiveParticle;
-    //public NetworkTransform netTrans;
 
-
-	// Use this for initialization
 	void Start () {
         rb = this.GetComponent<Rigidbody>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0)
@@ -26,22 +22,6 @@ public class Explosive : NetworkBehaviour {
         }
 	}
 
-    /*void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
-    {
-        Vector3 syncPosition = Vector3.zero;
-
-        if (stream.isWriting)
-        {
-            syncPosition = netTrans.transform.position;
-            stream.Serialize(ref syncPosition);
-        }
-        else
-        {
-            stream.Serialize(ref syncPosition);
-            netTrans.transform.position = syncPosition;
-        }
-    }*/
-		
     void Explode()
     {
         Debug.Log("explosion" + transform.position);

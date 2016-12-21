@@ -600,92 +600,26 @@ public class Player : NetworkBehaviour {
 
 	#region Spawn
 
-	/*//[Client]
-	void SpawnTest() {
-		CmdSpawnTest(gameObject);
-	}
-
-	[Command]
-	public void CmdSpawnTest(GameObject _go) {
-		RpcSpawnTest(_go);
-	}
-
-	[ClientRpc]
-	public void RpcSpawnTest(GameObject _go) {
-		Transform tp = _go.transform.Find("Graphics");
-		throwAudioSource.Play();
-		Debug.Log(tp);
-		Vector3 vec = new Vector3(0, 1.3f, 0);
-		var explosive = Instantiate(explosivePrefab, tp.position+vec, tp.rotation) as GameObject;
-		explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
-		//explosive.rigidbody.AddForce(transform.forward * 2000);
-
-		NetworkServer.Spawn(explosive);
-	}*/
-
     [Command]
     public void CmdSpawnGrenade(GameObject _go)
     {
-        /*Transform tp = _go.transform.Find("Graphics");
-        throwAudioSource.Play();
-        Debug.Log(tp);
-        Vector3 vec = new Vector3(0, 1.3f, 0);
-        var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
-
-        NetworkServer.SpawnWithClientAuthority(explosive, this.gameObject);
-
-        RpcSpawnGrenade(_go, explosive);*/
         Transform tp = _go.transform.Find("Graphics");
         throwAudioSource.Play();
         Vector3 vec = new Vector3(0, 1.3f, 0);
 
         var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
+        explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
         NetworkServer.Spawn(explosive);
     }
-
-    [ClientRpc]
-    public void RpcSpawnGrenade(GameObject _go, GameObject explosive)
-    {
-        
-       /* explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);*/
-        //NetworkServer.Spawn(explosive);     
-    }
-
-
-
-    [Command]
-    void CmdShot()
-    {
-  // your code but remove last part with rigidbody and add this line:
-        RpcAddForceOnAll(gameObject);
-    }
-
-    [ClientRpc]
-    void RpcAddForceOnAll(GameObject bullet)
-    {
-        //bullet.GetComponent<Rigidbody>().AddForce();
-    }
-
-
-
+    
     [Command]
     public void CmdSpawnMine(GameObject _go)
-    {
-        RpcSpawnMine(_go);
-    }
-
-    [ClientRpc]
-    public void RpcSpawnMine(GameObject _go)
     {
         throwAudioSource.Play();
         Vector3 offset = new Vector3(0, 5, 0);
         var explosive = Instantiate(explosiveMinePrefab, _go.transform.position + offset, Quaternion.identity) as GameObject;
-        //NetworkServer.Spawn(explosive);   
+        NetworkServer.Spawn(explosive);
     }
-
-            
-
-
 
 	#endregion
 
