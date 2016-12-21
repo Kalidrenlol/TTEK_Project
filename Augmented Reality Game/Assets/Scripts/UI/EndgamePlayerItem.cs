@@ -35,6 +35,7 @@ public class EndgamePlayerItem : MonoBehaviour {
 		usernameText.text = "";
 		pointText.gameObject.SetActive(false);
 		silhouette.gameObject.SetActive(false);
+		posText.text = "";
 
 		Image backgroundImg = background.GetComponent<Image>();
 		Color _newColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.4f);

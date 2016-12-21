@@ -73,7 +73,7 @@ GameObject:
   - 222: {fileID: 222000014272883932}
   - 114: {fileID: 114000012576338894}
   m_Layer: 5
-  m_Name: Room name
+  m_Name: Text Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,6 +105,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 224000010888571360}
+  - 114: {fileID: 114000011563040168}
   m_Layer: 5
   m_Name: ScoreRoom
   m_TagString: WaitingRoomUI
@@ -382,7 +383,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 44
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 3
     m_MaxSize: 44
     m_Alignment: 4
@@ -582,6 +583,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114000011563040168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011477573636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2458284f35f06498ba01d44c67dca964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endgamePlayerItem: {fileID: 1000013028653124, guid: 95550d435d0f04d82a30016796e76841,
+    type: 2}
+  endPlayerList: {fileID: 224000013530619046}
+  txtHeader: {fileID: 114000012576338894}
+  btnGoToMain: {fileID: 114000010058546544}
 --- !u!114 &114000011617803114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1004,10 +1021,7 @@ MonoBehaviour:
   waitingRoom: {fileID: 1000013873928116}
   btnGetReady: {fileID: 114000012513130156}
   btnDebug: {fileID: 114000012859929712}
-  scoreRoom: {fileID: 1000011477573636}
-  endgamePlayerItem: {fileID: 1000013028653124, guid: 95550d435d0f04d82a30016796e76841,
-    type: 2}
-  endPlayerList: {fileID: 224000013530619046}
+  uiScoreRoom: {fileID: 1000011477573636}
 --- !u!114 &114000014256040362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1242,10 +1256,10 @@ RectTransform:
   - {fileID: 224000012953510692}
   m_Father: {fileID: 224000010888571360}
   m_RootOrder: 3
-  m_AnchorMin: {x: 0.05, y: 0.1}
-  m_AnchorMax: {x: 0.95, y: 0.22740544}
-  m_AnchoredPosition: {x: -0.2000122, y: 0}
-  m_SizeDelta: {x: -1337, y: -76}
+  m_AnchorMin: {x: 0.3751671, y: 0.122222476}
+  m_AnchorMax: {x: 0.6022703, y: 0.19137082}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000011296491674
 RectTransform:

@@ -21,7 +21,6 @@ GameObject:
   - 4: {fileID: 4000012207289336}
   - 114: {fileID: 114000012534803166}
   - 114: {fileID: 114000012817125722}
-  - 114: {fileID: 114000013047199218}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -61,7 +60,7 @@ MonoBehaviour:
   m_RunInBackground: 1
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
-  m_LogLevel: 2
+  m_LogLevel: 1
   m_PlayerPrefab: {fileID: 1000010936444112, guid: 33e41cb384b694ed0bab3fdb67c3fb2d,
     type: 2}
   m_AutoCreatePlayer: 1
@@ -70,7 +69,9 @@ MonoBehaviour:
   m_OnlineScene: MainSceneAR
   m_SpawnPrefabs:
   - {fileID: 1000013416835768, guid: cfbd4319a55504b6596c8a256eae19b8, type: 2}
-  m_CustomConfig: 0
+  - {fileID: 1000010422693548, guid: 54a67239f959a004c9d1b13df5e82374, type: 2}
+  - {fileID: 1000013168553160, guid: 97fb279f704719645a9ec5f59147a73e, type: 2}
+  m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
     m_PacketSize: 1500
@@ -99,7 +100,7 @@ MonoBehaviour:
     m_ReactorMaximumReceivedMessages: 1024
     m_ReactorMaximumSentMessages: 1024
     m_MaxPacketSize: 2000
-  m_Channels: 
+  m_Channels: 0500000000000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1
@@ -125,17 +126,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   showGUI: 0
-  offsetX: 0
-  offsetY: 0
---- !u!114 &114000013047199218
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012648087524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5f5ef56beb0e4417bdf92b1900accf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomSize: 4
+  offsetX: 10
+  offsetY: 10
