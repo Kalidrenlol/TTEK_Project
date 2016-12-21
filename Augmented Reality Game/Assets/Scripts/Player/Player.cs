@@ -359,7 +359,9 @@ public class Player : NetworkBehaviour {
             Rigidbody rbHit = hit.GetComponent<Rigidbody>();
             if (rbHit != null && rbHit != thisRb)
             {
-                Debug.Log(rbHit.tag);
+				if (GameManager.instance.matchSettings.showDebug) {
+					Debug.Log (rbHit.tag);
+				}
                 if (rbHit.tag == "Player")
                 {
                     rbHit.GetComponent<Player>().PushedOpponent(_pusher.name);
@@ -560,7 +562,6 @@ public class Player : NetworkBehaviour {
 			currentPU = "0 - Invisibility";
 			break;
 		}
-
 	}
 
     public void ActivatePowerup()
@@ -588,8 +589,7 @@ public class Player : NetworkBehaviour {
                 default:
                     break;
             }
-
-
+				
             currentPU = "None";
             spritePU.image.overrideSprite = sprite_array[4];//
 
@@ -652,8 +652,6 @@ public class Player : NetworkBehaviour {
     {
         CmdSpawnMine(gameObject);
     }
-
-	
 
 	#endregion
 
