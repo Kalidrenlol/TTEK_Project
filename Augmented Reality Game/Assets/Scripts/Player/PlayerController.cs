@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown("x"))
         {
 
-            GetComponent<Player>().CmdPushNew(this.gameObject);
+            GetComponent<Player>().PushNew(this.gameObject);
             GetComponent<Player>().isAttacking = true;
             playerAnimator.SetBool("HasAttacked", true);
             StartCoroutine(StopPush());
