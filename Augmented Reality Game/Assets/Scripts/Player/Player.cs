@@ -431,8 +431,11 @@ public class Player : NetworkBehaviour {
 
     public void RotateGraphics(float _time, int _pu)
     {
-        Debug.Log("Start change");
-        StartCoroutine(ChangeGraphics(_time, _pu));
+        if (isLocalPlayer)
+        {
+            Debug.Log("Start change");
+            StartCoroutine(ChangeGraphics(_time, _pu));
+        }
     }
 
     public IEnumerator ChangeGraphics(float _time, int _pu)
@@ -554,14 +557,16 @@ public class Player : NetworkBehaviour {
         //explosive.rigidbody.AddForce(transform.forward * 2000);
 
 		NetworkServer.Spawn(explosive);*/
-		CmdSpawnTest(gameObject);
+		//CmdSpawnTest(gameObject);
+        CmdSpawnGrenade(gameObject);
     }
 
     public void PU_PlaceMine()
     {
-        throwAudioSource.Play();
+        /*throwAudioSource.Play();
         Vector3 offset = new Vector3(0, 5, 0);
-        var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;
+        var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;*/
+        CmdSpawnMine(gameObject);
     }
 
 	public void ActivatePowerup()
@@ -603,7 +608,7 @@ public class Player : NetworkBehaviour {
 
 	#region Spawn
 
-	[Client]
+	/*//[Client]
 	void SpawnTest() {
 		CmdSpawnTest(gameObject);
 	}
@@ -624,7 +629,69 @@ public class Player : NetworkBehaviour {
 		//explosive.rigidbody.AddForce(transform.forward * 2000);
 
 		NetworkServer.Spawn(explosive);
-	}
+	}*/
+
+    [Command]
+    public void CmdSpawnGrenade(GameObject _go)
+    {
+        /*Transform tp = _go.transform.Find("Graphics");
+        throwAudioSource.Play();
+        Debug.Log(tp);
+        Vector3 vec = new Vector3(0, 1.3f, 0);
+        var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
+
+        NetworkServer.SpawnWithClientAuthority(explosive, this.gameObject);
+
+        RpcSpawnGrenade(_go, explosive);*/
+        Transform tp = _go.transform.Find("Graphics");
+        throwAudioSource.Play();
+        Vector3 vec = new Vector3(0, 1.3f, 0);
+
+        var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
+        NetworkServer.Spawn(explosive);
+    }
+
+    [ClientRpc]
+    public void RpcSpawnGrenade(GameObject _go, GameObject explosive)
+    {
+        
+       /* explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);*/
+        //NetworkServer.Spawn(explosive);     
+    }
+
+
+
+    [Command]
+    void CmdShot()
+    {
+  // your code but remove last part with rigidbody and add this line:
+        RpcAddForceOnAll(gameObject);
+    }
+
+    [ClientRpc]
+    void RpcAddForceOnAll(GameObject bullet)
+    {
+        //bullet.GetComponent<Rigidbody>().AddForce();
+    }
+
+
+
+    [Command]
+    public void CmdSpawnMine(GameObject _go)
+    {
+        RpcSpawnMine(_go);
+    }
+
+    [ClientRpc]
+    public void RpcSpawnMine(GameObject _go)
+    {
+        throwAudioSource.Play();
+        Vector3 offset = new Vector3(0, 5, 0);
+        var explosive = Instantiate(explosiveMinePrefab, _go.transform.position + offset, Quaternion.identity) as GameObject;
+        //NetworkServer.Spawn(explosive);   
+    }
+
+            
 
 
 

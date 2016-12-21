@@ -9,6 +9,7 @@ public class Explosive : NetworkBehaviour {
     public float explosiveRadius = 5f;
     Rigidbody rb;
     public GameObject explosiveParticle;
+    //public NetworkTransform netTrans;
 
 
 	// Use this for initialization
@@ -24,10 +25,26 @@ public class Explosive : NetworkBehaviour {
             Explode();
         }
 	}
+
+    /*void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+    {
+        Vector3 syncPosition = Vector3.zero;
+
+        if (stream.isWriting)
+        {
+            syncPosition = netTrans.transform.position;
+            stream.Serialize(ref syncPosition);
+        }
+        else
+        {
+            stream.Serialize(ref syncPosition);
+            netTrans.transform.position = syncPosition;
+        }
+    }*/
 		
     void Explode()
     {
-        Debug.Log("explosion");
+        Debug.Log("explosion" + transform.position);
 
         Vector3 pos = rb.transform.position;
         Collider[] colliders = Physics.OverlapSphere(pos, explosiveRadius);
