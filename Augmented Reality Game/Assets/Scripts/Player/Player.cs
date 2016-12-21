@@ -626,7 +626,7 @@ public class Player : NetworkBehaviour {
     [Command]
     public void CmdSpawnGrenade(GameObject _go)
     {
-        Transform tp = _go.transform.Find("Graphics");
+        /*Transform tp = _go.transform.Find("Graphics");
         throwAudioSource.Play();
         Debug.Log(tp);
         Vector3 vec = new Vector3(0, 1.3f, 0);
@@ -634,14 +634,20 @@ public class Player : NetworkBehaviour {
 
         NetworkServer.SpawnWithClientAuthority(explosive, this.gameObject);
 
-        RpcSpawnGrenade(_go, explosive);
+        RpcSpawnGrenade(_go, explosive);*/
+        Transform tp = _go.transform.Find("Graphics");
+        throwAudioSource.Play();
+        Vector3 vec = new Vector3(0, 1.3f, 0);
+
+        var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
+        NetworkServer.Spawn(explosive);
     }
 
     [ClientRpc]
     public void RpcSpawnGrenade(GameObject _go, GameObject explosive)
     {
         
-        explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
+       /* explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);*/
         //NetworkServer.Spawn(explosive);     
     }
 
