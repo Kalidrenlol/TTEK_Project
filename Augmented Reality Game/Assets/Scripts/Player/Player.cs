@@ -626,20 +626,41 @@ public class Player : NetworkBehaviour {
     [Command]
     public void CmdSpawnGrenade(GameObject _go)
     {
-        RpcSpawnGrenade(_go);
-    }
-
-    [ClientRpc]
-    public void RpcSpawnGrenade(GameObject _go)
-    {
         Transform tp = _go.transform.Find("Graphics");
         throwAudioSource.Play();
         Debug.Log(tp);
         Vector3 vec = new Vector3(0, 1.3f, 0);
         var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
+
+        NetworkServer.SpawnWithClientAuthority(explosive, this.gameObject);
+
+        RpcSpawnGrenade(_go, explosive);
+    }
+
+    [ClientRpc]
+    public void RpcSpawnGrenade(GameObject _go, GameObject explosive)
+    {
+        
         explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
         //NetworkServer.Spawn(explosive);     
     }
+
+
+
+    [Command]
+    void CmdShot()
+    {
+  // your code but remove last part with rigidbody and add this line:
+        RpcAddForceOnAll(gameObject);
+    }
+
+    [ClientRpc]
+    void RpcAddForceOnAll(GameObject bullet)
+    {
+        //bullet.GetComponent<Rigidbody>().AddForce();
+    }
+
+
 
     [Command]
     public void CmdSpawnMine(GameObject _go)

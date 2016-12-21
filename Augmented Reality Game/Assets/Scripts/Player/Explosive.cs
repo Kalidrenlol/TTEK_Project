@@ -28,6 +28,7 @@ public class Explosive : NetworkBehaviour {
     void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
     {
         Vector3 syncPosition = Vector3.zero;
+
         if (stream.isWriting)
         {
             syncPosition = transform.position;
@@ -42,7 +43,7 @@ public class Explosive : NetworkBehaviour {
 		
     void Explode()
     {
-        Debug.Log("explosion");
+        Debug.Log("explosion" + transform.position);
 
         Vector3 pos = rb.transform.position;
         Collider[] colliders = Physics.OverlapSphere(pos, explosiveRadius);
