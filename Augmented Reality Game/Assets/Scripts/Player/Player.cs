@@ -206,7 +206,7 @@ public class Player : NetworkBehaviour {
 		if (pushedByPlayer != null) {
 			CmdSetScore(pushedByPlayer, 1, "Kill");
 		} else {
-			CmdSetScore(playerID, 1, "Suicide");
+			CmdSetScore(playerID, -1, "Suicide");
 		}
 
 	}
