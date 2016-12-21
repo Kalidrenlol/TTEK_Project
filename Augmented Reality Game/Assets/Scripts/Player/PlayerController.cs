@@ -34,21 +34,15 @@ public class PlayerController : MonoBehaviour {
 			playerAnimator.SetBool ("IsWalking", isWalkingPressed);
 		}
 
-		if (Input.GetKeyDown ("f")) {
+		/*if (Input.GetKeyDown ("x")) {
 			PushOpponent();
             //Push sound
             GetComponent<Player>().PushSound();
-		}
+		}*/
 
-        if (Input.GetKeyDown("x"))
+        if (Input.GetKeyDown("f"))
         {
-
-            GetComponent<Player>().PushNew(this.gameObject);
-            GetComponent<Player>().isAttacking = true;
-            playerAnimator.SetBool("HasAttacked", true);
-            StartCoroutine(StopPush());
-            //Push sound
-            GetComponent<Player>().PushSound();
+			PushOpponent ();
         }
 
 		Vector3 _velocity = new Vector3 (_xMov, 0, _zMov);
@@ -63,7 +57,7 @@ public class PlayerController : MonoBehaviour {
             GetComponent<Player>().ActivatePowerup();
         }
 
-        if (Input.GetKeyDown("r"))
+        /*if (Input.GetKeyDown("r"))
         {
 			if (GameManager.instance.matchSettings.showDebug) {
 				Debug.Log ("Use powerup");
@@ -83,28 +77,37 @@ public class PlayerController : MonoBehaviour {
         {
             //Camera camMain = Camera.main;
             cam.GetComponent<ScreenShake>().InitScreenShake(1,1);
-        }
+        }*/
 
 		isOutsideMap ();
 	}
 		
-	public void PushOpponent() {
+	/*public void PushOpponent() {
 		GetComponent<Player>().isAttacking = true;
 		playerAnimator.SetBool ("HasAttacked", true);
 		StartCoroutine(StopPush());
-	}
+	}*/
 
+	public void PushOpponent() {
+		GetComponent<Player>().PushNew(this.gameObject);
+		GetComponent<Player>().isAttacking = true;
+		playerAnimator.SetBool("HasAttacked", true);
+		StartCoroutine(StopPush());
+
+		//Push sound
+		GetComponent<Player>().PushSound();
+	}
 
 	private IEnumerator StopPush() {
 		yield return new WaitForSeconds(0.5f);
 		GetComponent<Player>().isAttacking = false;
 	}
 
-	void OnCollisionStay(Collision collider) {
+	/*void OnCollisionStay(Collision collider) {
 		if (collider.gameObject.tag == "Player") {
 			//GetComponent<Player>().PushOpponent(collider);
 		}
-	}
+	}*/
 
 	public void isOutsideMap() {
 		if (GetComponent<Player> ().transform.position.y < -0.1) {

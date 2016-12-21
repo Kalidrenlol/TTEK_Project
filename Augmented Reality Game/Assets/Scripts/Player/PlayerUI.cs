@@ -42,11 +42,6 @@ public class PlayerUI : MonoBehaviour {
 			manaSlider.transform.FindDeepChild("SavedBar").GetComponent<Slider>().value = playerScript.mana;
 			txtManaCount.text = Mathf.Floor(playerScript.mana).ToString();
 		}
-
-		if (Input.GetKeyDown(KeyCode.C)) {
-			ShowFeedbackText("Kill");
-		}
-
 	}
 
 	void Start() {
