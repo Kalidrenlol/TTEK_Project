@@ -18,11 +18,11 @@ public class Explosive : NetworkBehaviour {
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0)
         {
-            Explode();
+            CmdExplode();
         }
 	}
-
-    void Explode()
+    [Command]
+    void CmdExplode()
     {
         Debug.Log("explosion" + transform.position);
 
