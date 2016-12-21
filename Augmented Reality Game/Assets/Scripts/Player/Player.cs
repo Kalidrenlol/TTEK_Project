@@ -428,8 +428,11 @@ public class Player : NetworkBehaviour {
 
     public void RotateGraphics(float _time, int _pu)
     {
-        Debug.Log("Start change");
-        StartCoroutine(ChangeGraphics(_time, _pu));
+        if (isLocalPlayer)
+        {
+            Debug.Log("Start change");
+            StartCoroutine(ChangeGraphics(_time, _pu));
+        }
     }
 
     public IEnumerator ChangeGraphics(float _time, int _pu)
@@ -595,7 +598,7 @@ public class Player : NetworkBehaviour {
 
 	#region Spawn
 
-	[Client]
+	//[Client]
 	void SpawnTest() {
 		CmdSpawnTest(gameObject);
 	}
@@ -615,7 +618,7 @@ public class Player : NetworkBehaviour {
 		explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
 		//explosive.rigidbody.AddForce(transform.forward * 2000);
 
-		NetworkServer.Spawn(explosive);
+		//NetworkServer.Spawn(explosive);
 	}
 
 

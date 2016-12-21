@@ -12,6 +12,6 @@ public class DestroyThis : MonoBehaviour {
 
     void Destroy()
     {
-        Destroy();
+        //Destroy();
     }
 }
