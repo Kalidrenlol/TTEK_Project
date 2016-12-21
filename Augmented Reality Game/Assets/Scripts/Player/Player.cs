@@ -549,14 +549,16 @@ public class Player : NetworkBehaviour {
         //explosive.rigidbody.AddForce(transform.forward * 2000);
 
 		NetworkServer.Spawn(explosive);*/
-		CmdSpawnTest(gameObject);
+		//CmdSpawnTest(gameObject);
+        SpawnGrenadeCMD(gameObject);
     }
 
     public void PU_PlaceMine()
     {
-        throwAudioSource.Play();
+        /*throwAudioSource.Play();
         Vector3 offset = new Vector3(0, 5, 0);
-        var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;
+        var explosive = Instantiate(explosiveMinePrefab, transform.position + offset, Quaternion.identity) as GameObject;*/
+        SpawnMineCMD(gameObject);
     }
 
 	public void ActivatePowerup()
@@ -598,7 +600,7 @@ public class Player : NetworkBehaviour {
 
 	#region Spawn
 
-	//[Client]
+	/*//[Client]
 	void SpawnTest() {
 		CmdSpawnTest(gameObject);
 	}
@@ -619,7 +621,42 @@ public class Player : NetworkBehaviour {
 		//explosive.rigidbody.AddForce(transform.forward * 2000);
 
 		NetworkServer.Spawn(explosive);
-	}
+	}*/
+
+    [Command]
+    public void SpawnGrenadeCMD(GameObject _go)
+    {
+        SpawnGrenadeRPC(_go);
+    }
+
+    [ClientRpc]
+    public void SpawnGrenadeRPC(GameObject _go)
+    {
+        Transform tp = _go.transform.Find("Graphics");
+        throwAudioSource.Play();
+        Debug.Log(tp);
+        Vector3 vec = new Vector3(0, 1.3f, 0);
+        var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
+        explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
+        NetworkServer.Spawn(explosive);     
+    }
+
+    [Command]
+    public void SpawnMineCMD(GameObject _go)
+    {
+        SpawnMineRPC(_go);
+    }
+
+    [ClientRpc]
+    public void SpawnMineRPC(GameObject _go)
+    {
+        throwAudioSource.Play();
+        Vector3 offset = new Vector3(0, 5, 0);
+        var explosive = Instantiate(explosiveMinePrefab, _go.transform.position + offset, Quaternion.identity) as GameObject;
+        NetworkServer.Spawn(explosive);   
+    }
+
+            
 
 
 
