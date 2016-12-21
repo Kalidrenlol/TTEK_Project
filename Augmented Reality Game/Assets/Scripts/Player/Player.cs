@@ -631,15 +631,8 @@ public class Player : NetworkBehaviour {
 
         var explosive = Instantiate(explosivePrefab, tp.position + vec, tp.rotation) as GameObject;
         explosive.transform.parent = this.transform;
-        /**
-         
-         
-    weaponObject.parentNetId = hand.netId; // Set the parent network ID
-    weaponObject.transform.parent = hand; // Set the parent transform on the server
-         */
         explosive.GetComponent<Rigidbody>().AddRelativeForce(explosive.transform.forward * 1000);
         NetworkServer.Spawn(explosive);
-
         RpcSyncExplosiveOnce(explosive, this.gameObject);
     }
     
@@ -654,6 +647,13 @@ public class Player : NetworkBehaviour {
         NetworkServer.Spawn(explosive);
         RpcSyncExplosiveOnce(explosive, this.gameObject);
     }
+
+
+
+
+
+
+
 
     [ClientRpc]
     public void RpcSyncExplosiveOnce(GameObject ex, GameObject parent)

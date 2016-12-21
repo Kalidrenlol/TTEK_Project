@@ -147,7 +147,7 @@ MonoBehaviour:
     i13: 232
     i14: 35
     i15: 116
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &114000013922288284
 MonoBehaviour:
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 1.5
-  explosiveForce: 7000
+  explosiveForce: 6900
   explosiveRadius: 18
   explosiveParticle: {fileID: 1000011562095434, guid: 30624048746893f42a9d967c9860454c,
     type: 2}
