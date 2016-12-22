@@ -603,7 +603,7 @@ public class Player : NetworkBehaviour {
     }
 
     public void PU_MakeInvisible()
-    {
+    {/*
         invisAudioSource.Play();
         Instantiate(smokeParticle, transform.position, Quaternion.identity);
         Renderer[] rs = transform.GetChild(0).GetComponentsInChildren<Renderer>();
@@ -611,7 +611,8 @@ public class Player : NetworkBehaviour {
         {
             r.enabled = false;
             Invoke("PU_MakeVisible", 5); //5 is var for time in seconds before invoking
-        }
+        }*/
+        CmdPU_MakeInvisible();
     }
 
 	public void PU_MakeVisible()
@@ -628,8 +629,29 @@ public class Player : NetworkBehaviour {
 
 	[Command]
 	void CmdPU_MakeInvisible() {
-		
+        invisAudioSource.Play();
+        Instantiate(smokeParticle, transform.position, Quaternion.identity);
+        Renderer[] rs = transform.GetChild(0).GetComponentsInChildren<Renderer>();
+        foreach (Renderer r in rs)
+        {
+            r.enabled = false;
+            Invoke("CmdPU_MakeVisible", 4); //4 is var for time in seconds before invoking
+        }
 	}
+
+    [Command]
+    public void PU_MakeVisible()
+    {
+        if (GameManager.instance.matchSettings.showDebug)
+        {
+            Debug.Log("Make visible");
+        }
+        Renderer[] rs = transform.GetChild(0).GetComponentsInChildren<Renderer>();
+        foreach (Renderer r in rs)
+        {
+            r.enabled = true;
+        }
+    }
 
     public void PU_HeightenSpeed()
     {
