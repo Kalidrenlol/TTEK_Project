@@ -105,8 +105,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 4000012268011962, guid: fa9cee41d8b12a546b4e1c8da1d09dca, type: 2}
   rSpeed: 3
-  zSpeed: 10
-  zrSpeed: 0.4
+  zSpeed: 12
+  zrSpeed: 1
   mainCamera: {fileID: 0}
   rotateCamera: 0
   zoomToMain: 0

@@ -37,7 +37,7 @@ public class PregamePlayerItem : MonoBehaviour {
 	}
 
 	public void NoPlayer() {
-		usernameText.text = "Ledig plads";
+		usernameText.text = "Available Seat";
 		usernameText.fontStyle = FontStyle.Italic;
 		usernameText.alignment = TextAnchor.MiddleCenter;
 		statusText.gameObject.SetActive(false);
