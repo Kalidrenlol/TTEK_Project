@@ -45,7 +45,7 @@ public class GameController : NetworkBehaviour {
 
 	[ClientRpc]
 	public void RpcAllReady() {
-		Debug.Log(transform.name);
+		
 		if (isLocalPlayer){
 			startCountdown = true;
 			GetComponent<PlayerSetup>().pregameUI.SetActive(false);
