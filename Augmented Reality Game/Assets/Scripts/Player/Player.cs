@@ -640,7 +640,7 @@ public class Player : NetworkBehaviour {
 	}
 
     [Command]
-    public void PU_MakeVisible()
+    public void CmdPU_MakeVisible()
     {
         if (GameManager.instance.matchSettings.showDebug)
         {
