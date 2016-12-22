@@ -10,8 +10,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: Augmented Reality Game
+  companyName: T-TEK
+  productName: Mana Wonderland
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenStyle: 0
@@ -180,7 +180,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 041a7de15701e4be5b91c5daba9185cf, type: 3}
+      m_Icon: {fileID: 2800000, guid: afb1060f2cb88454ba8fa4d1419bb5a3, type: 3}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching: []
@@ -350,7 +350,7 @@ PlayerSettings:
     1: CROSS_PLATFORM_INPUT
     2: CROSS_PLATFORM_INPUT
     4: VUFORIA_IOS_SETTINGS;CROSS_PLATFORM_INPUT;MOBILE_INPUT
-    7: VUFORIA_ANDROID_SETTINGS;CROSS_PLATFORM_INPUT;MOBILE_INPUT
+    7: VUFORIA_ANDROID_SETTINGS
     14: VUFORIA_WSA_SETTINGS;MOBILE_INPUT
     17: MOBILE_INPUT
     20: MOBILE_INPUT
