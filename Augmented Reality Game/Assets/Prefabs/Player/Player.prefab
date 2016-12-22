@@ -52,7 +52,7 @@ GameObject:
   - 223: {fileID: 223000010106106680}
   - 114: {fileID: 114000012585346234}
   - 114: {fileID: 114000012249099126}
-  - 114: {fileID: 114000011349583834}
+  - 114: {fileID: 114000011600760332}
   m_Layer: 0
   m_Name: NamePlateCanvas
   m_TagString: Untagged
@@ -1972,6 +1972,7 @@ MonoBehaviour:
   tempMana: 0
   savedMana: 0
   isOnWonderland: 0
+  usernameText: {fileID: 114000010234794650}
   asThrowExplosive: {fileID: 1000011466076950, guid: 2bed18f2363d68147a730f3b9df592eb,
     type: 2}
   asPunch: {fileID: 1000010130028660, guid: 1dd9a0e6a7b314e49aa6d36175623378, type: 2}
@@ -2009,19 +2010,6 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &114000011349583834
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010240740248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba1de0b08f07543e1ba969dffb157049, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usernameText: {fileID: 114000010234794650}
-  player: {fileID: 114000010706120136}
 --- !u!114 &114000011496008384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2054,6 +2042,19 @@ MonoBehaviour:
     i15: 45
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114000011600760332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010240740248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac26c61bb9a91496d81605ae0afb03ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usernameText: {fileID: 114000010234794650}
+  player: {fileID: 114000010706120136}
 --- !u!114 &114000012223668820
 MonoBehaviour:
   m_ObjectHideFlags: 1

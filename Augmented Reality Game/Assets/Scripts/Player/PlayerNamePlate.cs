@@ -3,17 +3,16 @@ using UnityEngine.UI;
 
 public class PlayerNamePlate : MonoBehaviour {
 
-	[SerializeField] private Text usernameText;
-	[SerializeField] private Player player;
+	//Canvas
+	[SerializeField] Text usernameText;
+	[SerializeField] Player player;
 
-	void Update() {
-		usernameText.text = player.username;
-
+	void Update () {
 		Camera cam = Camera.main;
 		if (cam != null) {
 			transform.LookAt(transform.position + cam.transform.rotation * Vector3.forward, cam.transform.rotation * Vector3.up);
 		}
-		
-	}
 
+		usernameText.text = player.username;
+	}
 }
