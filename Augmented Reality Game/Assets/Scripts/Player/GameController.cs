@@ -36,14 +36,29 @@ public class GameController : NetworkBehaviour {
 				return;
 			}
 		}
-			
-		startCountdown = true;
-		GetComponent<PlayerSetup>().pregameUI.SetActive(false);
-		GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
-		GetComponent<Player>().sceneCamera.GetComponent<SceneCamera>().zoomToMain = true;
+
+		foreach(Player _player in GameManager.GetPlayers()) {
+			_player.GetComponent<GameController>().RpcAllReady();
+		}
+
+	}
+
+	[ClientRpc]
+	public void RpcAllReady() {
+		Debug.Log(transform.name);
+		if (isLocalPlayer){
+			startCountdown = true;
+			GetComponent<PlayerSetup>().pregameUI.SetActive(false);
+			GetComponent<PlayerSetup>().playerUIInstance.SetActive(true);
+			GetComponent<Player>().sceneCamera.GetComponent<SceneCamera>().zoomToMain = true;		
+		}
+
 	}
 
 	void Update() {
+		if (!isLocalPlayer) {
+			return;
+		}
 		if (startCountdown && !countdownTriggered) {
 			countdown -= Time.deltaTime;
 			GetComponent<PlayerSetup>().playerUIInstance.GetComponent<PlayerUI>().ShowFeedbackText(Mathf.Ceil(countdown).ToString(), 400);

@@ -145,9 +145,6 @@ public class PlayerSetup : NetworkBehaviour {
 
 	[Command]
 	public void CmdSetReady() {
-		if (!isLocalPlayer) {
-			//
-		}
 		isReady = true;
 		GetComponent<GameController>().IsAllReady();
 	}

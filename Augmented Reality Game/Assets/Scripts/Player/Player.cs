@@ -50,6 +50,8 @@ public class Player : NetworkBehaviour {
 	public float savedMana;
 	public bool isOnWonderland;
 
+	[SerializeField] Text usernameText;
+
 
     [Header("Sound")]
     public GameObject asThrowExplosive;
@@ -128,6 +130,9 @@ public class Player : NetworkBehaviour {
 			mainCamera.transform.SetParent(transform, false);
 			mainCamera.SetActive(false);
 			sceneCamera.SetActive(true);
+			usernameText.gameObject.SetActive(false);
+		} else {
+			usernameText.gameObject.SetActive(true);
 		}
         
 	}
