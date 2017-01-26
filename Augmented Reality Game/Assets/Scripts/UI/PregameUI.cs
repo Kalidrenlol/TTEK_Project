@@ -19,7 +19,7 @@ public class PregameUI : MonoBehaviour {
 	public GameObject uiScoreRoom;
 
 	void Start() {
-		RefreshPlayerlist();
+		StartCoroutine(StartUpRefresh());
 	}
 
 	public void RefreshPlayerlist () {
@@ -86,6 +86,11 @@ public class PregameUI : MonoBehaviour {
 		txtStatus.text = _text;
 	}
 
+	IEnumerator StartUpRefresh() {
+		yield return new WaitForSeconds(3f);
+
+		RefreshPlayerlist();
+	}
 
 
 }
